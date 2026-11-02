@@ -20,7 +20,7 @@ vibe --agent <agent>
 | 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
 | 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
 | 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | All three fixed, every check passes with no warnings | this commit |
-| 9 | Draw-on animation for all seven drawings | `wp-frontend-builder` | Not run yet | – |
+| 9 | Draw-on animation for all seven drawings | `wp-frontend-builder` | All seven animate; needed a second session, see notes under 9 | this commit |
 | 10 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
@@ -280,6 +280,18 @@ Why it is written this way:
 
 To see the animation, open `index.html` in a real browser. Headless screenshots freeze animated
 images at the first frame unless they use `--force-prefers-reduced-motion`.
+
+Result: `animate: true` in all seven generators, all seven SVGs animated, every generator and
+`check.mjs` `PASS` with no warnings. Scales, extents and sizes are unchanged, and the PNG previews
+are byte-identical to the static ones, so the animation ends on exactly the finished drawing.
+- **In Chrome:** the hero draws itself on load: walls and slabs first, then the stair, the people
+  and the dimension line, complete after about 3 seconds. The cards had already finished when
+  scrolled to, because lazy loading fetches them a screen or two early, as expected with `<img>`.
+- **First session:** the first attempt only fixed the hero's `alt` text ("dakraam", "drie
+  niveaus", left over from prompt 8) and did not apply the animation. A second session did.
+- **Render command:** the agent found `--virtual-time-budget` alone unreliable for rendering an
+  animated SVG file (one hero PNG came out blank) and added `--force-prefers-reduced-motion`. The
+  skill's render command should include that flag too.
 
 ## 10. Convert to WordPress
 

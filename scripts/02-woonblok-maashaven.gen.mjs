@@ -39,6 +39,7 @@ d.figure(17.8, { pose: 'stand' });
 d.figure(26.4, { pose: 'walk-left' });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'Woonblok Maashaven — voorgevel aan de kade',
   desc: 'Gesloten woonblok van 25 meter breed met vier verdiepingen, een raster van ramen per verdieping, oranje dubbele entree op de begane grond, kade met water en een afgemeerd binnenvaartschip.',
 }));

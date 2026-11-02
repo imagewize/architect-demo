@@ -48,6 +48,7 @@ d.figure(0.6, { pose: 'walk' });
 d.figure(26.2, { pose: 'stand-left' });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'Kadeblok Noordereiland — voorgevel aan de kade',
   desc: 'Vier geschakelde panden in een blok van 25 meter breed met zadeldaken aan de kade, elk met twee ramen per verdieping en één oranje deur, met water en een afgemeerd binnenvaartschip aan de rechterkant.',
 }));

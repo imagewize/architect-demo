@@ -39,6 +39,7 @@ d.figure(12.8, { pose: 'walk' });
 d.figure(34.6, { pose: 'stand-left' });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'De Hoeksteen — voorgevel',
   desc: 'Voormalige kerk: schip van 20 meter breed met zadeldak, toren met spits, drie hoge smalle vensters in het schip, een venster in de toren en een oranje ingangsportaal. Twee bomen en twee schaalfiguren.',
 }));

@@ -57,6 +57,7 @@ d.figure(4.8, { base: FLOORS[1] });
 d.dimension(WAREHOUSE.x0, WAREHOUSE.x1, 14.8, '16,0 m', { from: WAREHOUSE.ridge });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'Doorsnede bestaand pakhuis',
   desc: 'Doorsnede door een bestaand pakhuis van 16 bij 13 meter: zadeldak in zwart poche met oranje dakkapel, gesneden kopwanden met een raam op elke verdieping en een deur, twee ingevoegde vloerplaten, een trap van de begane grond naar de eerste verdieping, een maatvoering van 16,0 m en drie schaalfiguren op twee verdiepingen.',
 }));

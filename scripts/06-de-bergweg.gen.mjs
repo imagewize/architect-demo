@@ -36,6 +36,7 @@ d.figure(6.8, { pose: 'walk' });
 d.figure(31.8, { pose: 'stand-left' });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'De Bergweg — voorgevel',
   desc: 'Voormalige school: blok van 30 meter breed met zaagdak van vijf tanden, schoorsteen op een tand, een lange band van ramen met bovendorpel aan weerszijden van een oranje dubbele entree. Twee bomen en twee schaalfiguren.',
 }));

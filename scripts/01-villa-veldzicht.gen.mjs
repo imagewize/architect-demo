@@ -36,6 +36,7 @@ d.figure(22.8, { pose: 'walk' });
 d.figure(4.5, { pose: 'stand-left' });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'Villa Veldzicht — voorgevel',
   desc: 'Moderne villa: glazen paviljoen op de begane grond onder een uitkragende dakplaat, verschoven bovenbouw met drie ramen, oranje voordeur, twee bomen en twee schaalfiguren.',
 }));

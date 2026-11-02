@@ -46,6 +46,7 @@ d.figure(13.8, { pose: 'stand-left' });
 d.figure(22.8, { pose: 'stand' });
 
 A.write(out, d.svg({
+  animate: true,
   title: 'Pakhuis Keilewerf — voorgevel aan de kade',
   desc: 'Pakhuis met trapgevel, metselverband, twee rijen kleine ramen, oranje laaddeur met hijsbalk, aanbouw met zaagdak en studiobeglazing, kade met water en een binnenvaartschip.',
 }));
