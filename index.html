@@ -879,5 +879,36 @@ section[id] { scroll-margin-top: 5.5rem; }
   </div>
 </footer>
 
+<script>
+/* The draw-on animation lives inside each SVG file, so an <img> starts playing
+   when it loads — and lazy loading fetches the cards a screen or two early, so
+   they all played at once on page load. Off-screen drawings are armed with a
+   placeholder here and get their real src back from IntersectionObserver when
+   they scroll into view; restoring the src restarts the SVG animation. Without
+   JS (or without IntersectionObserver, or with reduced motion) the plain <img>
+   src stays and the drawing just shows, complete or playing on load. */
+(function () {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+  var PLACEHOLDER = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg"/>');
+  var io = new IntersectionObserver(function (entries) {
+    for (var i = 0; i < entries.length; i++) {
+      if (!entries[i].isIntersecting) continue;
+      var img = entries[i].target;
+      io.unobserve(img);
+      if (img.dataset.animSrc) { img.src = img.dataset.animSrc; delete img.dataset.animSrc; }
+    }
+  });
+  var imgs = document.querySelectorAll('img.hero-fig, img.drawing, img.map');
+  for (var j = 0; j < imgs.length; j++) {
+    var img = imgs[j], r = img.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < window.innerHeight) continue; // already in view (hero): play on load
+    img.dataset.animSrc = img.src;
+    img.src = PLACEHOLDER;
+    io.observe(img);
+  }
+})();
+</script>
+
 </body>
 </html>
