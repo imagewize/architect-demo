@@ -54,4 +54,4 @@ The brief and every later prompt are in [`PROMPTS.md`](PROMPTS.md).
 
 - **Form:** posts via `mailto:`, which opens the visitor's mail app. In WordPress it becomes a form plugin or block.
 - **Firm and content:** the firm, projects, client quote and phone number are invented. The street names and districts are real.
-- **Email domain:** `studioveld.nl` may be a real domain owned by someone else. Replace it before showing the page publicly.
+- **Email and phone:** placeholders, `studio@example.com` (a domain reserved for examples) and `+31 (0)10 000 00 00`. The firm's name has no domain of its own: `studioveld.nl` is registered to someone else, so the page does not link to it.
