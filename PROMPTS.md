@@ -16,7 +16,7 @@ vibe --agent <agent>
 | 2 | Apply review notes 1–4 | `wp-frontend-builder` | Skylight, map label, about layout, phone header fixed | `2596de1` |
 | 3 | Review the built page | `ux-designer` | Not run yet | – |
 | 4 | Isometric drawing test | `wp-frontend-builder` | Clean isometric solids, but objects at the wrong scale; see notes under 4 | `7c06572` (branch `test/isometric`) |
-| 5 | Project drawings with the kit | `wp-frontend-builder` | Running on `main` | – |
+| 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
 | 6 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
@@ -126,6 +126,19 @@ Why it is written this way:
 - **The page's palette** keeps the drawings in the site's ink-and-orange style.
 - **`<img>` with alt text** keeps `index.html` small and the drawings accessible.
 - **"Until they PASS"** makes the agent fix every error the kit and `check.mjs` report.
+
+Result: six generators in `scripts/`, six SVGs and 2x PNGs in `images/`, all at 11 units/m with the
+page palette. Every generator and `check.mjs` print `PASS`.
+- **Much better than hand-drawn:** real buildings at true proportions (villa, housing block,
+  warehouse with stepped gable, church with tower, quay houses, school with sawtooth roof), people
+  and trees for scale, one orange accent each.
+- **Too small in the cards:** a 480x300 drawing shows at about 330 px wide and the building fills
+  half of it. People are a few pixels tall, and the dimension labels shrink to about 4 px.
+- **Frame mismatch:** the card frame is taller than the 16:10 drawing, which leaves white bands.
+- **Kit gaps:** trees cover building corners (06), the chimney is a floating rectangle (no chimney
+  part), people look like pins, and dimension lines have no extension lines.
+
+These led to kit fixes in mistral-toolbox PR #33 and to prompt 6.
 
 ## 6. Convert to WordPress
 
