@@ -26,7 +26,7 @@ const d = A.drawing({
 });
 
 // a tree behind the warehouse, clear of the cut wall (crown starts beyond x=16)
-d.tree(18.8, { h: 8, layer: 'back' });
+d.tree(18.8, { h: 8, layer: 'back', shade: true });
 d.ground(EXTENT.x0, EXTENT.x1);
 
 // the existing shell in section: solid cut gable walls and the cut roof with a skylight
@@ -40,13 +40,13 @@ for (const lv of FLOORS) d.slab(WAREHOUSE.x0 + WAREHOUSE.wall, WAREHOUSE.x1 - WA
 
 // openings in the cut walls, after the cuts: a window on every floor, a door on the right
 for (const lv of [0, ...FLOORS]) {
-  d.cutOpening(WAREHOUSE.x0, WAREHOUSE.x0 + WAREHOUSE.wall, lv + 0.9, lv + 2.5);
-  if (lv > 0) d.cutOpening(WAREHOUSE.x1 - WAREHOUSE.wall, WAREHOUSE.x1, lv + 0.9, lv + 2.5);
+  d.cutOpening(WAREHOUSE.x0, WAREHOUSE.x0 + WAREHOUSE.wall, lv + 0.9, lv + 2.5, { reveal: true });
+  if (lv > 0) d.cutOpening(WAREHOUSE.x1 - WAREHOUSE.wall, WAREHOUSE.x1, lv + 0.9, lv + 2.5, { reveal: true });
 }
-d.cutOpening(WAREHOUSE.x1 - WAREHOUSE.wall, WAREHOUSE.x1, 0, 2.4, { glass: false });
+d.cutOpening(WAREHOUSE.x1 - WAREHOUSE.wall, WAREHOUSE.x1, 0, 2.4, { glass: false, reveal: true });
 
-// the stair from the ground floor up to the first inserted floor
-d.stair(2.2, 0, 6.6, FLOORS[0]);
+// the stair from the ground floor up to the first inserted floor, with a handrail
+d.stair(2.2, 0, 6.6, FLOORS[0], { rail: true });
 
 // people on more than one floor
 d.figure(9.5);
