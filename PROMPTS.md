@@ -16,7 +16,8 @@ vibe --agent <agent>
 | 2 | Apply review notes 1–4 | `wp-frontend-builder` | Skylight, map label, about layout, phone header fixed | `2596de1` |
 | 3 | Review the built page | `ux-designer` | Not run yet | – |
 | 4 | Isometric drawing test | `wp-frontend-builder` | Clean isometric solids, but objects at the wrong scale; see notes under 4 | `7c06572` (branch `test/isometric`) |
-| 5 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
+| 5 | Project drawings with the kit | `wp-frontend-builder` | Running on `main` | – |
+| 6 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
 
@@ -107,3 +108,30 @@ Result on branch `test/isometric` (`images/pakhuis-keilewerf.png`):
 
 Conclusion: a drawing kit is the right approach, but this one is the wrong kit. An architectural kit
 at building scale (water, quays, trees, people, consistent proportions) is the next step.
+
+## 5. Project drawings with the kit
+
+Agent: `wp-frontend-builder`, with the `architectural-drawing` skill (mistral-toolbox PR #33). It
+replaces the six hand-drawn project drawings with elevations built by the `arch.mjs` kit in metres,
+all at one scale, so a villa and a warehouse compare at their true size. This follows prompt 4,
+which showed that a drawing kit works but that the isometric kit's objects are at desk scale.
+
+```
+Load architectural-drawing. Replace the six project drawings in index.html with elevations drawn with arch.mjs: one generator per project in scripts/, all six at one shared scale and 480x300, using the page's ink and orange as the palette. Save them in images/ and reference them with <img> and alt text. Run each generator and check.mjs until they PASS, render PNGs, and list per project what you drew.
+```
+
+Why it is written this way:
+- **One generator per project** keeps each drawing reproducible: change the layout table and rerun.
+- **One shared scale** makes the set comparable. The kit reports the scale of each drawing.
+- **The page's palette** keeps the drawings in the site's ink-and-orange style.
+- **`<img>` with alt text** keeps `index.html` small and the drawings accessible.
+- **"Until they PASS"** makes the agent fix every error the kit and `check.mjs` report.
+
+## 6. Convert to WordPress
+
+Agent: `wp-frontend-builder`, with the `html-to-block-theme` skill. Run it once the design is
+final.
+
+```
+Load html-to-block-theme and convert index.html into a block theme with one pattern per section.
+```
