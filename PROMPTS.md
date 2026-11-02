@@ -19,7 +19,7 @@ vibe --agent <agent>
 | 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
 | 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
 | 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
-| 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | Not run yet | – |
+| 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | All three fixed, every check passes with no warnings | this commit |
 | 9 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
@@ -247,6 +247,16 @@ Why it is written this way:
 - **Exact caption wording:** a dakkapel is a dormer and the drawing shows a dakraam (skylight);
   the people stand on three levels. Giving the replacement text avoids another wrong guess.
 - **"Recompute the shared scale"**: a wider Maashaven drawing may set the scale for all six cards.
+
+Result: all seven generators and `check.mjs` `PASS` with no warnings.
+- **Hero:** the tree moved to x=18.8, clear of the cut wall; the kit's new warning is gone.
+- **Caption:** "oranje dakraam" and "op drie niveaus".
+- **Maashaven:** one 25 m block, eight bays on the upper floors. The shared scale stays 11.96
+  units/m, since De Bergweg's extent is still the widest. The other five card generators are
+  unchanged.
+- **Small leftovers:** the Maashaven ground-floor windows are two different widths left and right
+  of the door, and don't line up with the bays above. The agent also ran one shell loop
+  (`for n in …`), although the builder's instructions ask for one command per call.
 
 ## 9. Convert to WordPress
 

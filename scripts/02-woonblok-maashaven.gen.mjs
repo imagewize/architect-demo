@@ -1,6 +1,6 @@
-// 02 — Woonblok Maashaven, Kop van Zuid: closed block of 24 homes on the quay,
-// four storeys with a lower entrance wing, orange entrance, barge on the water.
-// The block (entrance wing included) is 25 m wide — a fact from the brief.
+// 02 — Woonblok Maashaven, Kop van Zuid: one closed block of 24 homes on the quay,
+// 25 m wide and four storeys high, orange entrance, barge on the water.
+// The block is 25 m wide — a fact from the brief.
 //   node scripts/02-woonblok-maashaven.gen.mjs images/02-woonblok-maashaven.svg
 import * as A from '/Users/jasperfrumau/code/mistral-toolbox/skills/architectural-drawing/scripts/arch.mjs';
 import { WIDTH, HEIGHT, DISPLAY_WIDTH, PALETTE, EXTENTS, SCALE } from './projects-shared.mjs';
@@ -19,24 +19,19 @@ d.ground(E.x0, 27);
 d.quay(27, 35.3, { level: -1.0, bottom: -1.8 });
 d.barge(27.8, 34.3, -1.0);
 
-// lower entrance wing and the four-storey block; wing 2..6 + block 6..27 = 25 m wide
-d.mass(2, 6, 3.2);
-d.flatRoof(2, 6, 3.2, { parapet: 0.4 });
-d.mass(6, 27, 12);
-d.flatRoof(6, 27, 12, { parapet: 0.6 });
+// one closed block 2..27 = 25 m wide, four storeys with a parapet
+d.mass(2, 27, 12);
+d.flatRoof(2, 27, 12, { parapet: 0.6 });
 
-// wing: two ground-floor windows
-d.windowRow(2.5, 5.5, 0.5, 2.6, 2);
-
-// block ground floor: window bays either side of the accent entrance
-d.windowRow(6.8, 13.8, 0.5, 2.6, 3);
+// ground floor: window bays either side of the accent entrance
+d.windowRow(2.8, 13.5, 0.5, 2.6, 4);
 d.door(16, 2.0, 2.7, { type: 'double', accent: true });
-d.windowRow(18.5, 26.3, 0.5, 2.6, 3);
+d.windowRow(18.5, 26.2, 0.5, 2.6, 4);
 
-// three upper floors, six bays each
-d.windowRow(6.8, 26.3, 3.5, 5.4, 6);
-d.windowRow(6.8, 26.3, 6.5, 8.4, 6);
-d.windowRow(6.8, 26.3, 9.5, 11.4, 6);
+// three upper floors, eight bays each
+d.windowRow(2.8, 26.2, 3.5, 5.4, 8);
+d.windowRow(2.8, 26.2, 6.5, 8.4, 8);
+d.windowRow(2.8, 26.2, 9.5, 11.4, 8);
 
 // three people in different poses, all on the ground in front of the block
 d.figure(0.6, { pose: 'walk' });
@@ -45,6 +40,6 @@ d.figure(26.4, { pose: 'walk-left' });
 
 A.write(out, d.svg({
   title: 'Woonblok Maashaven — voorgevel aan de kade',
-  desc: 'Gesloten woonblok van 25 meter breed met vier verdiepingen en een lagere entreugel, een raster van ramen per verdieping, oranje dubbele entree op de begane grond, kade met water en een afgemeerd binnenvaartschip.',
+  desc: 'Gesloten woonblok van 25 meter breed met vier verdiepingen, een raster van ramen per verdieping, oranje dubbele entree op de begane grond, kade met water en een afgemeerd binnenvaartschip.',
 }));
 A.printReport(d);

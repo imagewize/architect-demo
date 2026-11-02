@@ -25,8 +25,8 @@ const d = A.drawing({
   displayWidth: HERO_COLUMN, prefix: 'hero-', palette: PALETTE,
 });
 
-// a tree behind the warehouse, then the ground line with earth hatch
-d.tree(18.4, { h: 9, layer: 'back' });
+// a tree behind the warehouse, clear of the cut wall (crown starts beyond x=16)
+d.tree(18.8, { h: 8, layer: 'back' });
 d.ground(EXTENT.x0, EXTENT.x1);
 
 // the existing shell in section: solid cut gable walls and the cut roof with a skylight

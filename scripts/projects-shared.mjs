@@ -15,7 +15,7 @@ export const PALETTE = { ink: '#111111', paper: '#FFFFFF', tint: '#F7F7F8', mid:
 // Noordereiland block 25 m) and are never resized to fit the scale.
 export const EXTENTS = {
   villa:         { x0: -2.3,  x1: 28.2,  top: 9.7,  bottom: -1.6 },
-  maashaven:     { x0: -1.2,  x1: 35.3,  top: 14.2, bottom: -2.0 },
+  maashaven:     { x0: -0.8,  x1: 35.3,  top: 14.2, bottom: -2.0 },
   keilewerf:     { x0: -0.5,  x1: 35.8,  top: 15.5, bottom: -2.0 },
   hoeksteen:     { x0: -0.9,  x1: 35.8,  top: 15.7, bottom: -1.6 },
   noordereiland: { x0: -1.2,  x1: 35.3,  top: 10.7, bottom: -2.0 },
