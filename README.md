@@ -2,7 +2,7 @@
 
 A test run of the `wp-frontend-builder` Vibe agent from
 [mistral-toolbox](https://github.com/imagewize/mistral-toolbox). From a short brief, the agent
-built a homepage for an invented Rotterdam architecture firm, **Studio Veld Architecten**, as one
+built a homepage for an invented Rotterdam architecture firm, **Bureau Kadewerk**, as one
 self-contained HTML/CSS file. The aim is to test the loop: build from a brief, revise with change
 requests, then convert to a WordPress block theme.
 
@@ -54,4 +54,4 @@ The brief and every later prompt are in [`PROMPTS.md`](PROMPTS.md).
 
 - **Form:** posts via `mailto:`, which opens the visitor's mail app. In WordPress it becomes a form plugin or block.
 - **Firm and content:** the firm, projects, client quote and phone number are invented. The street names and districts are real.
-- **Email and phone:** placeholders, `studio@example.com` (a domain reserved for examples) and `+31 (0)10 000 00 00`. The firm's name has no domain of its own: `studioveld.nl` is registered to someone else, so the page does not link to it.
+- **Name, email and phone:** the firm was first called Studio Veld Architecten and was renamed to Bureau Kadewerk, because `studioveld.nl` is registered to someone else. The email and phone are placeholders: `studio@example.com` (a domain reserved for examples) and `+31 (0)10 000 00 00`.

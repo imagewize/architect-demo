@@ -31,7 +31,7 @@ Agent: `wp-frontend-builder`
 Build the homepage for a small architecture firm as one self-contained index.html with embedded CSS.
 
 Brief:
-- Firm: Studio Veld Architecten, Rotterdam. 12 people, founded 2009.
+- Firm: Bureau Kadewerk, Rotterdam (renamed from Studio Veld Architecten on Nov 2, 2026; the first runs used the old name). 12 people, founded 2009.
 - Work: residential (villas, housing blocks) and adaptive reuse (turning old warehouses and churches into homes and offices).
 - Audience: private clients and housing corporations who are choosing an architect.
 - Main action: "Plan a conversation" (a contact or intake request).
