@@ -287,34 +287,8 @@ section[id] { scroll-margin-top: 5.5rem; }
   letter-spacing: -0.02em;
 }
 
-/* Hero line drawing */
-.hero-fig { width: 100%; height: auto; color: var(--wp--preset--color--ink); }
-.hero-fig .ln { fill: none; stroke: currentColor; stroke-width: 1.5; }
-.hero-fig .dash { stroke-dasharray: 7 6; }
-.hero-fig .dim line { stroke: var(--wp--preset--color--muted); stroke-width: 1; }
-.hero-fig .hatch line { stroke: var(--wp--preset--color--muted); stroke-width: 1; }
-.hero-fig .acc { fill: none; stroke: var(--wp--preset--color--accent); stroke-width: 1.5; }
-.hero-fig .acc-fill { fill: var(--wp--preset--color--accent); }
-.hero-fig .fig path { fill: none; stroke: var(--wp--preset--color--accent); stroke-width: 2; stroke-linecap: round; }
-.hero-fig text {
-  font-family: var(--wp--preset--font-family--sans);
-  font-size: 13px;
-  fill: var(--wp--preset--color--muted);
-}
-
-.draw {
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  animation: draw 1s ease forwards;
-  animation-delay: var(--d, 0s);
-}
-.pop {
-  opacity: 0;
-  animation: fadein 0.5s ease forwards;
-  animation-delay: var(--d, 0s);
-}
-@keyframes draw { to { stroke-dashoffset: 0; } }
-@keyframes fadein { to { opacity: 1; } }
+/* Hero section drawing (images/hero-section.svg, generated with arch.mjs) */
+.hero-fig { width: 100%; height: auto; }
 
 /* ============================================================
    Section head pattern
@@ -374,15 +348,8 @@ section[id] { scroll-margin-top: 5.5rem; }
   padding: var(--wp--preset--spacing--20);
 }
 
-.drawing { width: 100%; height: auto; color: var(--wp--preset--color--ink); }
-.drawing :is(line, path, rect, circle, polyline) { fill: none; stroke: currentColor; stroke-width: 1.4; }
-.drawing .thin { stroke-width: 1; }
-.drawing .fill-acc { fill: var(--wp--preset--color--accent); stroke: none; }
-.drawing text {
-  font-family: var(--wp--preset--font-family--sans);
-  font-size: 13px;
-  fill: var(--wp--preset--color--muted);
-}
+/* Card image frame: exactly the drawings' 480x300 (16:10) ratio, so no white bands */
+.drawing { width: 100%; height: auto; aspect-ratio: 480 / 300; object-fit: cover; }
 
 .project-desc { max-width: 40ch; }
 
@@ -627,8 +594,6 @@ section[id] { scroll-margin-top: 5.5rem; }
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .draw { animation: none; stroke-dashoffset: 0; }
-  .pop { animation: none; opacity: 1; }
   .btn { transition: none; }
 }
 </style>
@@ -667,44 +632,8 @@ section[id] { scroll-margin-top: 5.5rem; }
         </div>
       </div>
       <figure class="hero-figure">
-        <svg class="hero-fig" viewBox="0 0 560 400" role="img" aria-label="Lijntekening van een doorsnede door een bestaand pakhuis: de bestaande shell met zadeldak en dakraam, twee ingevoegde woonvloeren in stippellijn en een oranje schaalfiguur.">
-          <g class="dim">
-            <line x1="80" y1="30" x2="480" y2="30"/>
-            <line x1="80" y1="24" x2="80" y2="36"/>
-            <line x1="480" y1="24" x2="480" y2="36"/>
-            <text x="280" y="20" text-anchor="middle">42,0 m</text>
-          </g>
-          <path class="ln draw" pathLength="1" d="M16 372 H544"/>
-          <g class="hatch">
-            <line x1="48" y1="372" x2="39" y2="382"/>
-            <line x1="98" y1="372" x2="89" y2="382"/>
-            <line x1="148" y1="372" x2="139" y2="382"/>
-            <line x1="198" y1="372" x2="189" y2="382"/>
-            <line x1="248" y1="372" x2="239" y2="382"/>
-            <line x1="298" y1="372" x2="289" y2="382"/>
-            <line x1="348" y1="372" x2="339" y2="382"/>
-            <line x1="398" y1="372" x2="389" y2="382"/>
-            <line x1="448" y1="372" x2="439" y2="382"/>
-            <line x1="498" y1="372" x2="489" y2="382"/>
-          </g>
-          <path class="ln draw" pathLength="1" style="--d:.15s" d="M80 372 L80 150 L280 64 L480 150 L480 372"/>
-          <path class="ln draw" pathLength="1" style="--d:.45s" d="M200 98 V372"/>
-          <path class="ln draw" pathLength="1" style="--d:.5s" d="M360 98 V372"/>
-          <line class="ln dash pop" style="--d:.7s" x1="80" y1="232" x2="480" y2="232"/>
-          <line class="ln dash pop" style="--d:.8s" x1="80" y1="302" x2="480" y2="302"/>
-          <path class="ln draw" pathLength="1" style="--d:.95s" d="M104 372 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 M216 302 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10"/>
-          <path class="ln draw" pathLength="1" style="--d:1.1s" d="M169.8 111.4 L210.2 94 L202.3 75.6 L161.9 93 Z"/>
-          <line class="acc pop" style="--d:1.25s" x1="165.8" y1="102.2" x2="206.3" y2="84.8"/>
-          <path class="ln draw" pathLength="1" style="--d:1.15s" d="M96 308 h46 v64 h-46 z"/>
-          <path class="ln pop" style="--d:1.2s" d="M96 308 L142 372"/>
-          <path class="ln draw" pathLength="1" style="--d:1.25s" d="M404 240 h34 v44 h-34 z"/>
-          <line class="ln" x1="421" y1="240" x2="421" y2="284"/>
-          <g class="fig pop" style="--d:1.4s">
-            <circle class="acc-fill" cx="330" cy="338" r="7"/>
-            <path d="M330 345 L330 362 M330 362 L321 372 M330 362 L339 372 M330 350 L321 357 M330 350 L339 357"/>
-          </g>
-        </svg>
-        <figcaption>Fig. 01 — Doorsnede bestaand pakhuis met dakraam, ingevoegde woonvloeren (stippel) en schaalfiguur</figcaption>
+        <img class="hero-fig" src="images/hero-section.svg" alt="Doorsnede door een bestaand pakhuis: zadeldakprofiel, twee gesneden kopwanden en twee ingevoegde vloerplaten in zwart poche, een trap, een maatvoering van 16,0 m en twee schaalfiguren waarvan één oranje." width="560" height="400">
+        <figcaption>Fig. 01 — Doorsnede bestaand pakhuis: zadeldak, gesneden wanden en ingevoegde vloerplaten, trap, maatvoering 16,0 m en twee schaalfiguren</figcaption>
       </figure>
     </div>
     <div class="container">

@@ -17,7 +17,7 @@ vibe --agent <agent>
 | 3 | Review the built page | `ux-designer` | Not run yet | – |
 | 4 | Isometric drawing test | `wp-frontend-builder` | Clean isometric solids, but objects at the wrong scale; see notes under 4 | `7c06572` (branch `test/isometric`) |
 | 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
-| 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | Not run yet | – |
+| 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
 | 7 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
@@ -166,6 +166,25 @@ Why it is written this way:
 - **Frames at 16:10:** the image fills its frame instead of floating in white.
 - **The hero as a section:** the section parts (cut walls, slabs, stair) are what the kit adds over
   hand drawing, and the hero is the most visible drawing on the page.
+
+Result: seven generators and drawings, one shared scale of 12.1 units/m for the cards
+(`scripts/projects-shared.mjs`), every generator and `check.mjs` `PASS` with no warnings. Card
+frames are 16:10 and the drawings fill them. The hero is `images/hero-section.svg`, a section with
+cut walls, two floor slabs, a stair and two people.
+- **Better:** people readable at card size, no white bands, trees clear of corners, a real
+  chimney, varied poses, and a hero that matches the cards.
+- **Buildings resized to fit the scale:** De Bergweg 30 → 20 m, the church nave 20 → 18 m, the
+  Maashaven block 25 → 22 m, the Noordereiland block 25 → 24 m. The widest drawing sets the shared
+  scale, so the agent shrank buildings to make every card bigger. Building sizes are project facts
+  and must not change.
+- **People placed in the water** three times; the agent found and moved them itself. The kit
+  should catch this.
+- **The villa card looks empty:** at one true scale the villa is honestly small. The drawings are
+  wide and low, so a 2:1 frame fits them better than 16:10.
+- **The hero is bare** compared with the hand-drawn one: the kit cannot yet draw a window or door
+  in a cut wall, or a skylight.
+
+These led to kit 1.2 in mistral-toolbox PR #33 and to prompt 7.
 
 ## 7. Convert to WordPress
 

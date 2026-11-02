@@ -2,21 +2,20 @@
 // cantilevered roof plate and a set-back upper volume.
 //   node scripts/01-villa-veldzicht.gen.mjs images/01-villa-veldzicht.svg
 import * as A from '/Users/jasperfrumau/code/mistral-toolbox/skills/architectural-drawing/scripts/arch.mjs';
+import { WIDTH, HEIGHT, DISPLAY_WIDTH, PALETTE, EXTENTS, SCALE } from './projects-shared.mjs';
 
 const out = process.argv[2] || 'images/01-villa-veldzicht.svg';
+const E = EXTENTS.villa;
 
-// One shared scale and the page's palette for all six project drawings.
-const SCALE = 11; // SVG units per metre, shared by every drawing in images/
-const PALETTE = { ink: '#111111', paper: '#FFFFFF', tint: '#F7F7F8', mid: '#595959', accent: '#FF4F00' };
-
+// Shared scale for all six cards, shown at card size with labels off.
 const d = A.drawing({
-  width: 480, height: 300, scale: SCALE, prefix: 'v1-', palette: PALETTE,
-  extent: { x0: -1.5, x1: 29, top: 9.6, bottom: -1.8 },
+  width: WIDTH, height: HEIGHT, extent: E, scale: SCALE,
+  displayWidth: DISPLAY_WIDTH, labels: false, prefix: 'v1-', palette: PALETTE,
 });
 
 // ground and a tree behind the villa
-d.ground(-1.5, 29);
-d.tree(1.2, { h: 8.5, layer: 'back' });
+d.ground(E.x0, E.x1);
+d.tree(0.5, { h: 8.5, layer: 'back' });
 
 // glazed ground-floor pavilion, set-back upper volume, cantilevered roof plate + parapet
 d.mass(5, 23, 3.4);
@@ -31,12 +30,10 @@ d.door(20.6, 1.0, 2.4, { accent: true });
 // upper floor: three windows in the set-back volume
 d.windowRow(8.7, 19.3, 4.2, 6.0, 3);
 
-// context in front: one tree, two people for scale
-d.tree(26.3, { h: 7 });
-d.figure(22.8);
-d.figure(3.8);
-
-d.dimension(5, 23, 8.9, '18,0 m');
+// context in front: one tree clear of the corners, two people in different poses
+d.tree(25.5, { h: 7 });
+d.figure(22.8, { pose: 'walk' });
+d.figure(4.5, { pose: 'stand-left' });
 
 A.write(out, d.svg({
   title: 'Villa Veldzicht — voorgevel',
