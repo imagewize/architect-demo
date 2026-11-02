@@ -1,0 +1,11 @@
+# Project settings for Mistral Vibe in architect-demo. Merged over
+# ~/.vibe/config.toml, so only settings that differ for this project belong here.
+#
+# Wires in the mistral-toolbox skills and agent profiles so that
+#   vibe --agent wp-frontend-builder
+# works from this folder.
+#
+# No [tools.bash] allowlist here on purpose: a project allowlist replaces the
+# user-level one in ~/.vibe/config.toml instead of extending it.
+
+skill_paths = ["~/code/mistral-toolbox/skills"]
