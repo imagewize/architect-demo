@@ -129,7 +129,7 @@ layers.marker += `<circle class="k2-fade" style="animation-delay:${step(1.05)}s"
 layers.marker += `<circle class="k2-draw" pathLength="1" style="animation-delay:${step(1.12)}s" cx="${mx}" cy="${my.toFixed(1)}" r="9.5" fill="none" stroke="${PALETTE.accent}" stroke-width="0.9"/>`;
 
 // 7. labels
-layers.labels += T(16, 40, 'Studio Veld — Keilestraat 9F, M4H', 1.15, { size: 13, fill: PALETTE.ink, weight: 600 });
+layers.labels += T(16, 40, 'Bureau Kadewerk — Keilestraat 9F, M4H', 1.15, { size: 13, fill: PALETTE.ink, weight: 600 });
 layers.labels += T(126, streetY(126) - 5, 'Keilestraat', 1.20, { size: 8.5, ls: 0.06 });
 layers.labels += T(236, 64, 'MERWE-VIERHAVENS', 1.25, { size: 10, ls: 0.14 });
 layers.labels += T(16, 92, 'Delfshaven', 1.30, { size: 10 });
