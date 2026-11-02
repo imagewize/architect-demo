@@ -20,7 +20,8 @@ vibe --agent <agent>
 | 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
 | 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
 | 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | All three fixed, every check passes with no warnings | this commit |
-| 9 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
+| 9 | Draw-on animation for all seven drawings | `wp-frontend-builder` | Not run yet | – |
+| 10 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
 
@@ -258,7 +259,29 @@ Result: all seven generators and `check.mjs` `PASS` with no warnings.
   of the door, and don't line up with the bays above. The agent also ran one shell loop
   (`for n in …`), although the builder's instructions ask for one command per call.
 
-## 9. Convert to WordPress
+## 9. Draw-on animation for all seven drawings
+
+Agent: `wp-frontend-builder`, with `architectural-drawing` 1.3.0 (mistral-toolbox PR #36). The first
+build's hand-drawn SVGs were drawn on screen by page CSS. That stopped when the drawings moved to
+`<img>` files in prompt 6, because page CSS cannot reach inside an image. Version 1.3.0 puts the
+animation inside the SVG file itself.
+
+```
+Load architectural-drawing. Turn on the draw-on animation for all seven drawings: pass animate: true to d.svg() in every generator in scripts/ (the six cards and hero-section). Keep the drawings as <img> files. Remove any leftover page CSS for the old inline-SVG animation if it is still in index.html. Run each generator and check.mjs until they PASS without warnings, render the PNGs with the skill's render command, and list what changed.
+```
+
+Why it is written this way:
+- **One option per generator:** the kit does the work (draw order, fades, reduced motion), so the
+  change is small and the same in all seven files.
+- **Keep `<img>`:** it keeps `index.html` small and is what the WordPress conversion needs. The
+  cards start drawing when they load, shortly before they scroll into view.
+- **The skill's render command:** it waits for the animation to finish, so the PNG previews show
+  the complete drawing.
+
+To see the animation, open `index.html` in a real browser. Headless screenshots freeze animated
+images at the first frame unless they use `--force-prefers-reduced-motion`.
+
+## 10. Convert to WordPress
 
 Agent: `wp-frontend-builder`, with the `html-to-block-theme` skill. Run it once the design is
 final.
