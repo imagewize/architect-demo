@@ -19,7 +19,8 @@ vibe --agent <agent>
 | 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
 | 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
 | 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
-| 8 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
+| 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | Not run yet | – |
+| 9 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
 
@@ -226,7 +227,28 @@ one shared scale of 11.96 units/m, and the frames are 2:1.
   stand on three levels.
 - **Hero tree:** the tree behind the building crosses the right-hand wall.
 
-## 8. Convert to WordPress
+## 8. Hero tree, caption wording, one Maashaven block
+
+Agent: `wp-frontend-builder`, with `architectural-drawing` 1.2.1 (mistral-toolbox PR #33, commit
+`b2c449d`). A small change request for the three points left after prompt 7. Version 1.2.1 warns
+when a tree crosses a cut wall in a section, so the hero generator now reports the tree itself.
+
+```
+Read index.html. Fix three things:
+1. Rerun scripts/hero-section.gen.mjs and fix its warning: move the tree clear of the cut wall.
+2. In the Fig. 01 caption, replace "oranje dakkapel" with "oranje dakraam" and "op twee verdiepingen" with "op drie niveaus".
+3. Draw Woonblok Maashaven as one 25 m block without the entrance wing, and recompute the shared scale.
+Run the generators and check.mjs until they PASS without warnings, and list what changed.
+```
+
+Why it is written this way:
+- **A numbered list** lets the agent report per point, and keeps the run small and easy to check.
+- **The kit's own warning** names the hero problem, so the prompt only has to say "fix its warning".
+- **Exact caption wording:** a dakkapel is a dormer and the drawing shows a dakraam (skylight);
+  the people stand on three levels. Giving the replacement text avoids another wrong guess.
+- **"Recompute the shared scale"**: a wider Maashaven drawing may set the scale for all six cards.
+
+## 9. Convert to WordPress
 
 Agent: `wp-frontend-builder`, with the `html-to-block-theme` skill. Run it once the design is
 final.
