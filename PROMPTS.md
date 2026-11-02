@@ -18,7 +18,8 @@ vibe --agent <agent>
 | 4 | Isometric drawing test | `wp-frontend-builder` | Clean isometric solids, but objects at the wrong scale; see notes under 4 | `7c06572` (branch `test/isometric`) |
 | 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
 | 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
-| 7 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
+| 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | Not run yet | – |
+| 8 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
 
@@ -186,7 +187,31 @@ cut walls, two floor slabs, a stair and two people.
 
 These led to kit 1.2 in mistral-toolbox PR #33 and to prompt 7.
 
-## 7. Convert to WordPress
+## 7. True sizes, 2:1 cards and a richer hero section
+
+Agent: `wp-frontend-builder`, with `architectural-drawing` 1.2.0 (mistral-toolbox PR #33, commit
+`e5cf281`). It restores the building sizes that prompt 6 shrank, switches the cards to a 2:1
+drawing so the wide, low elevations fill them, and gives the hero section the openings and
+skylight the kit can now draw.
+
+```
+Load architectural-drawing. Update the drawings with arch.mjs:
+- Restore the true building sizes: De Bergweg 30 m wide, the De Hoeksteen nave 20 m, the Woonblok Maashaven block 25 m, the Kadeblok Noordereiland block 25 m. Building sizes are facts from the brief; never change them to fit the scale.
+- Redraw the six project drawings at 480x240 (2:1). Trim the surroundings so each extent stays tight, then recompute one scale for all six with A.sharedScale. Keep displayWidth: 330 and labels: false, and fix every warning.
+- Change the card image frames in index.html to aspect-ratio: 480 / 240.
+- Redraw the hero section using examples/pakhuis-section.gen.mjs in the skill as the reference: a cut roof with a skylight, windows in the cut walls on every floor, a door, the two inserted floors, the stair, and people on more than one floor. Keep it at 560x400 with displayWidth: 533 and labels on, and update the Fig. 01 caption to match the drawing.
+Run each generator and check.mjs until they PASS without warnings, render PNGs, and list per drawing what changed.
+```
+
+Why it is written this way:
+- **True sizes stated in the prompt:** the kit cannot know a building's real size, so the prompt
+  names the four that prompt 6 changed, and repeats the rule that sizes are facts.
+- **2:1 at one scale:** wide, low elevations fill a 2:1 card, so every building gets bigger
+  without breaking the true relative sizes.
+- **The section example as reference:** it shows the new section parts in use, so the agent
+  copies a working pattern instead of guessing the API.
+
+## 8. Convert to WordPress
 
 Agent: `wp-frontend-builder`, with the `html-to-block-theme` skill. Run it once the design is
 final.
