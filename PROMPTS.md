@@ -18,7 +18,7 @@ vibe --agent <agent>
 | 4 | Isometric drawing test | `wp-frontend-builder` | Clean isometric solids, but objects at the wrong scale; see notes under 4 | `7c06572` (branch `test/isometric`) |
 | 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
 | 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | All checks pass, frames fit, hero is a section; but buildings were resized to fit the scale, see notes under 6 | this commit |
-| 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | Not run yet | – |
+| 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
 | 8 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
@@ -210,6 +210,21 @@ Why it is written this way:
   without breaking the true relative sizes.
 - **The section example as reference:** it shows the new section parts in use, so the agent
   copies a working pattern instead of guessing the API.
+
+Result: all seven generators and `check.mjs` `PASS` with no warnings. The six cards are 480x240 at
+one shared scale of 11.96 units/m, and the frames are 2:1.
+- **True sizes restored:** De Bergweg 30 m, the De Hoeksteen nave 20 m, the Kadeblok
+  Noordereiland block 25 m. Woonblok Maashaven is 25 m overall, but as a 21 m block with a 4 m
+  entrance wing, not one 25 m block.
+- **Cards:** the 2:1 drawings fill their frames better. Every building is larger than in run 6
+  while keeping its true relative size, and nobody stands in the water.
+- **Hero:** a section with a cut roof and skylight, windows in the cut walls on every floor, a
+  door, two inserted floors, a stair and people on three levels. It follows the skill's section
+  example closely.
+- **Caption wording:** Fig. 01 calls the skylight an "oranje dakkapel"; a dakkapel is a dormer,
+  and the drawing shows a dakraam. It also says the people stand "op twee verdiepingen", but they
+  stand on three levels.
+- **Hero tree:** the tree behind the building crosses the right-hand wall.
 
 ## 8. Convert to WordPress
 

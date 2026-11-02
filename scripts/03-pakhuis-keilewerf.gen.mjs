@@ -15,25 +15,25 @@ const d = A.drawing({
 
 // ground, quay with water, a poplar behind the shed and a moored barge
 d.ground(E.x0, 29);
-d.quay(29, 37.2, { level: -1.2 });
-d.tree(27.2, { h: 12, type: 'poplar', layer: 'back' });
-d.barge(30.2, 35.2, -1.2);
+d.quay(29, 35.8, { level: -1.0, bottom: -1.8 });
+d.tree(27.2, { h: 10, type: 'poplar', layer: 'back' });
+d.barge(29.8, 34.8, -1.0);
 
 // the warehouse: brick block with a stepped gable
-d.mass(4, 20, 11);
-d.stepGable(4, 20, 11, 15.5, { steps: 4 });
-d.coursing(4, 20, 0, 11);
+d.mass(4, 20, 10.5);
+d.stepGable(4, 20, 10.5, 14.0, { steps: 4 });
+d.coursing(4, 20, 0, 10.5);
 
 // two rows of small loft windows
-d.windowRow(4.7, 19.3, 8.7, 10.5, 5);
-d.windowRow(4.7, 19.3, 5.6, 7.4, 5);
+d.windowRow(4.7, 19.3, 7.9, 9.7, 5);
+d.windowRow(4.7, 19.3, 4.9, 6.7, 5);
 
 // ground floor: shopfront windows and the accent loading door with hoist beam
 d.window(7, 0.6, 2.4, 2.9, { transom: true });
 d.window(17, 0.6, 2.4, 2.9, { transom: true });
 d.door(12, 3.0, 3.4, { type: 'loading', accent: true });
-d.hoist(12, 4.2);
-d.window(12, 12.0, 1.2, 1.4); // attic window in the gable
+d.hoist(12, 4.3);
+d.window(12, 11.5, 1.2, 1.4); // attic window in the gable
 
 // former shed beside it, now studios with tall glazing
 d.mass(20, 26, 6, { fill: 'tint' });

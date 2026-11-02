@@ -1,6 +1,7 @@
-// Hero — section through the existing warehouse (the studio's own pakhuis in M4H):
-// gable profile, cut gable walls and inserted floor slabs, a stair, two people and
-// one dimension line, drawn with the kit in metres.
+// Hero — section through the existing warehouse (the studio's own pakhuis in M4H),
+// following examples/pakhuis-section.gen.mjs in the architectural-drawing skill:
+// a cut roof with an orange skylight, windows in the cut walls on every floor, a door,
+// the two inserted floor slabs, a stair, and people on more than one floor.
 //   node scripts/hero-section.gen.mjs images/hero-section.svg
 import * as A from '/Users/jasperfrumau/code/mistral-toolbox/skills/architectural-drawing/scripts/arch.mjs';
 
@@ -14,38 +15,49 @@ const PALETTE = { ink: '#111111', paper: '#FFFFFF', tint: '#F7F7F8', mid: '#5959
 const HERO_COLUMN = 533;
 
 // Existing warehouse shell: 16 m wide, 9 m to the eaves, ridge at 13 m.
-const WAREHOUSE = { x0: 0, x1: 16, eave: 9, ridge: 13 };
+const WAREHOUSE = { x0: 0, x1: 16, wall: 0.6, eave: 9, ridge: 13, roof: 0.35 };
 const FLOORS = [3.2, 6.4]; // two inserted residential floors
+const EXTENT = { x0: -2.5, x1: 20.5, top: 15.6, bottom: -1.6 };
 
 const d = A.drawing({
   width: 560, height: 400,
-  extent: { x0: -2, x1: 18, top: 16.4, bottom: -2 },
+  extent: EXTENT,
   displayWidth: HERO_COLUMN, prefix: 'hero-', palette: PALETTE,
 });
 
-// ground line with earth hatch
-d.ground(-2, 18);
+// a tree behind the warehouse, then the ground line with earth hatch
+d.tree(18.4, { h: 9, layer: 'back' });
+d.ground(EXTENT.x0, EXTENT.x1);
 
-// the existing shell in section: solid cut gable walls and the gable roof profile
-d.cut(WAREHOUSE.x0, 0, WAREHOUSE.x0 + 0.6, WAREHOUSE.eave);
-d.cut(WAREHOUSE.x1 - 0.6, 0, WAREHOUSE.x1, WAREHOUSE.eave);
-d.gableRoof(WAREHOUSE.x0, WAREHOUSE.x1, WAREHOUSE.eave, WAREHOUSE.ridge, { overhang: 0 });
+// the existing shell in section: solid cut gable walls and the cut roof with a skylight
+d.cut(WAREHOUSE.x0, 0, WAREHOUSE.x0 + WAREHOUSE.wall, WAREHOUSE.eave);
+d.cut(WAREHOUSE.x1 - WAREHOUSE.wall, 0, WAREHOUSE.x1, WAREHOUSE.eave);
+const roof = d.gableRoof(WAREHOUSE.x0, WAREHOUSE.x1, WAREHOUSE.eave, WAREHOUSE.ridge, { cut: WAREHOUSE.roof, overhang: 0.3 });
+d.roofWindow(roof, { side: 'left', at: 0.5, len: 1.8, accent: true });
 
 // two inserted floor slabs, cut solid between the walls
-for (const lv of FLOORS) d.slab(WAREHOUSE.x0 + 0.6, WAREHOUSE.x1 - 0.6, lv, { t: 0.35 });
+for (const lv of FLOORS) d.slab(WAREHOUSE.x0 + WAREHOUSE.wall, WAREHOUSE.x1 - WAREHOUSE.wall, lv, { t: 0.3 });
+
+// openings in the cut walls, after the cuts: a window on every floor, a door on the right
+for (const lv of [0, ...FLOORS]) {
+  d.cutOpening(WAREHOUSE.x0, WAREHOUSE.x0 + WAREHOUSE.wall, lv + 0.9, lv + 2.5);
+  if (lv > 0) d.cutOpening(WAREHOUSE.x1 - WAREHOUSE.wall, WAREHOUSE.x1, lv + 0.9, lv + 2.5);
+}
+d.cutOpening(WAREHOUSE.x1 - WAREHOUSE.wall, WAREHOUSE.x1, 0, 2.4, { glass: false });
 
 // the stair from the ground floor up to the first inserted floor
-d.stair(2.0, 0, 6.4, FLOORS[0]);
+d.stair(2.2, 0, 6.6, FLOORS[0]);
 
-// two people for scale, one of them the accent figure
-d.figure(8.5, { pose: 'stand' });
-d.figure(12.5, { pose: 'walk-left', accent: true });
+// people on more than one floor
+d.figure(9.5);
+d.figure(12.4, { base: FLOORS[0], pose: 'walk-left' });
+d.figure(4.8, { base: FLOORS[1] });
 
 // one dimension line across the warehouse, extension lines down to the ridge
 d.dimension(WAREHOUSE.x0, WAREHOUSE.x1, 14.8, '16,0 m', { from: WAREHOUSE.ridge });
 
 A.write(out, d.svg({
   title: 'Doorsnede bestaand pakhuis',
-  desc: 'Doorsnede door een bestaand pakhuis van 16 bij 13 meter: zadeldakprofiel, twee gesneden kopwanden in zwart poche, twee ingevoegde vloerplaten, een trap van de begane grond naar de eerste verdieping, een maatvoering van 16,0 m en twee schaalfiguren waarvan één oranje.',
+  desc: 'Doorsnede door een bestaand pakhuis van 16 bij 13 meter: zadeldak in zwart poche met oranje dakkapel, gesneden kopwanden met een raam op elke verdieping en een deur, twee ingevoegde vloerplaten, een trap van de begane grond naar de eerste verdieping, een maatvoering van 16,0 m en drie schaalfiguren op twee verdiepingen.',
 }));
 A.printReport(d);
