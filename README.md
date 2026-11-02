@@ -27,24 +27,9 @@ open index.html
 
 To check phone layouts, use the browser's device toolbar at about 390px wide.
 
-## Brief (run 1)
+## Run 1
 
-```
-Build the homepage for a small architecture firm as one self-contained index.html with embedded CSS.
-
-Brief:
-- Firm: Studio Veld Architecten, Rotterdam. 12 people, founded 2009.
-- Work: residential (villas, housing blocks) and adaptive reuse (turning old warehouses and churches into homes and offices).
-- Audience: private clients and housing corporations who are choosing an architect.
-- Main action: "Plan a conversation" (a contact or intake request).
-- Tone: calm, precise, confident. Editorial, not salesy.
-
-This is a homepage, not a landing page. Sections: header with nav, hero, selected projects (6), approach / how we work (4 steps), about the studio, a short quote from a client, contact block, footer.
-
-Minimal questions: state your assumptions at the top of your reply, then build.
-
-Design: load frontend-design and pick one aesthetic anchor that suits architecture (restrained, lots of whitespace, strong typography, a grid you can feel). Lock the tokens as --wp--preset--* custom properties. No stock-photo look: use inline SVG line drawings or CSS compositions for the project visuals so the file needs no images. Mobile-first, accessible, real Dutch place names and project copy. Run the no-ai-design-slop gate before you hand off.
-```
+The brief and every later prompt are in [`PROMPTS.md`](PROMPTS.md).
 
 **What the agent did:**
 - loaded `frontend-design`, `no-ai-design-slop` and `frontend-ui-engineering`, and skipped `landing-page`
@@ -58,28 +43,10 @@ Design: load frontend-design and pick one aesthetic anchor that suits architectu
 3. There is empty space under the facts table in "Over het bureau", and the right half of the quote section is empty.
 4. The sticky header is 122px tall on phones. Make it non-sticky on small screens, or fold the nav into a toggle.
 
-## Change requests
+## Change requests and conversion
 
-Start each run by pointing the agent at the existing file, keep each run to two or three changes,
-and commit after every run you keep:
-
-```
-Read index.html. Change: …
-```
-
-```bash
-git diff                                  # compare with the last version
-git commit -am "design: <what changed>"   # keep this run
-git restore index.html                    # throw this run away
-```
-
-## Convert to WordPress
-
-When the design is final:
-
-```
-Load html-to-block-theme and convert index.html into a block theme with one pattern per section.
-```
+[`PROMPTS.md`](PROMPTS.md) has the prompts to apply review notes, to review the page with
+`html-page-review`, and to convert the page to a block theme. Commit after every run you keep.
 
 ## Stand-ins, not finished
 
