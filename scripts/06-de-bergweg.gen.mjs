@@ -15,21 +15,25 @@ const d = A.drawing({
 });
 
 d.ground(E.x0, E.x1);
+d.groundShadow(4, 34, { depth: 1.0 });
 // a front tree beside the school, clear of the building corner, and one behind it
-d.tree(2.0, { h: 7 });
-d.tree(35.0, { h: 7.5, layer: 'back' });
+d.tree(2.0, { h: 7, shade: true, shadow: true });
+d.tree(35.0, { h: 7.5, layer: 'back', shadow: true });
 
 // school block 4..34 = 30 m wide, sawtooth roof of five teeth, chimney on a tooth peak
 d.mass(4, 34, 6.5);
 d.sawtoothRoof(4, 34, 6.5, 2.0, 5);
-d.chimney(28, 8.5, { w: 0.7, h: 1.6 });
+d.chimney(28, 8.5, { w: 0.7, h: 1.6, pot: true });
+d.plinth(4, 34, { h: 0.5 });
+d.downpipe(4.15, 6.5);
+d.downpipe(33.85, 6.5);
 
 // long window strip across the facade, left of the entrance
-d.windowRow(4.7, 22.6, 1.0, 4.7, 7, { transom: true });
+d.windowRow(4.7, 22.6, 1.0, 4.7, 7, { glass: true, bars: [2, 2], reveal: 0.07, drip: true });
 
 // accent entrance and a short window strip right of it
-d.door(25, 1.9, 2.6, { type: 'double', accent: true });
-d.windowRow(27.6, 33.3, 1.0, 4.7, 3, { transom: true });
+d.door(25, 1.9, 2.6, { type: 'double', accent: true, frame: true, handle: true });
+d.windowRow(27.6, 33.3, 1.0, 4.7, 3, { glass: true, bars: [2, 2], reveal: 0.07, drip: true });
 
 // two people in different poses
 d.figure(6.8, { pose: 'walk' });

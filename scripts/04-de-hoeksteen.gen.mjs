@@ -15,24 +15,28 @@ const d = A.drawing({
 });
 
 d.ground(E.x0, E.x1);
+d.groundShadow(5, 30, { depth: 1.0 });
 // trees beside the church, clear of the nave and tower corners
-d.tree(1.5, { h: 7 });
-d.tree(32.0, { h: 6.5 });
+d.tree(1.5, { h: 7, shade: true, shadow: true });
+d.tree(32.0, { h: 6.5, shade: true, shadow: true });
 
 // nave 5..25 = 20 m wide with gable roof, tower with spire (seen end-on)
 d.mass(5, 25, 7.5);
 d.gableRoof(5, 25, 7.5, 11.2);
 d.mass(25, 30, 11);
 d.gableRoof(25, 30, 11, 14.2);
+d.plinth(5, 30, { h: 0.7, out: 0.1 });
+d.downpipe(5.15, 7.5);
+d.downpipe(29.85, 11);
 
 // three tall nave windows and the accent entrance portal
-d.window(8, 0.8, 1.4, 4.6, { transom: true });
-d.window(15, 0.8, 1.4, 4.6, { transom: true });
-d.window(22, 0.8, 1.4, 4.6, { transom: true });
-d.door(11, 1.6, 2.6, { type: 'double', accent: true });
+d.window(8, 0.8, 1.4, 4.6, { glass: true, bars: [1, 3], reveal: 0.08, drip: true });
+d.window(15, 0.8, 1.4, 4.6, { glass: true, bars: [1, 3], reveal: 0.08, drip: true });
+d.window(22, 0.8, 1.4, 4.6, { glass: true, bars: [1, 3], reveal: 0.08, drip: true });
+d.door(11, 1.6, 2.6, { type: 'double', accent: true, frame: true, handle: true });
 
 // lancet window in the tower
-d.window(27.5, 8.4, 1.2, 2.2);
+d.window(27.5, 8.4, 1.2, 2.2, { glass: true, bars: [1, 2], reveal: 0.07 });
 
 // two people in different poses
 d.figure(12.8, { pose: 'walk' });
