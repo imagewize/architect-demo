@@ -17,7 +17,8 @@ vibe --agent <agent>
 | 3 | Review the built page | `ux-designer` | Not run yet | – |
 | 4 | Isometric drawing test | `wp-frontend-builder` | Clean isometric solids, but objects at the wrong scale; see notes under 4 | `7c06572` (branch `test/isometric`) |
 | 5 | Project drawings with the kit | `wp-frontend-builder` | Six kit elevations at one scale, all checks pass; too small in the cards, see notes under 5 | this commit |
-| 6 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
+| 6 | Redraw with shared scale, card options and a hero section | `wp-frontend-builder` | Not run yet | – |
+| 7 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
 
@@ -140,7 +141,33 @@ page palette. Every generator and `check.mjs` print `PASS`.
 
 These led to kit fixes in mistral-toolbox PR #33 and to prompt 6.
 
-## 6. Convert to WordPress
+## 6. Redraw with shared scale, card options and a hero section
+
+Agent: `wp-frontend-builder`, with `architectural-drawing` 1.1.0 (mistral-toolbox PR #33, commit
+`aa81883`). It fixes what prompt 5 showed: drawings too small in the cards, unreadable labels, white
+bands in the frames, trees over corners and a floating chimney. It also redraws the hero, which is
+still the hand-drawn section from the first build.
+
+```
+Load architectural-drawing. Redraw the six project drawings and the hero drawing with arch.mjs:
+- Tighten each project's extent to 1–3 m of context beyond the outermost tree or boat, then compute one scale for all six with A.sharedScale and pass it to every project drawing.
+- The cards show the drawings at about 330 px wide: pass displayWidth: 330 and labels: false to the six project drawings, and fix every warning about people or labels being too small.
+- Keep trees clear of building corners, use chimney() for De Bergweg's chimney, and vary the people's poses.
+- Make the card image frames in index.html match the drawings' 480x300 (16:10) aspect ratio, so no white bands appear.
+- Redraw the hero figure as a section through the existing warehouse with the kit: the gable profile, cut walls and floor slabs (cut, slab), the stair, two people and one dimension line. Size it for the hero column and set displayWidth to the column width. Save it as images/hero-section.svg and keep the Fig. 01 caption in line with what the drawing shows.
+Run each generator and check.mjs until they PASS without warnings, render PNGs, and list per drawing what changed.
+```
+
+Why it is written this way:
+- **`sharedScale` after tightening the extents:** the largest building sets the scale, so tighter
+  extents make every drawing bigger in its card while the buildings keep their true relative size.
+- **`displayWidth` and `labels: false`:** the kit then warns about anything too small at card
+  size, so the agent finds the problem itself instead of passing every check.
+- **Frames at 16:10:** the image fills its frame instead of floating in white.
+- **The hero as a section:** the section parts (cut walls, slabs, stair) are what the kit adds over
+  hand drawing, and the hero is the most visible drawing on the page.
+
+## 7. Convert to WordPress
 
 Agent: `wp-frontend-builder`, with the `html-to-block-theme` skill. Run it once the design is
 final.
