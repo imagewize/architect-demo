@@ -6,7 +6,7 @@ built a homepage for an invented Rotterdam architecture firm, **Studio Veld Arch
 self-contained HTML/CSS file. The aim is to test the loop: build from a brief, revise with change
 requests, then convert to a WordPress block theme.
 
-![The homepage loading: the hero section drawing draws itself, then the six project cards draw in as the page scrolls to them](images/demo.gif)
+![The homepage loading: the hero section drawing draws itself, the six project cards draw in as the page scrolls to them, then the Fig. 02 studio map draws in further down](images/demo.gif)
 
 - **Agent:** `wp-frontend-builder` (Mistral Vibe, Mistral Large 4)
 - **Toolbox version:** `main` at `8240385` (v1.6.1 plus unreleased fixes #28–#30)
