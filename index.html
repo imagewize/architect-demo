@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Studio Veld Architecten is een architectenbureau in Rotterdam. Wij ontwerpen villa's en woonblokken en transformeren pakhuizen, kerken en scholen tot woningen en werkplekken.">
+<meta name="theme-color" content="#FFFFFF">
+<title>Studio Veld Architecten — Wonen en hergebruik in Rotterdam</title>
+<style>
+/* ============================================================
+   Studio Veld Architecten — design tokens (theme.json presets)
+   ============================================================ */
+:root {
+  --wp--preset--font-family--sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+
+  --wp--preset--color--paper: #FFFFFF;
+  --wp--preset--color--ink: #111111;
+  --wp--preset--color--accent: #FF4F00;
+  --wp--preset--color--muted: #595959;
+  --wp--preset--color--line: #E3E3E3;
+  --wp--preset--color--mist: #F7F7F8;
+
+  --wp--preset--spacing--10: 0.5rem;
+  --wp--preset--spacing--20: 1rem;
+  --wp--preset--spacing--30: 1.5rem;
+  --wp--preset--spacing--40: 2.5rem;
+  --wp--preset--spacing--50: 4rem;
+  --wp--preset--spacing--60: 6rem;
+  --wp--preset--spacing--70: 8rem;
+
+  --wp--preset--font-size--small: 0.8125rem;
+  --wp--preset--font-size--medium: 1rem;
+  --wp--preset--font-size--large: 1.1875rem;
+  --wp--preset--font-size--x-large: clamp(1.375rem, 2.5vw, 1.75rem);
+  --wp--preset--font-size--xx-large: clamp(2rem, 4.5vw, 3.25rem);
+  --wp--preset--font-size--display: clamp(2.625rem, 7.2vw, 5.75rem);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--wp--preset--font-family--sans);
+  font-size: var(--wp--preset--font-size--medium);
+  line-height: 1.6;
+  color: var(--wp--preset--color--ink);
+  background: var(--wp--preset--color--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+h1 { font-size: var(--wp--preset--font-size--display); letter-spacing: -0.035em; line-height: 1.02; }
+h2 { font-size: var(--wp--preset--font-size--xx-large); }
+h3 { font-size: var(--wp--preset--font-size--x-large); letter-spacing: -0.01em; }
+
+p { margin: 0; }
+
+a {
+  color: var(--wp--preset--color--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--wp--preset--color--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+:focus-visible {
+  outline: 2px solid var(--wp--preset--color--accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--wp--preset--color--accent);
+  color: var(--wp--preset--color--ink);
+}
+
+img, svg { display: block; max-width: 100%; }
+
+.container {
+  width: min(100% - 2 * clamp(1.25rem, 4vw, 3.5rem), 84rem);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(3.5rem, 9vw, var(--wp--preset--spacing--70));
+  border-top: 1px solid var(--wp--preset--color--ink);
+}
+
+section[id] { scroll-margin-top: 5.5rem; }
+@media (max-width: 47.5rem) {
+  section[id] { scroll-margin-top: 8.5rem; }
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--wp--preset--spacing--20);
+  top: -4rem;
+  z-index: 100;
+  padding: var(--wp--preset--spacing--10) var(--wp--preset--spacing--20);
+  background: var(--wp--preset--color--ink);
+  color: var(--wp--preset--color--paper);
+  text-decoration: none;
+  font-weight: 600;
+}
+.skip-link:focus { top: var(--wp--preset--spacing--20); color: var(--wp--preset--color--paper); }
+
+/* ============================================================
+   Header
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--wp--preset--color--paper);
+  border-bottom: 1px solid var(--wp--preset--color--ink);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--wp--preset--spacing--30);
+  padding-block: 0.85rem;
+}
+
+.brand {
+  margin-right: auto;
+  text-decoration: none;
+  font-size: var(--wp--preset--font-size--large);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.brand span {
+  display: block;
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--wp--preset--color--muted);
+}
+
+.site-nav { display: flex; flex-wrap: wrap; gap: 0.4rem var(--wp--preset--spacing--30); }
+.site-nav a {
+  text-decoration: none;
+  font-size: var(--wp--preset--font-size--medium);
+  font-weight: 500;
+}
+.site-nav a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--wp--preset--color--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 47.5rem) {
+  .site-nav {
+    order: 3;
+    flex-basis: 100%;
+    margin-top: 0.85rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--wp--preset--color--line);
+  }
+}
+
+/* ============================================================
+   Buttons and arrow links
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--10);
+  padding: 0.9rem 1.5rem;
+  background: var(--wp--preset--color--ink);
+  color: var(--wp--preset--color--paper);
+  border: 1px solid var(--wp--preset--color--ink);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover {
+  background: var(--wp--preset--color--accent);
+  border-color: var(--wp--preset--color--accent);
+  color: var(--wp--preset--color--ink);
+}
+.btn:active { transform: translateY(1px); }
+.btn-small { padding: 0.55rem 1rem; font-size: var(--wp--preset--font-size--small); }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--wp--preset--spacing--10);
+  font-weight: 600;
+}
+.link-arrow svg { width: 0.9em; height: 0.9em; stroke: currentColor; fill: none; stroke-width: 2; }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero { padding-block: clamp(3rem, 8vw, var(--wp--preset--spacing--60)) clamp(2.5rem, 6vw, 4.5rem); }
+
+.hero-grid {
+  display: grid;
+  gap: var(--wp--preset--spacing--40);
+}
+@media (min-width: 60rem) {
+  .hero-grid {
+    grid-template-columns: 7fr 5fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: end;
+  }
+}
+
+.kicker {
+  font-size: var(--wp--preset--font-size--small);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--wp--preset--color--muted);
+}
+
+.hero-copy h1 { margin-block: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30); }
+
+.lead {
+  font-size: var(--wp--preset--font-size--large);
+  line-height: 1.55;
+  max-width: 34rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--wp--preset--spacing--20) var(--wp--preset--spacing--30);
+  margin-top: var(--wp--preset--spacing--40);
+}
+
+.hero-figure { margin: 0; }
+.hero-figure figcaption {
+  margin-top: var(--wp--preset--spacing--10);
+  padding-top: var(--wp--preset--spacing--10);
+  border-top: 1px solid var(--wp--preset--color--line);
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+}
+
+.hero-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 var(--wp--preset--spacing--30);
+  margin: clamp(2.5rem, 6vw, 4.5rem) 0 0;
+  padding: 0;
+  border-top: 1px solid var(--wp--preset--color--ink);
+}
+@media (min-width: 60rem) {
+  .hero-facts { grid-template-columns: repeat(4, 1fr); }
+}
+.hero-facts > div {
+  display: flex;
+  flex-direction: column-reverse;
+  padding-block: var(--wp--preset--spacing--20) 0;
+}
+.hero-facts dt {
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+}
+.hero-facts dd {
+  margin: 0 0 var(--wp--preset--spacing--10);
+  font-size: var(--wp--preset--font-size--x-large);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* Hero line drawing */
+.hero-fig { width: 100%; height: auto; color: var(--wp--preset--color--ink); }
+.hero-fig .ln { fill: none; stroke: currentColor; stroke-width: 1.5; }
+.hero-fig .dash { stroke-dasharray: 7 6; }
+.hero-fig .dim line { stroke: var(--wp--preset--color--muted); stroke-width: 1; }
+.hero-fig .hatch line { stroke: var(--wp--preset--color--muted); stroke-width: 1; }
+.hero-fig .acc { fill: none; stroke: var(--wp--preset--color--accent); stroke-width: 1.5; }
+.hero-fig .acc-fill { fill: var(--wp--preset--color--accent); }
+.hero-fig .fig path { fill: none; stroke: var(--wp--preset--color--accent); stroke-width: 2; stroke-linecap: round; }
+.hero-fig text {
+  font-family: var(--wp--preset--font-family--sans);
+  font-size: 13px;
+  fill: var(--wp--preset--color--muted);
+}
+
+.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1s ease forwards;
+  animation-delay: var(--d, 0s);
+}
+.pop {
+  opacity: 0;
+  animation: fadein 0.5s ease forwards;
+  animation-delay: var(--d, 0s);
+}
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fadein { to { opacity: 1; } }
+
+/* ============================================================
+   Section head pattern
+   ============================================================ */
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--wp--preset--spacing--20) var(--wp--preset--spacing--40);
+  margin-bottom: var(--wp--preset--spacing--50);
+}
+.section-note {
+  max-width: 26ch;
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+  padding-bottom: 0.4rem;
+}
+
+/* ============================================================
+   Projects
+   ============================================================ */
+.projects-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--wp--preset--color--line);
+  border: 1px solid var(--wp--preset--color--line);
+}
+@media (min-width: 42.5rem) { .projects-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 67.5rem) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: var(--wp--preset--spacing--20);
+  padding: var(--wp--preset--spacing--30);
+  background: var(--wp--preset--color--paper);
+}
+
+.project-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--wp--preset--spacing--20);
+}
+
+.folio {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--wp--preset--color--accent);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.plate {
+  border: 1px solid var(--wp--preset--color--line);
+  padding: var(--wp--preset--spacing--20);
+}
+
+.drawing { width: 100%; height: auto; color: var(--wp--preset--color--ink); }
+.drawing :is(line, path, rect, circle, polyline) { fill: none; stroke: currentColor; stroke-width: 1.4; }
+.drawing .thin { stroke-width: 1; }
+.drawing .fill-acc { fill: var(--wp--preset--color--accent); stroke: none; }
+.drawing text {
+  font-family: var(--wp--preset--font-family--sans);
+  font-size: 13px;
+  fill: var(--wp--preset--color--muted);
+}
+
+.project-desc { max-width: 40ch; }
+
+.project-meta {
+  margin-top: auto;
+  padding-top: var(--wp--preset--spacing--10);
+  border-top: 1px solid var(--wp--preset--color--line);
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+}
+
+/* ============================================================
+   Approach (werkwijze)
+   ============================================================ */
+.steps {
+  display: grid;
+  gap: 1px;
+  background: var(--wp--preset--color--line);
+  border: 1px solid var(--wp--preset--color--line);
+}
+@media (min-width: 37.5rem) { .steps { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 56.25rem) { .steps { grid-template-columns: repeat(4, 1fr); } }
+
+.step {
+  padding: var(--wp--preset--spacing--30);
+  background: var(--wp--preset--color--paper);
+}
+
+.step-num {
+  display: block;
+  font-size: var(--wp--preset--font-size--xx-large);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--wp--preset--color--accent);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: var(--wp--preset--spacing--30);
+}
+
+.step h3 { margin-bottom: var(--wp--preset--spacing--10); }
+.step p { color: var(--wp--preset--color--ink); max-width: 34ch; }
+
+/* ============================================================
+   About the studio
+   ============================================================ */
+.about-grid {
+  display: grid;
+  gap: var(--wp--preset--spacing--40);
+}
+@media (min-width: 56.25rem) {
+  .about-grid {
+    grid-template-columns: 5fr 7fr;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+.facts { margin: var(--wp--preset--spacing--40) 0 0; }
+.fact {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--wp--preset--spacing--20);
+  padding-block: 0.8rem;
+  border-top: 1px solid var(--wp--preset--color--line);
+}
+.fact dt { font-size: var(--wp--preset--font-size--small); color: var(--wp--preset--color--muted); }
+.fact dd { margin: 0; font-weight: 600; text-align: right; }
+
+.about-copy p + p { margin-top: var(--wp--preset--spacing--20); }
+.about-copy p { max-width: 58ch; }
+
+.map-figure { margin: var(--wp--preset--spacing--40) 0 0; }
+.map-figure figcaption {
+  margin-top: var(--wp--preset--spacing--10);
+  padding-top: var(--wp--preset--spacing--10);
+  border-top: 1px solid var(--wp--preset--color--line);
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+}
+.map { width: 100%; max-width: 30rem; height: auto; color: var(--wp--preset--color--ink); }
+.map :is(line, path, circle) { fill: none; stroke: currentColor; stroke-width: 1.4; }
+.map .thin { stroke-width: 1; }
+.map .fill-acc { fill: var(--wp--preset--color--accent); stroke: none; }
+.map text {
+  font-family: var(--wp--preset--font-family--sans);
+  font-size: 13px;
+  fill: var(--wp--preset--color--muted);
+}
+.map .map-label-ink { fill: var(--wp--preset--color--ink); font-weight: 600; }
+
+/* ============================================================
+   Quote
+   ============================================================ */
+.quote { background: var(--wp--preset--color--mist); }
+
+.quote blockquote { margin: 0; max-width: 46rem; }
+.quote blockquote::before {
+  content: "„";
+  display: block;
+  font-size: var(--wp--preset--font-size--xx-large);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--wp--preset--color--accent);
+  margin-bottom: var(--wp--preset--spacing--20);
+}
+.quote blockquote p {
+  font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+.quote footer {
+  margin-top: var(--wp--preset--spacing--30);
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+}
+
+/* ============================================================
+   Contact
+   ============================================================ */
+.contact-grid {
+  display: grid;
+  gap: var(--wp--preset--spacing--40);
+}
+@media (min-width: 56.25rem) {
+  .contact-grid {
+    grid-template-columns: 7fr 5fr;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+}
+
+.contact-lead { max-width: 52ch; margin-top: var(--wp--preset--spacing--20); }
+
+.contact-form { margin-top: var(--wp--preset--spacing--40); }
+.form-row {
+  display: grid;
+  gap: var(--wp--preset--spacing--20);
+  margin-bottom: var(--wp--preset--spacing--20);
+}
+@media (min-width: 40rem) {
+  .form-row.two { grid-template-columns: 1fr 1fr; }
+}
+
+.field { display: grid; gap: 0.4rem; align-content: start; }
+.field label { font-weight: 600; }
+.req { color: var(--wp--preset--color--accent); }
+.hint { font-size: var(--wp--preset--font-size--small); font-weight: 400; color: var(--wp--preset--color--muted); }
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  font: inherit;
+  color: var(--wp--preset--color--ink);
+  background: var(--wp--preset--color--paper);
+  border: 1px solid var(--wp--preset--color--muted);
+  border-radius: 0;
+}
+.field textarea { min-height: 9rem; resize: vertical; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus { border-color: var(--wp--preset--color--ink); }
+.field ::placeholder { color: var(--wp--preset--color--muted); }
+
+.form-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--wp--preset--spacing--20);
+  margin-top: var(--wp--preset--spacing--10);
+}
+.form-note { font-size: var(--wp--preset--font-size--small); color: var(--wp--preset--color--muted); max-width: 34ch; }
+
+.contact-info { border-top: 1px solid var(--wp--preset--color--ink); padding-top: var(--wp--preset--spacing--30); }
+@media (min-width: 56.25rem) {
+  .contact-info {
+    border-top: none;
+    border-left: 1px solid var(--wp--preset--color--line);
+    padding-top: 0;
+    padding-left: clamp(1.5rem, 3vw, 3rem);
+    align-self: start;
+  }
+}
+.contact-info h3 { font-size: var(--wp--preset--font-size--medium); margin-bottom: var(--wp--preset--spacing--20); }
+.contact-info address { font-style: normal; }
+.contact-info .fact dd a { color: var(--wp--preset--color--ink); }
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--wp--preset--color--ink);
+  padding-block: var(--wp--preset--spacing--50) var(--wp--preset--spacing--30);
+}
+
+.footer-grid {
+  display: grid;
+  gap: var(--wp--preset--spacing--40);
+}
+@media (min-width: 50rem) {
+  .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+
+.footer-tag { margin-top: var(--wp--preset--spacing--20); max-width: 30ch; color: var(--wp--preset--color--muted); }
+
+.footer-col .kicker { display: block; margin-bottom: var(--wp--preset--spacing--20); }
+.footer-col nav { display: grid; gap: 0.5rem; justify-items: start; }
+.footer-col nav a { text-decoration: none; }
+.footer-col nav a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--wp--preset--color--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.footer-col address { font-style: normal; }
+.footer-col p + p { margin-top: 0.5rem; }
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--wp--preset--spacing--20);
+  margin-top: var(--wp--preset--spacing--50);
+  padding-top: var(--wp--preset--spacing--20);
+  border-top: 1px solid var(--wp--preset--color--line);
+  font-size: var(--wp--preset--font-size--small);
+  color: var(--wp--preset--color--muted);
+}
+.footer-bottom .link-arrow { color: var(--wp--preset--color--ink); }
+
+/* ============================================================
+   Motion preferences
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .draw { animation: none; stroke-dashoffset: 0; }
+  .pop { animation: none; opacity: 1; }
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#inhoud">Direct naar inhoud</a>
+
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="#top">Studio Veld<span>architecten · Rotterdam</span></a>
+    <nav class="site-nav" aria-label="Hoofdmenu">
+      <a href="#projecten">Projecten</a>
+      <a href="#werkwijze">Werkwijze</a>
+      <a href="#studio">Studio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-small" href="#contact">Plan een gesprek</a>
+  </div>
+</header>
+
+<main id="inhoud">
+
+  <!-- ===== Hero ===== -->
+  <section class="hero" id="top" aria-labelledby="hero-titel">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">Architectenbureau — Rotterdam, sinds 2009</p>
+        <h1 id="hero-titel">Precieze architectuur voor wonen en hergebruik.</h1>
+        <p class="lead">Studio Veld is een bureau van twaalf architecten in Rotterdam. Wij ontwerpen villa&rsquo;s en woonblokken — en geven pakhuizen, kerken en scholen een tweede leven als woning of werkplek.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#contact">Plan een gesprek</a>
+          <a class="link-arrow" href="#projecten">Bekijk zes projecten
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M3 9l5 5 5-5"/></svg>
+          </a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <svg class="hero-fig" viewBox="0 0 560 400" role="img" aria-label="Lijntekening van een doorsnede door een bestaand pakhuis: de bestaande shell met zadeldak, twee ingevoegde woonvloeren in stippellijn en een oranje schaalfiguur.">
+          <g class="dim">
+            <line x1="80" y1="30" x2="480" y2="30"/>
+            <line x1="80" y1="24" x2="80" y2="36"/>
+            <line x1="480" y1="24" x2="480" y2="36"/>
+            <text x="280" y="20" text-anchor="middle">42,0 m</text>
+          </g>
+          <path class="ln draw" pathLength="1" d="M16 372 H544"/>
+          <g class="hatch">
+            <line x1="48" y1="372" x2="39" y2="382"/>
+            <line x1="98" y1="372" x2="89" y2="382"/>
+            <line x1="148" y1="372" x2="139" y2="382"/>
+            <line x1="198" y1="372" x2="189" y2="382"/>
+            <line x1="248" y1="372" x2="239" y2="382"/>
+            <line x1="298" y1="372" x2="289" y2="382"/>
+            <line x1="348" y1="372" x2="339" y2="382"/>
+            <line x1="398" y1="372" x2="389" y2="382"/>
+            <line x1="448" y1="372" x2="439" y2="382"/>
+            <line x1="498" y1="372" x2="489" y2="382"/>
+          </g>
+          <path class="ln draw" pathLength="1" style="--d:.15s" d="M80 372 L80 150 L280 64 L480 150 L480 372"/>
+          <path class="ln draw" pathLength="1" style="--d:.45s" d="M200 98 V372"/>
+          <path class="ln draw" pathLength="1" style="--d:.5s" d="M360 98 V372"/>
+          <line class="ln dash pop" style="--d:.7s" x1="80" y1="232" x2="480" y2="232"/>
+          <line class="ln dash pop" style="--d:.8s" x1="80" y1="302" x2="480" y2="302"/>
+          <path class="ln draw" pathLength="1" style="--d:.95s" d="M104 372 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 M216 302 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10"/>
+          <path class="acc pop" style="--d:1.1s" d="M238 96 h26 v16 h-26 z" transform="rotate(-23.3 251 104)"/>
+          <path class="ln draw" pathLength="1" style="--d:1.15s" d="M96 308 h46 v64 h-46 z"/>
+          <path class="ln pop" style="--d:1.2s" d="M96 308 L142 372"/>
+          <path class="ln draw" pathLength="1" style="--d:1.25s" d="M404 240 h34 v44 h-34 z"/>
+          <line class="ln" x1="421" y1="240" x2="421" y2="284"/>
+          <g class="fig pop" style="--d:1.4s">
+            <circle class="acc-fill" cx="330" cy="338" r="7"/>
+            <path d="M330 345 L330 362 M330 362 L321 372 M330 362 L339 372 M330 350 L321 357 M330 350 L339 357"/>
+          </g>
+        </svg>
+        <figcaption>Fig. 01 — Doorsnede bestaand pakhuis met ingevoegde woonvloeren (stippel) en schaalfiguur</figcaption>
+      </figure>
+    </div>
+    <div class="container">
+      <dl class="hero-facts">
+        <div><dt>Opgericht</dt><dd>2009</dd></div>
+        <div><dt>Mensen</dt><dd>12</dd></div>
+        <div><dt>Werkvelden</dt><dd>Wonen &amp; hergebruik</dd></div>
+        <div><dt>Studio</dt><dd>M4H, Rotterdam</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===== Geselecteerde projecten ===== -->
+  <section class="section" id="projecten" aria-labelledby="projecten-titel">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="projecten-titel">Geselecteerde projecten</h2>
+        <p class="section-note">Zes projecten uit 2019–2026 — van villa tot voormalige kerk.</p>
+      </div>
+      <div class="projects-grid">
+
+        <article class="project">
+          <div class="project-top">
+            <h3>Villa Veldzicht</h3>
+            <span class="folio">01</span>
+          </div>
+          <div class="plate">
+            <svg class="drawing" viewBox="0 0 480 340" role="img" aria-label="Lijntekening van een moderne villa: uitkragende dakplaat, een glasgevel met staanders, een oranje deur en twee bomen.">
+              <line x1="24" y1="300" x2="456" y2="300"/>
+              <line class="thin" x1="48" y1="300" x2="39" y2="309"/><line class="thin" x1="128" y1="300" x2="119" y2="309"/><line class="thin" x1="208" y1="300" x2="199" y2="309"/><line class="thin" x1="288" y1="300" x2="279" y2="309"/><line class="thin" x1="368" y1="300" x2="359" y2="309"/><line class="thin" x1="448" y1="300" x2="439" y2="309"/>
+              <rect x="132" y="196" width="260" height="12"/>
+              <rect x="150" y="208" width="200" height="80"/>
+              <line x1="150" y1="248" x2="350" y2="248"/>
+              <line x1="190" y1="208" x2="190" y2="288"/>
+              <line x1="230" y1="208" x2="230" y2="288"/>
+              <line x1="270" y1="208" x2="270" y2="288"/>
+              <line x1="310" y1="208" x2="310" y2="288"/>
+              <rect class="fill-acc" x="158" y="252" width="26" height="36"/>
+              <line x1="100" y1="300" x2="100" y2="252"/>
+              <circle cx="100" cy="234" r="20"/>
+              <line x1="392" y1="300" x2="392" y2="270"/>
+              <circle cx="392" cy="256" r="13"/>
+            </svg>
+          </div>
+          <p class="project-desc">Villa rond een beschutte binnentuin, met de woonkamer gericht op de Kralingse Plas.</p>
+          <p class="project-meta">Kralingen · Nieuwbouw villa · 2024</p>
+        </article>
+
+        <article class="project">
+          <div class="project-top">
+            <h3>Woonblok Maashaven</h3>
+            <span class="folio">02</span>
+          </div>
+          <div class="plate">
+            <svg class="drawing" viewBox="0 0 480 340" role="img" aria-label="Lijntekening van een woonblok: vier verdiepingen met een raster van ramen, balkons aan de rechterkant en een oranje entree.">
+              <line x1="24" y1="300" x2="456" y2="300"/>
+              <line class="thin" x1="48" y1="300" x2="39" y2="309"/><line class="thin" x1="128" y1="300" x2="119" y2="309"/><line class="thin" x1="208" y1="300" x2="199" y2="309"/><line class="thin" x1="288" y1="300" x2="279" y2="309"/><line class="thin" x1="368" y1="300" x2="359" y2="309"/><line class="thin" x1="448" y1="300" x2="439" y2="309"/>
+              <rect x="64" y="120" width="352" height="8"/>
+              <rect x="64" y="128" width="352" height="172"/>
+              <rect x="84" y="148" width="32" height="30"/><rect x="140" y="148" width="32" height="30"/><rect x="196" y="148" width="32" height="30"/><rect x="252" y="148" width="32" height="30"/><rect x="308" y="148" width="32" height="30"/><rect x="364" y="148" width="32" height="30"/>
+              <rect x="84" y="192" width="32" height="30"/><rect x="140" y="192" width="32" height="30"/><rect x="196" y="192" width="32" height="30"/><rect x="252" y="192" width="32" height="30"/><rect x="308" y="192" width="32" height="30"/><rect x="364" y="192" width="32" height="30"/>
+              <rect x="84" y="252" width="32" height="36"/><rect x="140" y="252" width="32" height="36"/>
+              <rect class="fill-acc" x="224" y="252" width="32" height="48"/>
+              <rect x="308" y="252" width="32" height="36"/><rect x="364" y="252" width="32" height="36"/>
+              <line x1="416" y1="170" x2="450" y2="170"/><line x1="450" y1="170" x2="450" y2="146"/><line x1="416" y1="146" x2="450" y2="146"/>
+              <line x1="416" y1="214" x2="450" y2="214"/><line x1="450" y1="214" x2="450" y2="190"/><line x1="416" y1="190" x2="450" y2="190"/>
+              <line x1="416" y1="258" x2="450" y2="258"/><line x1="450" y1="258" x2="450" y2="234"/><line x1="416" y1="234" x2="450" y2="234"/>
+            </svg>
+          </div>
+          <p class="project-desc">24 appartementen in een gesloten blok aan het water, waarvan 18 sociale huur.</p>
+          <p class="project-meta">Kop van Zuid · Woonblok · 2023</p>
+        </article>
+
+        <article class="project">
+          <div class="project-top">
+            <h3>Pakhuis Keilewerf</h3>
+            <span class="folio">03</span>
+          </div>
+          <div class="plate">
+            <svg class="drawing" viewBox="0 0 480 340" role="img" aria-label="Lijntekening van een pakhuis met trapgevel, een rij kleine ramen, een oranje laaddeur en een hijsbalk.">
+              <line x1="24" y1="300" x2="456" y2="300"/>
+              <line class="thin" x1="48" y1="300" x2="39" y2="309"/><line class="thin" x1="128" y1="300" x2="119" y2="309"/><line class="thin" x1="208" y1="300" x2="199" y2="309"/><line class="thin" x1="288" y1="300" x2="279" y2="309"/><line class="thin" x1="368" y1="300" x2="359" y2="309"/><line class="thin" x1="448" y1="300" x2="439" y2="309"/>
+              <rect x="110" y="150" width="260" height="150"/>
+              <polyline points="110,150 110,132 138,132 138,114 166,114 166,96 194,96 194,84 286,84 286,96 314,96 314,114 342,114 342,132 370,132 370,150"/>
+              <rect x="134" y="168" width="24" height="28"/><rect x="180" y="168" width="24" height="28"/><rect x="226" y="168" width="24" height="28"/><rect x="272" y="168" width="24" height="28"/><rect x="318" y="168" width="24" height="28"/>
+              <rect class="fill-acc" x="216" y="236" width="48" height="64"/>
+              <line x1="216" y1="236" x2="264" y2="300"/>
+              <line x1="264" y1="236" x2="216" y2="300"/>
+              <rect x="370" y="210" width="46" height="90"/>
+              <rect x="386" y="262" width="16" height="38"/>
+              <line x1="240" y1="84" x2="240" y2="112"/>
+              <circle cx="240" cy="118" r="5"/>
+            </svg>
+          </div>
+          <p class="project-desc">Voormalig pakhuis met twaalf loftwoningen en vier ateliers op de begane grond.</p>
+          <p class="project-meta">Merwe-Vierhavens (M4H) · Transformatie pakhuis · 2021</p>
+        </article>
+
+        <article class="project">
+          <div class="project-top">
+            <h3>De Hoeksteen</h3>
+            <span class="folio">04</span>
+          </div>
+          <div class="plate">
+            <svg class="drawing" viewBox="0 0 480 340" role="img" aria-label="Lijntekening van een kerk: schip met zadeldak, een toren met spits, drie rondboogvensters en een oranje ingangsportaal.">
+              <line x1="24" y1="300" x2="456" y2="300"/>
+              <line class="thin" x1="48" y1="300" x2="39" y2="309"/><line class="thin" x1="128" y1="300" x2="119" y2="309"/><line class="thin" x1="208" y1="300" x2="199" y2="309"/><line class="thin" x1="288" y1="300" x2="279" y2="309"/><line class="thin" x1="368" y1="300" x2="359" y2="309"/><line class="thin" x1="448" y1="300" x2="439" y2="309"/>
+              <rect x="72" y="196" width="210" height="104"/>
+              <polyline points="72,196 177,148 282,196"/>
+              <rect x="282" y="120" width="64" height="180"/>
+              <polyline points="282,120 314,66 346,120"/>
+              <circle cx="314" cy="152" r="10"/>
+              <line class="thin" x1="314" y1="152" x2="314" y2="145"/>
+              <line class="thin" x1="314" y1="152" x2="319" y2="152"/>
+              <path d="M96 300 L96 248 A16 16 0 0 1 128 248 L128 300"/>
+              <path d="M156 300 L156 248 A16 16 0 0 1 188 248 L188 300"/>
+              <path d="M216 300 L216 248 A16 16 0 0 1 248 248 L248 300"/>
+              <path class="fill-acc" d="M161 300 L161 254 A16 16 0 0 1 193 254 L193 300 Z"/>
+              <rect x="306" y="184" width="16" height="30"/>
+            </svg>
+          </div>
+          <p class="project-desc">Voormalige kerk met acht woningen rond de lichtinval van het middenschip.</p>
+          <p class="project-meta">Delfshaven · Kerk → woningen · 2019</p>
+        </article>
+
+        <article class="project">
+          <div class="project-top">
+            <h3>Kadeblok Noordereiland</h3>
+            <span class="folio">05</span>
+          </div>
+          <div class="plate">
+            <svg class="drawing" viewBox="0 0 480 340" role="img" aria-label="Lijntekening van vier panden met zadeldaken aan de kade, met water aan de rechterkant en één oranje deur.">
+              <line x1="24" y1="300" x2="384" y2="300"/>
+              <line class="thin" x1="48" y1="300" x2="39" y2="309"/><line class="thin" x1="128" y1="300" x2="119" y2="309"/><line class="thin" x1="208" y1="300" x2="199" y2="309"/><line class="thin" x1="288" y1="300" x2="279" y2="309"/><line class="thin" x1="368" y1="300" x2="359" y2="309"/>
+              <line x1="384" y1="300" x2="384" y2="316"/>
+              <line class="thin" x1="390" y1="312" x2="456" y2="312"/>
+              <line class="thin" x1="394" y1="322" x2="456" y2="322"/>
+              <rect x="48" y="210" width="78" height="90"/>
+              <polyline points="48,210 87,178 126,210"/>
+              <rect x="58" y="222" width="20" height="26"/><rect x="96" y="222" width="20" height="26"/>
+              <rect x="58" y="258" width="20" height="30"/><rect x="96" y="260" width="20" height="40"/>
+              <rect x="126" y="210" width="78" height="90"/>
+              <polyline points="126,210 165,168 204,210"/>
+              <rect x="159" y="146" width="12" height="24"/>
+              <rect x="136" y="222" width="20" height="26"/><rect x="174" y="222" width="20" height="26"/>
+              <rect x="136" y="258" width="20" height="30"/>
+              <rect class="fill-acc" x="174" y="260" width="20" height="40"/>
+              <rect x="204" y="210" width="78" height="90"/>
+              <polyline points="204,210 243,184 282,210"/>
+              <rect x="214" y="222" width="20" height="26"/><rect x="252" y="222" width="20" height="26"/>
+              <rect x="214" y="258" width="20" height="30"/><rect x="252" y="260" width="20" height="40"/>
+              <rect x="282" y="210" width="78" height="90"/>
+              <polyline points="282,210 321,174 360,210"/>
+              <rect x="292" y="222" width="20" height="26"/><rect x="330" y="222" width="20" height="26"/>
+              <rect x="292" y="258" width="20" height="30"/><rect x="330" y="260" width="20" height="40"/>
+            </svg>
+          </div>
+          <p class="project-desc">Negen kadewoningen met kap en uitzicht op de Maas, direct aan de kade.</p>
+          <p class="project-meta">Noordereiland · 9 kadewoningen · 2022</p>
+        </article>
+
+        <article class="project">
+          <div class="project-top">
+            <h3>De Bergweg</h3>
+            <span class="folio">06</span>
+          </div>
+          <div class="plate">
+            <svg class="drawing" viewBox="0 0 480 340" role="img" aria-label="Lijntekening van een voormalige school met zaagdak, een lang raamlint en een oranje entree.">
+              <line x1="24" y1="300" x2="456" y2="300"/>
+              <line class="thin" x1="48" y1="300" x2="39" y2="309"/><line class="thin" x1="128" y1="300" x2="119" y2="309"/><line class="thin" x1="208" y1="300" x2="199" y2="309"/><line class="thin" x1="288" y1="300" x2="279" y2="309"/><line class="thin" x1="368" y1="300" x2="359" y2="309"/><line class="thin" x1="448" y1="300" x2="439" y2="309"/>
+              <rect x="64" y="176" width="352" height="124"/>
+              <polyline points="64,176 94,142 94,176 124,142 124,176 154,142 154,176 184,142 184,176 214,142 214,176"/>
+              <rect x="340" y="148" width="14" height="28"/>
+              <rect x="84" y="222" width="312" height="32"/>
+              <line x1="120" y1="222" x2="120" y2="254"/><line x1="156" y1="222" x2="156" y2="254"/><line x1="192" y1="222" x2="192" y2="254"/><line x1="228" y1="222" x2="228" y2="254"/><line x1="264" y1="222" x2="264" y2="254"/><line x1="300" y1="222" x2="300" y2="254"/><line x1="336" y1="222" x2="336" y2="254"/><line x1="372" y1="222" x2="372" y2="254"/>
+              <rect class="fill-acc" x="230" y="266" width="40" height="34"/>
+              <line x1="222" y1="266" x2="278" y2="266"/>
+            </svg>
+          </div>
+          <p class="project-desc">Voormalige basisschool, nu tien appartementen en een buurthuis in de zijvleugel.</p>
+          <p class="project-meta">Bergwegkwartier · School → wonen · 2020</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Werkwijze ===== -->
+  <section class="section" id="werkwijze" aria-labelledby="werkwijze-titel">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="werkwijze-titel">In vier stappen van idee tot sleutel</h2>
+        <p class="section-note">Vaste prijsafspraken per fase. U weet bij elke stap waar het project staat.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">01</span>
+          <h3>Kennismaking</h3>
+          <p>We beginnen op de plek zelf: een gesprek aan tafel, een ronde over de locatie en een analyse van programma, bestemmingsplan en buren.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <h3>Ontwerp in drie ronden</h3>
+          <p>Schets, voorontwerp en definitief ontwerp. Bij elke ronde presenteren we in beeld en op papier — en u beslist mee.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <h3>Bestek en aanbesteding</h3>
+          <p>We werken het ontwerp uit tot bestek en tekeningen, vragen offertes aan bij drie aannemers en bewaken prijs en planning.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">04</span>
+          <h3>Bouw en nazorg</h3>
+          <p>Tijdens de bouw zijn we wekelijks op de bouwplaats. Na de oplevering blijven we aanspreekpunt voor garantie en klein onderhoud.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Over de studio ===== -->
+  <section class="section" id="studio" aria-labelledby="studio-titel">
+    <div class="container about-grid">
+      <div>
+        <h2 id="studio-titel">Over het bureau</h2>
+        <dl class="facts">
+          <div class="fact"><dt>Opgericht</dt><dd>2009, Rotterdam</dd></div>
+          <div class="fact"><dt>Team</dt><dd>12 mensen</dd></div>
+          <div class="fact"><dt>Studio</dt><dd>Eigen pakhuis, Keilestraat 9F, M4H</dd></div>
+          <div class="fact"><dt>Werkgebied</dt><dd>Rotterdam en regio</dd></div>
+          <div class="fact"><dt>Werkvelden</dt><dd>Wonen · transformatie · interieur</dd></div>
+        </dl>
+      </div>
+      <div class="about-copy">
+        <p>Studio Veld Architecten is in 2009 opgericht in Rotterdam. We zijn met zijn twaalven: architecten, een interieurontwerper, een technisch tekenaar en een projectleider. Sinds 2016 werken we vanuit een eigen pakhuis in Merwe-Vierhavens — het gebouw dat we zelf hebben getransformeerd.</p>
+        <p>We werken voor particulieren en woningcorporaties. Nieuwbouw villa&rsquo;s en woonblokken, maar ook de transformatie van pakhuizen, kerken en scholen. Wat al die projecten gemeen hebben: daglicht, een heldere constructie en een gebouw dat bij de straat past.</p>
+        <figure class="map-figure">
+          <svg class="map" viewBox="0 0 440 240" role="img" aria-label="Schematische kaart van de Nieuwe Maas in Rotterdam, met de studio gemarkeerd in Merwe-Vierhavens.">
+            <path d="M-8 150 C70 118 130 196 214 162 C298 128 350 108 448 138"/>
+            <path class="thin" d="M-8 172 C70 140 130 218 214 184 C298 150 350 130 448 160"/>
+            <line class="thin" x1="316" y1="146" x2="316" y2="78"/>
+            <line class="thin" x1="316" y1="78" x2="294" y2="146"/>
+            <line class="thin" x1="316" y1="78" x2="338" y2="146"/>
+            <circle class="fill-acc" cx="118" cy="136" r="6"/>
+            <text class="map-label-ink" x="132" y="141">Studio Veld — Keilestraat, M4H</text>
+            <text x="216" y="212">Nieuwe Maas</text>
+            <line class="thin" x1="416" y1="44" x2="416" y2="20"/>
+            <path class="thin" d="M410 28 L416 18 L422 28"/>
+            <text x="410" y="62">N</text>
+          </svg>
+          <figcaption>Fig. 02 — De studio zit aan de Keilestraat in Merwe-Vierhavens, Rotterdam-Noord.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Citaat ===== -->
+  <section class="section quote" aria-label="Ervaring van een opdrachtgever">
+    <div class="container">
+      <blockquote>
+        <p>Ze luisterden eerst en tekenden daarna. Het ontwerp past bij ons én bij de straat — en de bouw verliep zonder verrassingen.</p>
+        <footer>J. van der Laan — particulier, Villa Veldzicht (Kralingen)</footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ===== Contact ===== -->
+  <section class="section" id="contact" aria-labelledby="contact-titel">
+    <div class="container contact-grid">
+      <div>
+        <h2 id="contact-titel">Plan een gesprek</h2>
+        <p class="contact-lead">Vertel ons kort over uw plan — een kavel, een pakhuis, een kerk of een heel woonblok. We nodigen u graag uit in ons pakhuis aan de Keilestraat, of we komen naar u toe. U hoort binnen twee werkdagen van ons.</p>
+        <form class="contact-form" action="mailto:studio@studioveld.nl" method="post" enctype="text/plain">
+          <div class="form-row two">
+            <div class="field">
+              <label for="naam">Naam <span class="req" aria-hidden="true">*</span></label>
+              <input id="naam" name="naam" type="text" autocomplete="name" required>
+            </div>
+            <div class="field">
+              <label for="email">E-mailadres <span class="req" aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="form-row two">
+            <div class="field">
+              <label for="tel">Telefoonnummer <span class="hint">(facultatief)</span></label>
+              <input id="tel" name="telefoon" type="tel" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="onderwerp">Waar gaat het over?</label>
+              <select id="onderwerp" name="onderwerp">
+                <option>Nieuwbouw — villa of woning</option>
+                <option>Nieuwbouw — woonblok</option>
+                <option>Transformatie van een bestaand gebouw</option>
+                <option>Interieur</option>
+                <option>Iets anders</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="bericht">Uw bericht <span class="req" aria-hidden="true">*</span> <span class="hint">— locatie, programma, wensen en planning. Mag kort.</span></label>
+              <textarea id="bericht" name="bericht" rows="5" required></textarea>
+            </div>
+          </div>
+          <div class="form-foot">
+            <button class="btn" type="submit">Verstuur aanvraag</button>
+            <p class="form-note">We gebruiken uw gegevens alleen om op uw aanvraag te reageren.</p>
+          </div>
+        </form>
+      </div>
+      <aside class="contact-info" aria-label="Contactgegevens">
+        <h3>Studio Veld Architecten</h3>
+        <dl class="facts">
+          <div class="fact"><dt>Bezoekadres</dt><dd><address>Keilestraat 9F<br>3029 BP Rotterdam (M4H)</address></dd></div>
+          <div class="fact"><dt>E-mail</dt><dd><a href="mailto:studio@studioveld.nl">studio@studioveld.nl</a></dd></div>
+          <div class="fact"><dt>Telefoon</dt><dd><a href="tel:+31103402218">+31 (0)10 340 22 18</a></dd></div>
+          <div class="fact"><dt>Bereikbaar</dt><dd>ma–vr, 09.00–17.30</dd></div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <p class="brand">Studio Veld<span>architecten · Rotterdam</span></p>
+      <p class="footer-tag">Precieze architectuur voor wonen en hergebruik, sinds 2009.</p>
+    </div>
+    <div class="footer-col">
+      <span class="kicker">Menu</span>
+      <nav aria-label="Footermenu">
+        <a href="#projecten">Projecten</a>
+        <a href="#werkwijze">Werkwijze</a>
+        <a href="#studio">Studio</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer-col">
+      <span class="kicker">Contact</span>
+      <address>Keilestraat 9F, 3029 BP Rotterdam</address>
+      <p><a href="mailto:studio@studioveld.nl">studio@studioveld.nl</a></p>
+      <p><a href="tel:+31103402218">+31 (0)10 340 22 18</a></p>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>© 2026 Studio Veld Architecten, Rotterdam</p>
+    <a class="link-arrow" href="#top">Terug naar boven
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14V3M3 7l5-5 5 5"/></svg>
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>
