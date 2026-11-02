@@ -102,7 +102,7 @@ img, svg { display: block; max-width: 100%; }
 
 section[id] { scroll-margin-top: 5.5rem; }
 @media (max-width: 47.5rem) {
-  section[id] { scroll-margin-top: 8.5rem; }
+  section[id] { scroll-margin-top: var(--wp--preset--spacing--20); }
 }
 
 .skip-link {
@@ -167,6 +167,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 }
 
 @media (max-width: 47.5rem) {
+  .site-header { position: static; }
   .site-nav {
     order: 3;
     flex-basis: 100%;
@@ -433,8 +434,15 @@ section[id] { scroll-margin-top: 5.5rem; }
 @media (min-width: 56.25rem) {
   .about-grid {
     grid-template-columns: 5fr 7fr;
-    gap: clamp(2rem, 5vw, 5rem);
+    grid-template-areas:
+      "head copy"
+      "map  copy";
+    column-gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
   }
+  .about-head { grid-area: head; }
+  .about-copy { grid-area: copy; }
+  .map-figure { grid-area: map; }
 }
 
 .facts { margin: var(--wp--preset--spacing--40) 0 0; }
@@ -452,7 +460,7 @@ section[id] { scroll-margin-top: 5.5rem; }
 .about-copy p + p { margin-top: var(--wp--preset--spacing--20); }
 .about-copy p { max-width: 58ch; }
 
-.map-figure { margin: var(--wp--preset--spacing--40) 0 0; }
+.map-figure { margin: 0; }
 .map-figure figcaption {
   margin-top: var(--wp--preset--spacing--10);
   padding-top: var(--wp--preset--spacing--10);
@@ -476,7 +484,7 @@ section[id] { scroll-margin-top: 5.5rem; }
    ============================================================ */
 .quote { background: var(--wp--preset--color--mist); }
 
-.quote blockquote { margin: 0; max-width: 46rem; }
+.quote blockquote { margin: 0 auto; max-width: 46rem; text-align: center; }
 .quote blockquote::before {
   content: "„";
   display: block;
@@ -491,6 +499,7 @@ section[id] { scroll-margin-top: 5.5rem; }
   font-weight: 500;
   letter-spacing: -0.015em;
   line-height: 1.25;
+  text-wrap: balance;
 }
 .quote footer {
   margin-top: var(--wp--preset--spacing--30);
@@ -658,7 +667,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         </div>
       </div>
       <figure class="hero-figure">
-        <svg class="hero-fig" viewBox="0 0 560 400" role="img" aria-label="Lijntekening van een doorsnede door een bestaand pakhuis: de bestaande shell met zadeldak, twee ingevoegde woonvloeren in stippellijn en een oranje schaalfiguur.">
+        <svg class="hero-fig" viewBox="0 0 560 400" role="img" aria-label="Lijntekening van een doorsnede door een bestaand pakhuis: de bestaande shell met zadeldak en dakraam, twee ingevoegde woonvloeren in stippellijn en een oranje schaalfiguur.">
           <g class="dim">
             <line x1="80" y1="30" x2="480" y2="30"/>
             <line x1="80" y1="24" x2="80" y2="36"/>
@@ -684,7 +693,8 @@ section[id] { scroll-margin-top: 5.5rem; }
           <line class="ln dash pop" style="--d:.7s" x1="80" y1="232" x2="480" y2="232"/>
           <line class="ln dash pop" style="--d:.8s" x1="80" y1="302" x2="480" y2="302"/>
           <path class="ln draw" pathLength="1" style="--d:.95s" d="M104 372 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 M216 302 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10 h16 v-10"/>
-          <path class="acc pop" style="--d:1.1s" d="M238 96 h26 v16 h-26 z" transform="rotate(-23.3 251 104)"/>
+          <path class="ln draw" pathLength="1" style="--d:1.1s" d="M169.8 111.4 L210.2 94 L202.3 75.6 L161.9 93 Z"/>
+          <line class="acc pop" style="--d:1.25s" x1="165.8" y1="102.2" x2="206.3" y2="84.8"/>
           <path class="ln draw" pathLength="1" style="--d:1.15s" d="M96 308 h46 v64 h-46 z"/>
           <path class="ln pop" style="--d:1.2s" d="M96 308 L142 372"/>
           <path class="ln draw" pathLength="1" style="--d:1.25s" d="M404 240 h34 v44 h-34 z"/>
@@ -694,7 +704,7 @@ section[id] { scroll-margin-top: 5.5rem; }
             <path d="M330 345 L330 362 M330 362 L321 372 M330 362 L339 372 M330 350 L321 357 M330 350 L339 357"/>
           </g>
         </svg>
-        <figcaption>Fig. 01 — Doorsnede bestaand pakhuis met ingevoegde woonvloeren (stippel) en schaalfiguur</figcaption>
+        <figcaption>Fig. 01 — Doorsnede bestaand pakhuis met dakraam, ingevoegde woonvloeren (stippel) en schaalfiguur</figcaption>
       </figure>
     </div>
     <div class="container">
@@ -917,7 +927,7 @@ section[id] { scroll-margin-top: 5.5rem; }
   <!-- ===== Over de studio ===== -->
   <section class="section" id="studio" aria-labelledby="studio-titel">
     <div class="container about-grid">
-      <div>
+      <div class="about-head">
         <h2 id="studio-titel">Over het bureau</h2>
         <dl class="facts">
           <div class="fact"><dt>Opgericht</dt><dd>2009, Rotterdam</dd></div>
@@ -930,23 +940,24 @@ section[id] { scroll-margin-top: 5.5rem; }
       <div class="about-copy">
         <p>Studio Veld Architecten is in 2009 opgericht in Rotterdam. We zijn met zijn twaalven: architecten, een interieurontwerper, een technisch tekenaar en een projectleider. Sinds 2016 werken we vanuit een eigen pakhuis in Merwe-Vierhavens — het gebouw dat we zelf hebben getransformeerd.</p>
         <p>We werken voor particulieren en woningcorporaties. Nieuwbouw villa&rsquo;s en woonblokken, maar ook de transformatie van pakhuizen, kerken en scholen. Wat al die projecten gemeen hebben: daglicht, een heldere constructie en een gebouw dat bij de straat past.</p>
-        <figure class="map-figure">
-          <svg class="map" viewBox="0 0 440 240" role="img" aria-label="Schematische kaart van de Nieuwe Maas in Rotterdam, met de studio gemarkeerd in Merwe-Vierhavens.">
-            <path d="M-8 150 C70 118 130 196 214 162 C298 128 350 108 448 138"/>
-            <path class="thin" d="M-8 172 C70 140 130 218 214 184 C298 150 350 130 448 160"/>
-            <line class="thin" x1="316" y1="146" x2="316" y2="78"/>
-            <line class="thin" x1="316" y1="78" x2="294" y2="146"/>
-            <line class="thin" x1="316" y1="78" x2="338" y2="146"/>
-            <circle class="fill-acc" cx="118" cy="136" r="6"/>
-            <text class="map-label-ink" x="132" y="141">Studio Veld — Keilestraat, M4H</text>
-            <text x="216" y="212">Nieuwe Maas</text>
-            <line class="thin" x1="416" y1="44" x2="416" y2="20"/>
-            <path class="thin" d="M410 28 L416 18 L422 28"/>
-            <text x="410" y="62">N</text>
-          </svg>
-          <figcaption>Fig. 02 — De studio zit aan de Keilestraat in Merwe-Vierhavens, Rotterdam-Noord.</figcaption>
-        </figure>
       </div>
+      <figure class="map-figure">
+        <svg class="map" viewBox="0 0 440 240" role="img" aria-label="Schematische kaart van de Nieuwe Maas in Rotterdam, met de studio gemarkeerd in Merwe-Vierhavens.">
+          <path d="M-8 150 C70 118 130 196 214 162 C298 128 350 108 448 138"/>
+          <path class="thin" d="M-8 172 C70 140 130 218 214 184 C298 150 350 130 448 160"/>
+          <line class="thin" x1="316" y1="146" x2="316" y2="78"/>
+          <line class="thin" x1="316" y1="78" x2="294" y2="146"/>
+          <line class="thin" x1="316" y1="78" x2="338" y2="146"/>
+          <circle class="fill-acc" cx="118" cy="136" r="6"/>
+          <line class="thin" x1="118" y1="50" x2="118" y2="128"/>
+          <text class="map-label-ink" x="16" y="40">Studio Veld — Keilestraat 9F, M4H</text>
+          <text x="216" y="212">Nieuwe Maas</text>
+          <line class="thin" x1="416" y1="44" x2="416" y2="20"/>
+          <path class="thin" d="M410 28 L416 18 L422 28"/>
+          <text x="410" y="62">N</text>
+        </svg>
+        <figcaption>Fig. 02 — De studio zit aan de Keilestraat in Merwe-Vierhavens, Rotterdam-West (Delfshaven).</figcaption>
+      </figure>
     </div>
   </section>
 
