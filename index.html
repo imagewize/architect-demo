@@ -435,16 +435,8 @@ section[id] { scroll-margin-top: 5.5rem; }
   font-size: var(--wp--preset--font-size--small);
   color: var(--wp--preset--color--muted);
 }
-.map { width: 100%; max-width: 30rem; height: auto; color: var(--wp--preset--color--ink); }
-.map :is(line, path, circle) { fill: none; stroke: currentColor; stroke-width: 1.4; }
-.map .thin { stroke-width: 1; }
-.map .fill-acc { fill: var(--wp--preset--color--accent); stroke: none; }
-.map text {
-  font-family: var(--wp--preset--font-family--sans);
-  font-size: 13px;
-  fill: var(--wp--preset--color--muted);
-}
-.map .map-label-ink { fill: var(--wp--preset--color--ink); font-weight: 600; }
+/* Studio map (images/studio-kaart.svg, generated with scripts/studio-kaart.gen.mjs) */
+.map { width: 100%; max-width: 30rem; height: auto; }
 
 /* ============================================================
    Quote
@@ -781,20 +773,7 @@ section[id] { scroll-margin-top: 5.5rem; }
         <p>We werken voor particulieren en woningcorporaties. Nieuwbouw villa&rsquo;s en woonblokken, maar ook de transformatie van pakhuizen, kerken en scholen. Wat al die projecten gemeen hebben: daglicht, een heldere constructie en een gebouw dat bij de straat past.</p>
       </div>
       <figure class="map-figure">
-        <svg class="map" viewBox="0 0 440 240" role="img" aria-label="Schematische kaart van de Nieuwe Maas in Rotterdam, met de studio gemarkeerd in Merwe-Vierhavens.">
-          <path d="M-8 150 C70 118 130 196 214 162 C298 128 350 108 448 138"/>
-          <path class="thin" d="M-8 172 C70 140 130 218 214 184 C298 150 350 130 448 160"/>
-          <line class="thin" x1="316" y1="146" x2="316" y2="78"/>
-          <line class="thin" x1="316" y1="78" x2="294" y2="146"/>
-          <line class="thin" x1="316" y1="78" x2="338" y2="146"/>
-          <circle class="fill-acc" cx="118" cy="136" r="6"/>
-          <line class="thin" x1="118" y1="50" x2="118" y2="128"/>
-          <text class="map-label-ink" x="16" y="40">Studio Veld — Keilestraat 9F, M4H</text>
-          <text x="216" y="212">Nieuwe Maas</text>
-          <line class="thin" x1="416" y1="44" x2="416" y2="20"/>
-          <path class="thin" d="M410 28 L416 18 L422 28"/>
-          <text x="410" y="62">N</text>
-        </svg>
+        <img class="map" src="images/studio-kaart.svg" alt="Schematische kaart van de Nieuwe Maas in Rotterdam: op de noordelijke oever Merwe-Vierhavens en Delfshaven, met de studio in oranje gemarkeerd aan de Keilestraat; in het oosten een brug over de Maas; op de zuidoever de Maashaven." width="440" height="240" loading="lazy" decoding="async">
         <figcaption>Fig. 02 — De studio zit aan de Keilestraat in Merwe-Vierhavens, Rotterdam-West (Delfshaven).</figcaption>
       </figure>
     </div>
