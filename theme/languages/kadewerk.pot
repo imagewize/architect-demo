@@ -1,0 +1,552 @@
+# Copyright (C) 2026 Jasper Frumau
+# This file is distributed under the GNU General Public License v3 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Kadewerk 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/theme\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-10T10:29:25+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: kadewerk\n"
+
+#. Theme Name of the theme
+#: style.css
+#: functions.php:58
+msgid "Kadewerk"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://github.com/imagewize/architect-demo"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "Full-site-editing block theme for Bureau Kadewerk, a Rotterdam architecture firm. Forked from the Aviendha starter theme; the homepage is composed from the kadewerk/* patterns converted from index.html."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Jasper Frumau"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://imagewize.com"
+msgstr ""
+
+#: patterns/contact.php
+msgctxt "Pattern title"
+msgid "Contact"
+msgstr ""
+
+#: patterns/contact.php
+msgctxt "Pattern description"
+msgid "Plan een gesprek — lead, contactformulier (aludra/contact-section met Contact Form 7-kaart) en contactgegevens. Komt uit de contact-sectie van index.html. De mailto: form is vervangen door het Aludra-formulierblok; de veldteksten staan in de CF7-formulierconfiguratie (id vervangen door een echt formulier)."
+msgstr ""
+
+#: patterns/contact.php:19
+#: patterns/hero.php:33
+msgid "Plan een gesprek"
+msgstr ""
+
+#: patterns/contact.php:23
+msgid "Vertel ons kort over uw plan — een kavel, een pakhuis, een kerk of een heel woonblok. We nodigen u graag uit in ons pakhuis aan de Keilestraat, of we komen naar u toe. U hoort binnen twee werkdagen van ons."
+msgstr ""
+
+#: patterns/contact.php:37
+msgid "We gebruiken uw gegevens alleen om op uw aanvraag te reageren."
+msgstr ""
+
+#: patterns/contact.php:45
+msgid "Bureau Kadewerk"
+msgstr ""
+
+#: patterns/contact.php:51
+msgid "Bezoekadres"
+msgstr ""
+
+#: patterns/contact.php:63
+msgid "E-mail"
+msgstr ""
+
+#: patterns/contact.php:73
+msgid "Telefoon"
+msgstr ""
+
+#: patterns/contact.php:83
+msgid "Bereikbaar"
+msgstr ""
+
+#: patterns/contact.php:87
+msgid "ma–vr, 09.00–17.30"
+msgstr ""
+
+#: patterns/hero.php
+msgctxt "Pattern title"
+msgid "Hero"
+msgstr ""
+
+#: patterns/hero.php
+msgctxt "Pattern description"
+msgid "Hero van Bureau Kadewerk — kicker, titel, lead, acties, doorsnede-tekening en kerncijfers. Komt uit de hero-sectie van index.html."
+msgstr ""
+
+#: patterns/hero.php:19
+msgid "Architectenbureau — Rotterdam, sinds 2009"
+msgstr ""
+
+#: patterns/hero.php:23
+msgid "Precieze architectuur voor wonen en hergebruik."
+msgstr ""
+
+#: patterns/hero.php:27
+msgid "Bureau Kadewerk is een team van twaalf architecten in Rotterdam. Wij ontwerpen villa’s en woonblokken — en geven pakhuizen, kerken en scholen een tweede leven als woning of werkplek."
+msgstr ""
+
+#: patterns/hero.php:38
+msgid "Bekijk zes projecten"
+msgstr ""
+
+#: patterns/hero.php:45
+msgid "Doorsnede door een bestaand pakhuis: zadeldak in zwart poche met oranje dakraam, gesneden kopwanden met een raam op elke verdieping en een deur, twee ingevoegde vloerplaten, een trap, een maatvoering van 16,0 m en drie schaalfiguren op drie niveaus."
+msgstr ""
+
+#: patterns/hero.php:45
+msgid "Fig. 01 — Doorsnede bestaand pakhuis: gesneden zadeldak met oranje dakraam, kopwanden met ramen op elke verdieping en een deur, twee ingevoegde vloerplaten, trap, maatvoering 16,0 m en drie schaalfiguren op drie niveaus"
+msgstr ""
+
+#: patterns/hero.php:54
+#: patterns/studio.php:25
+msgid "Opgericht"
+msgstr ""
+
+#: patterns/hero.php:58
+msgid "2009"
+msgstr ""
+
+#: patterns/hero.php:64
+msgid "Mensen"
+msgstr ""
+
+#: patterns/hero.php:68
+msgid "12"
+msgstr ""
+
+#: patterns/hero.php:74
+#: patterns/studio.php:65
+msgid "Werkvelden"
+msgstr ""
+
+#: patterns/hero.php:78
+msgid "Wonen & hergebruik"
+msgstr ""
+
+#: patterns/hero.php:84
+#: patterns/studio.php:45
+msgid "Studio"
+msgstr ""
+
+#: patterns/hero.php:88
+msgid "M4H, Rotterdam"
+msgstr ""
+
+#: patterns/projecten.php
+msgctxt "Pattern title"
+msgid "Geselecteerde projecten"
+msgstr ""
+
+#: patterns/projecten.php
+msgctxt "Pattern description"
+msgid "Zes projectkaarten met opstand-tekening, beschrijving en meta. Komt uit de projecten-sectie van index.html."
+msgstr ""
+
+#: patterns/projecten.php:19
+msgid "Geselecteerde projecten"
+msgstr ""
+
+#: patterns/projecten.php:23
+msgid "Zes projecten uit 2019–2026 — van villa tot voormalige kerk."
+msgstr ""
+
+#: patterns/projecten.php:31
+msgid "Villa Veldzicht"
+msgstr ""
+
+#: patterns/projecten.php:41
+msgid "Opstand van Villa Veldzicht: glazen paviljoen onder een uitkragende dakplaat met verschoven bovenbouw, oranje voordeur, twee bomen en twee schaalfiguren."
+msgstr ""
+
+#: patterns/projecten.php:46
+msgid "Villa rond een beschutte binnentuin, met de woonkamer gericht op de Kralingse Plas."
+msgstr ""
+
+#: patterns/projecten.php:50
+msgid "Kralingen · Nieuwbouw villa · 2024"
+msgstr ""
+
+#: patterns/projecten.php:57
+msgid "Woonblok Maashaven"
+msgstr ""
+
+#: patterns/projecten.php:67
+msgid "Opstand van Woonblok Maashaven: vier verdiepingen met een raster van ramen, oranje dubbele entree op de begane grond, kade met water en een afgemeerd binnenvaartschip."
+msgstr ""
+
+#: patterns/projecten.php:72
+msgid "24 appartementen in een gesloten blok aan het water, waarvan 18 sociale huur."
+msgstr ""
+
+#: patterns/projecten.php:76
+msgid "Kop van Zuid · Woonblok · 2023"
+msgstr ""
+
+#: patterns/projecten.php:83
+msgid "Pakhuis Keilewerf"
+msgstr ""
+
+#: patterns/projecten.php:93
+msgid "Opstand van Pakhuis Keilewerf: pakhuis met trapgevel en metselverband, twee rijen kleine ramen, oranje laaddeur met hijsbalk, zaagdak-aanbouw en een binnenvaartschip aan de kade."
+msgstr ""
+
+#: patterns/projecten.php:98
+msgid "Voormalig pakhuis met twaalf loftwoningen en vier ateliers op de begane grond."
+msgstr ""
+
+#: patterns/projecten.php:102
+msgid "Merwe-Vierhavens (M4H) · Transformatie pakhuis · 2021"
+msgstr ""
+
+#: patterns/projecten.php:109
+msgid "De Hoeksteen"
+msgstr ""
+
+#: patterns/projecten.php:119
+msgid "Opstand van De Hoeksteen: voormalige kerk met schip en zadeldak, toren met spits, drie hoge vensters, oranje ingangsportaal, twee bomen en twee schaalfiguren."
+msgstr ""
+
+#: patterns/projecten.php:124
+msgid "Voormalige kerk met acht woningen rond de lichtinval van het middenschip."
+msgstr ""
+
+#: patterns/projecten.php:128
+msgid "Delfshaven · Kerk → woningen · 2019"
+msgstr ""
+
+#: patterns/projecten.php:135
+msgid "Kadeblok Noordereiland"
+msgstr ""
+
+#: patterns/projecten.php:145
+msgid "Opstand van Kadeblok Noordereiland: vier panden met zadeldaken aan de kade, twee ramen per verdieping, één oranje deur en een binnenvaartschip in het water."
+msgstr ""
+
+#: patterns/projecten.php:150
+msgid "Negen kadewoningen met kap en uitzicht op de Maas, direct aan de kade."
+msgstr ""
+
+#: patterns/projecten.php:154
+msgid "Noordereiland · 9 kadewoningen · 2022"
+msgstr ""
+
+#: patterns/projecten.php:161
+msgid "De Bergweg"
+msgstr ""
+
+#: patterns/projecten.php:171
+msgid "Opstand van De Bergweg: voormalige school, blok van 30 meter breed met zaagdak en schoorsteen, een lange band van tien ramen, oranje dubbele entree, twee bomen en twee schaalfiguren."
+msgstr ""
+
+#: patterns/projecten.php:176
+msgid "Voormalige basisschool, nu tien appartementen en een buurthuis in de zijvleugel."
+msgstr ""
+
+#: patterns/projecten.php:180
+msgid "Bergwegkwartier · School → wonen · 2020"
+msgstr ""
+
+#: patterns/quote.php
+msgctxt "Pattern title"
+msgid "Citaat"
+msgstr ""
+
+#: patterns/quote.php
+msgctxt "Pattern description"
+msgid "Citaat van een opdrachtgever op mist-achtergrond. Komt uit de quote-sectie van index.html."
+msgstr ""
+
+#: patterns/quote.php:19
+msgid "Ze luisterden eerst en tekenden daarna. Het ontwerp past bij ons én bij de straat — en de bouw verliep zonder verrassingen."
+msgstr ""
+
+#: patterns/quote.php:22
+msgid "J. van der Laan — particulier, Villa Veldzicht (Kralingen)"
+msgstr ""
+
+#: patterns/studio.php
+msgctxt "Pattern title"
+msgid "Over het bureau (studio)"
+msgstr ""
+
+#: patterns/studio.php
+msgctxt "Pattern description"
+msgid "Over het bureau — feiten, twee alinea’s en de kaart van de studio. Komt uit de studio-sectie van index.html."
+msgstr ""
+
+#: patterns/studio.php:19
+msgid "Over het bureau"
+msgstr ""
+
+#: patterns/studio.php:29
+msgid "2009, Rotterdam"
+msgstr ""
+
+#: patterns/studio.php:35
+msgid "Team"
+msgstr ""
+
+#: patterns/studio.php:39
+msgid "12 mensen"
+msgstr ""
+
+#: patterns/studio.php:49
+msgid "Eigen pakhuis, Keilestraat 9F, M4H"
+msgstr ""
+
+#: patterns/studio.php:55
+msgid "Werkgebied"
+msgstr ""
+
+#: patterns/studio.php:59
+msgid "Rotterdam en regio"
+msgstr ""
+
+#: patterns/studio.php:69
+msgid "Wonen · transformatie · interieur"
+msgstr ""
+
+#: patterns/studio.php:77
+msgid "Bureau Kadewerk is in 2009 opgericht in Rotterdam. We zijn met zijn twaalven: architecten, een interieurontwerper, een technisch tekenaar en een projectleider. Sinds 2016 werken we vanuit een eigen pakhuis in Merwe-Vierhavens — het gebouw dat we zelf hebben getransformeerd."
+msgstr ""
+
+#: patterns/studio.php:81
+msgid "We werken voor particulieren en woningcorporaties. Nieuwbouw villa’s en woonblokken, maar ook de transformatie van pakhuizen, kerken en scholen. Wat al die projecten gemeen hebben: daglicht, een heldere constructie en een gebouw dat bij de straat past."
+msgstr ""
+
+#: patterns/studio.php:87
+msgid "Schematische kaart van de Nieuwe Maas in Rotterdam: op de noordelijke oever Merwe-Vierhavens en Delfshaven, met de studio in oranje gemarkeerd aan de Keilestraat; in het oosten een brug over de Maas; op de zuidoever de Maashaven."
+msgstr ""
+
+#: patterns/studio.php:87
+msgid "Fig. 02 — De studio zit aan de Keilestraat in Merwe-Vierhavens, Rotterdam-West (Delfshaven)."
+msgstr ""
+
+#: patterns/werkwijze.php
+msgctxt "Pattern title"
+msgid "Werkwijze"
+msgstr ""
+
+#: patterns/werkwijze.php
+msgctxt "Pattern description"
+msgid "Vier stappen van idee tot sleutel. Komt uit de werkwijze-sectie van index.html."
+msgstr ""
+
+#: patterns/werkwijze.php:19
+msgid "In vier stappen van idee tot sleutel"
+msgstr ""
+
+#: patterns/werkwijze.php:23
+msgid "Vaste prijsafspraken per fase. U weet bij elke stap waar het project staat."
+msgstr ""
+
+#: patterns/werkwijze.php:34
+msgid "Kennismaking"
+msgstr ""
+
+#: patterns/werkwijze.php:38
+msgid "We beginnen op de plek zelf: een gesprek aan tafel, een ronde over de locatie en een analyse van programma, bestemmingsplan en buren."
+msgstr ""
+
+#: patterns/werkwijze.php:48
+msgid "Ontwerp in drie ronden"
+msgstr ""
+
+#: patterns/werkwijze.php:52
+msgid "Schets, voorontwerp en definitief ontwerp. Bij elke ronde presenteren we in beeld en op papier — en u beslist mee."
+msgstr ""
+
+#: patterns/werkwijze.php:62
+msgid "Bestek en aanbesteding"
+msgstr ""
+
+#: patterns/werkwijze.php:66
+msgid "We werken het ontwerp uit tot bestek en tekeningen, vragen offertes aan bij drie aannemers en bewaken prijs en planning."
+msgstr ""
+
+#: patterns/werkwijze.php:76
+msgid "Bouw en nazorg"
+msgstr ""
+
+#: patterns/werkwijze.php:80
+msgid "Tijdens de bouw zijn we wekelijks op de bouwplaats. Na de oplevering blijven we aanspreekpunt voor garantie en klein onderhoud."
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Paper"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Ink"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Accent"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Muted"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Line"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Mist"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Base"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Contrast"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Main"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Primary"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Primary Alt"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Secondary"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Tertiary"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Border Light"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "White"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Sans"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "X-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "XX-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Display"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "10"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "20"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "30"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "40"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "50"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "60"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "70"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr ""
