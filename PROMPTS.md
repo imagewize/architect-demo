@@ -21,7 +21,8 @@ vibe --agent <agent>
 | 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
 | 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | All three fixed, every check passes with no warnings | this commit |
 | 9 | Draw-on animation for all seven drawings | `wp-frontend-builder` | All seven animate; needed a second session, see notes under 9 | this commit |
-| 10 | Convert to WordPress | `wp-frontend-builder` | Not run yet | – |
+| 10 | Convert to a block theme | `wp-frontend-builder` | Not run yet | – |
+| 11 | Assemble on Aviendha + Aludra | `wp-frontend-builder` | Not run yet | – |
 
 ## 1. Build from brief
 
@@ -293,11 +294,55 @@ are byte-identical to the static ones, so the animation ends on exactly the fini
   animated SVG file (one hero PNG came out blank) and added `--force-prefers-reduced-motion`. The
   skill's render command should include that flag too.
 
-## 10. Convert to WordPress
+## 10. Convert to a block theme
 
 Agent: `wp-frontend-builder`, with the `html-to-block-theme` skill. Run it once the design is
-final.
+final. This path makes a self-contained theme; prompt 11 builds the same page on Aviendha +
+Aludra instead.
 
 ```
-Load html-to-block-theme and convert index.html into a block theme with one pattern per section.
+Load html-to-block-theme. Convert index.html into a full-site-editing block theme in a new theme/ folder in this repository: one registered pattern per <section> (hero, projecten, werkwijze, studio, quote, contact), plus header and footer template parts and a page template that stacks the patterns.
+- Generate theme.json from the page's locked --wp--preset--* tokens: paper #FFFFFF, ink #111111, accent #FF4F00, muted #595959, line #E3E3E3, mist #F7F7F8, the Helvetica stack as the sans font family, spacing scale 10-70. Reuse native slugs where they exist and keep the rest as custom presets under the same names.
+- Register the patterns as PHP files in the theme's patterns/ directory (auto-registration needs the pattern header comment). Copy the seven SVGs from images/ into theme/assets/img/ and reference them with get_theme_file_uri(), keeping the existing alt texts.
+- Replace the mailto: form with core form blocks as the WordPress stand-in; keep all Dutch copy verbatim.
+- The draw-on animation lives inside the SVG files, so <img> keeps it for free.
+- Validate before handing off: php -l on every PHP file, the theme activates without fatal errors, and every pattern parses in the editor with no unsupported-block warnings. List per pattern which section it came from and whatever did not map 1:1 to blocks.
 ```
+
+Why it is written this way:
+- **theme/ in this repo** keeps the demo in one place; a real client theme would be forked from Aviendha as in prompt 11.
+- **PHP pattern files + get_theme_file_uri():** auto-registered patterns must be .php files, and block markup cannot resolve theme-relative image URLs on its own.
+- **Tokens as presets** is what html-to-block-theme expects; the page already locks them as `--wp--preset--*`, so theme.json is a direct mapping.
+- **Core form blocks for the mailto:** a theme cannot send mail by itself.
+
+## 11. Assemble the homepage on Aviendha + Aludra
+
+Agent: `wp-frontend-builder`. The alternative to prompt 10: instead of converting the HTML into a
+theme, compose the same page from `aludra/*` blocks on a fork of the Aviendha starter theme
+(`~/code/aviendha` ships no patterns of its own and expects content blocks from the Aludra
+plugin, `~/code/aludra`). Aludra is a plugin, not a theme — WordPress.org theme review forbids
+themes registering their own blocks, which is why the split exists.
+
+```
+Create theme-kadewerk/ in this repository as a fork of ~/code/aviendha for Bureau Kadewerk, and build the homepage there as one pattern composed from aludra/* blocks:
+- Fork and rename: copy ~/code/aviendha to theme-kadewerk/, then rename every aviendha identifier to kadewerk — CSS class prefixes and keyframes (aviendha-header, aviendha-header-edge, ...), the PHP namespace and aviendha_* function prefix, the text domain, the phpcs.xml prefix rule, composer/npm package names, logo filenames in assets/logos/ and their references. Exception: CHANGELOG.md, README.md, readme.txt, AGENTS.md and CLAUDE.md keep naming Aviendha as the lineage; still reset the version to 1.0.0 there and in style.css, readme.txt and package.json. Verify with a grep for "aviendha" over the theme's code files that must come back empty. Then set the style.css header (Theme Name: Kadewerk, Text Domain: kadewerk) and give theme.json the palette below. Add a patterns/ directory; aviendha's package.json already wires npm run validate (wp-pattern-sentinel) for it.
+- Palette: map the page's locked tokens onto the color slugs Aludra's block styles resolve by (base, contrast, secondary, main, primary, accent, tertiary, border-light): base #FFFFFF, contrast #111111, primary #FF4F00, secondary #595959, tertiary #F7F7F8, border-light #E3E3E3. Helvetica stack as the sans font family.
+- patterns/homepage.php: one pattern mirroring index.html section by section, Dutch copy verbatim:
+  - hero: aludra/hero-split (heading "Precieze architectuur voor wonen en hergebruik.", lead, CTA "Plan een gesprek", images/hero-section.svg as the image)
+  - Geselecteerde projecten: six project cards with the six SVGs; pick between aludra/carousel (see patterns/carousel-portfolio-showcase.php in aludra), aludra/feature-cards and aludra/photo-grid, whichever fits image + title + meta best
+  - In vier stappen van idee tot sleutel: aludra/feature-list-grid or aludra/icon-grid
+  - Over het bureau: aludra/about or aludra/split-section, facts table plus the Fig. 02 map
+  - client quote: aludra/testimonial-grid (one quote)
+  - Plan een gesprek: aludra/contact-section (its form card needs Contact Form 7 active; note that) plus aludra/cta-banner
+- Copy the seven SVGs from images/ into theme-kadewerk/assets/img/ and reference them with get_theme_file_uri(). Their draw-on animation is inside the SVG, so it survives.
+- Point the page template at the pattern, php -l every PHP file, run npm run validate, and grep every aludra/* block name used in the pattern against ~/code/aludra/blocks/ to confirm it exists (run npm run build --workspaces --if-present in ~/code/aludra first if its build/ looks stale).
+- Connect it to a local site: wp valet new kadewerk (Laravel Valet, see the html-to-block-theme skill's references/local-environment.md), copy theme-kadewerk into the site's wp-content/themes/, wp theme activate kadewerk, and confirm the homepage pattern renders at http://kadewerk.test with a clean debug.log. The Aludra plugin must be active for the aludra/* blocks.
+- Report the final section-to-block mapping and anything index.html has that no aludra block covers.
+```
+
+Why it is written this way:
+- **Aviendha fork, not a converted theme:** prompt 10's theme cannot ship aludra blocks (theme-review rule); the Imagewize stack is theme (palette, header, footer) + plugin (content blocks), so the fork only carries the design system and the page pattern.
+- **Full rename, lineage kept:** a client theme must not ship aviendha identifiers (class prefixes, function prefix, text domain, package names), but CHANGELOG.md/README/readme.txt/AGENTS/CLAUDE keep naming Aviendha as the lineage — the starter theme's own fork rules. Connecting to a Valet site proves the rename: wp theme list must show kadewerk, not aviendha.
+- **Slug names matter:** Aludra's block styles resolve colors by slug, so the page palette must land on base/contrast/primary/... exactly.
+- **get_theme_file_uri():** pattern markup cannot resolve theme-relative image paths by itself.
+- **Block-name grep:** a pattern using a block the plugin does not register renders as an unsupported block, and the agent cannot open the editor, so checking names against aludra/blocks/ is the proof.
