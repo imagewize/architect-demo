@@ -48,7 +48,9 @@ The brief and every later prompt are in [`PROMPTS.md`](PROMPTS.md).
 ## Change requests and conversion
 
 [`PROMPTS.md`](PROMPTS.md) has the prompts to apply review notes, to review the page with
-`html-page-review`, and to convert the page to a block theme. Commit after every run you keep.
+`html-page-review`, and to convert the page to WordPress — either into a self-contained block
+theme (prompt 10) or assembled from Aludra blocks on an Aviendha fork (prompt 11). Commit after
+every run you keep.
 
 ## Stand-ins, not finished
 
