@@ -21,8 +21,9 @@ vibe --agent <agent>
 | 7 | True sizes, 2:1 cards and a richer hero section | `wp-frontend-builder` | True sizes back, 2:1 cards at one scale, hero with openings and skylight; two small fixes left, see notes under 7 | this commit |
 | 8 | Hero tree, caption wording, one Maashaven block | `wp-frontend-builder` | All three fixed, every check passes with no warnings | this commit |
 | 9 | Draw-on animation for all seven drawings | `wp-frontend-builder` | All seven animate; needed a second session, see notes under 9 | this commit |
-| 10 | Convert to a block theme | `wp-frontend-builder` | Not run yet | – |
-| 11 | Assemble on Aviendha + Aludra | `wp-frontend-builder` | Not run yet | – |
+| 10 | Convert to a block theme | `wp-frontend-builder` | Not run separately; run 11 built this in `theme/` instead | – |
+| 11 | Assemble on Aviendha + Aludra | `wp-frontend-builder` | Renamed fork, active on Valet, sentinel passes; but a core-block conversion with one Aludra block, see notes under 11 | `4376d1e` |
+| 11b | Aviendha + Aludra, rerun | `wp-frontend-builder` | Not run yet; needs `html-to-block-theme` 1.4.0 | – |
 
 ## 1. Build from brief
 
@@ -346,3 +347,47 @@ Why it is written this way:
 - **Slug names matter:** Aludra's block styles resolve colors by slug, so the page palette must land on base/contrast/primary/... exactly.
 - **get_theme_file_uri():** pattern markup cannot resolve theme-relative image paths by itself.
 - **Block-name grep:** a pattern using a block the plugin does not register renders as an unsupported block, and the agent cannot open the editor, so checking names against aludra/blocks/ is the proof.
+
+Result (`4376d1e`, with `html-to-block-theme` 1.3.0): a renamed Kadewerk fork, active on
+`https://kadewerk-demo.test` with Aludra and Contact Form 7. Sentinel passes on all six patterns,
+both parts and both templates, after failures on the first runs (6 errors in `projecten.php`). The
+agent needed help along the way: it had to be told to clone Aviendha and to use wp-pattern-sentinel,
+and the skill was updated three times during the run (1.1.0 to 1.3.0).
+- **Prompt 10 instead of 11:** the theme is in `theme/`, not `theme-kadewerk/`. It has six
+  patterns, one per section, built from `core/group` and `core/paragraph` with class names from
+  `index.html`, plus 561 lines of `style.css`. There is no `patterns/homepage.php`.
+- **One Aludra block:** only `aludra/contact-section`. hero-split, the project cards,
+  feature-list-grid, about, testimonial-grid and cta-banner were not used, and the block-name grep
+  was not run.
+- **Two palettes:** `theme.json` has the page tokens (`paper`, `ink`, `accent`, …) and also the
+  Aludra slugs (`base`, `contrast`, `primary`, …).
+- **Incomplete fork:** `package.json`, `composer.json`, `phpcs.xml`, `AGENTS.md`, `CLAUDE.md`,
+  `README.md` and `styles/` were not copied. Sentinel was run from inside `~/code/aviendha`, which
+  left six `sentinel-*.log.json` files in the starter repo.
+- **Cause:** the skill told the agent to prefer core blocks and named Aludra only as a fallback
+  before writing a custom block. Nothing listed Aludra's blocks or showed how to use them, so the
+  agent converted the HTML by hand. Every check passed, because none of them checked for Aludra.
+
+These led to `html-to-block-theme` 1.4.0 (mistral-toolbox PR #49): a choice between two build
+modes, a `composing-with-aludra.md` reference, fork fixes, and `$HOME` instead of `~` in
+`--path=`. Prompt 11b reruns this with it.
+
+## 11b. Aviendha + Aludra, rerun
+
+Agent: `wp-frontend-builder`, with `html-to-block-theme` 1.4.0. Run it on a branch so `theme/`
+from run 11 stays available for comparison. Before the run, delete the six sentinel logs in
+`~/code/aviendha`, and in `~/code/aludra` run `npm run build --workspaces --if-present` if its
+build looks stale. The site from run 11 can be reused: point its symlink at the new folder.
+
+Use prompt 11 as written, with this line added at the top:
+
+```
+Load html-to-block-theme and work in Mode B (Aviendha fork + Aludra blocks); read references/forking-a-starter-theme.md and references/composing-with-aludra.md first. Do not hand-build a section with core/group + CSS when an aludra block fits: copy the block's markup from ~/code/aludra/patterns/section-*.php and change only the content, and list every section no aludra block covers as a gap. Run npm and sentinel only inside theme-kadewerk/, never inside ~/code/aviendha.
+```
+
+Why it is written this way:
+- **Mode B named up front:** run 11 slid into a hand conversion. Naming the mode and the two
+  references makes the Aludra path the default.
+- **Copy markup from Aludra's own patterns:** the blocks are static, so their wrapper must match
+  `save()` exactly. Copying a working pattern is the fastest way to pass sentinel.
+- **Gaps listed, not hidden:** what no block covers shows what Aludra may need next.
