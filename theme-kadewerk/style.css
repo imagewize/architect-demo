@@ -1365,8 +1365,11 @@ main [id] { scroll-margin-top: 5.5rem; }
 /* Header — brand: wordmark and tagline stacked tight as in index.html; the group's default block gap left ~24px between them, and the group gap cannot be set per part in theme.json */
 .kadewerk-header .brand { gap: 0; }
 
-/* Header — narrow phones: wordmark + CTA + hamburger do not fit one row below 480px and the CTA wrapped onto a second row; the hero repeats the same button, so the header copy is dropped: media queries cannot live in theme.json */
-@media (max-width: 29.9375rem) {
+/* Header — CTA: the label never wraps; at ~490px the flex row squeezed it into a four-line column, and white-space is not expressible per instance in theme.json */
+.kadewerk-header .wp-block-button__link { white-space: nowrap; }
+
+/* Header — phones: wordmark + CTA + hamburger do not fit one row below 600px (where core's own mobile menu starts), so the header CTA is dropped there; the hero repeats the same button: media queries cannot live in theme.json */
+@media (max-width: 37.4375rem) {
 	.kadewerk-header .wp-block-buttons { display: none; }
 }
 
