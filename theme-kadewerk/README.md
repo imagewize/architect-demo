@@ -25,6 +25,16 @@ Unlike Imagewize's [Elayne](https://github.com/imagewize/elayne) theme, Aviendha
 
 > **Lineage:** Aviendha is a companion starter theme to Imagewize's [Elayne](https://github.com/imagewize/elayne) and [Nynaeve](https://github.com/imagewize/nynaeve) themes, and serves as the base for themes like [Ixian](https://github.com/imagewize/ixian). Like Elayne, it ships no custom blocks of its own — content blocks come from the shared [Aludra](https://github.com/imagewize/aludra) plugin, per WordPress.org's theme-review rules. (Nynaeve is a separate case: it registers its own blocks and doesn't use Aludra.)
 
+## Kadewerk homepage: required plugins
+
+This fork's homepage pattern (`patterns/homepage.php`) is composed from [Aludra](https://github.com/imagewize/aludra) blocks (`aludra/hero-split`, `stat-rail`, `spine-section`, `feature-cards`, `service-blocks`, `split-section`, `testimonial-grid`, `contact-section`, `cta-banner`). **Install and activate Aludra, or those blocks render as empty placeholders.** The contact section embeds a [Contact Form 7](https://wordpress.org/plugins/contact-form-7/) form; without it the form area stays empty. A dismissible admin notice (`inc/plugin-recommendations.php`) links to both plugins while one is missing.
+
+The form template, with visible labels and no placeholders, is in `assets/forms/contact-form-7-aanvraag.txt`. Paste it into the form's **Form** tab, or load it with WP-CLI (replace `7` with the form's ID):
+
+```bash
+wp post meta update 7 _form "$(cat assets/forms/contact-form-7-aanvraag.txt)"
+```
+
 ## Requirements
 
 - WordPress 6.6+

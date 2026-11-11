@@ -304,3 +304,10 @@ function kadewerk_render_template_shortcodes( $pre_render, $parsed_block ) {
 	return $pre_render;
 }
 add_filter( 'pre_render_block', __NAMESPACE__ . '\\kadewerk_render_template_shortcodes', 10, 2 );
+
+/**
+ * Admin notice for the plugins the homepage pattern depends on (Aludra, Contact Form 7).
+ */
+if ( is_admin() ) {
+	require_once get_template_directory() . '/inc/plugin-recommendations.php';
+}
