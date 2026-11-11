@@ -1340,7 +1340,7 @@ main [id] { scroll-margin-top: 5.5rem; }
 }
 
 /* Header — nav row: flex list with gaps and hover-only orange underline; core/navigation renders a ul that theme.json cannot lay out */
-.site-nav ul {
+.site-nav .wp-block-navigation__responsive-container:not(.is-menu-open) ul {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 0.4rem 1.5rem;
@@ -1362,17 +1362,18 @@ main [id] { scroll-margin-top: 5.5rem; }
 	font-size: var(--wp--preset--font-size--small);
 }
 
-/* Header — mobile: static masthead with the nav on its own hairline row: media queries cannot live in theme.json */
+/* Header — brand: wordmark and tagline stacked tight as in index.html; the group's default block gap left ~24px between them, and the group gap cannot be set per part in theme.json */
+.kadewerk-header .brand { gap: 0; }
+
+/* Header — narrow phones: wordmark + CTA + hamburger do not fit one row below 480px and the CTA wrapped onto a second row; the hero repeats the same button, so the header copy is dropped: media queries cannot live in theme.json */
+@media (max-width: 29.9375rem) {
+	.kadewerk-header .wp-block-buttons { display: none; }
+}
+
+/* Header — mobile: static masthead; the nav collapses to the hamburger overlay (§2.7), so no separate nav row is needed: media queries cannot live in theme.json */
 @media (max-width: 47.5rem) {
 	.kadewerk-header,
 	.wp-block-template-part:has(> .kadewerk-header) { position: static; }
-	.site-nav {
-		order: 3;
-		flex-basis: 100%;
-		margin-top: 0.85rem;
-		padding-top: 0.85rem;
-		border-top: 1px solid var(--wp--preset--color--border-light);
-	}
 }
 
 /* Kickers — hero, projects, werkwijze, studio, contact, footer: small Helvetica uppercase 0.12em in secondary, no leading rule, not monospace; aludra sets its own label styles with !important, which theme.json cannot override */
