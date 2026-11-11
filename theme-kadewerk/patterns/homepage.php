@@ -70,10 +70,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- wp:aludra/spine-section {"anchor":"projecten"} -->
 <div id="projecten" class="wp-block-aludra-spine-section alignfull" style="margin-top:0;margin-bottom:0"><div class="spine-section__shell"><div class="spine-section__spine"><p class="spine-section__label"><?php esc_html_e( 'Projecten', 'kadewerk' ); ?></p><h2 class="spine-section__heading"><?php esc_html_e( 'Geselecteerde projecten', 'kadewerk' ); ?></h2><p class="spine-section__aside"><?php esc_html_e( 'Zes projecten uit 2019–2026 — van villa tot voormalige kerk.', 'kadewerk' ); ?></p></div><div class="spine-section__content"><!-- wp:aludra/feature-cards -->
-<div class="wp-block-aludra-feature-cards alignfull"><div class="feature-cards__inner"><!-- wp:group {"className":"feature-cards__grid","layout":{"type":"constrained"}} -->
+<div class="wp-block-aludra-feature-cards alignfull"><div class="feature-cards__inner"><!-- wp:group {"className":"feature-cards__grid"} -->
 <div class="wp-block-group feature-cards__grid">
 <!-- wp:group {"className":"feature-card project","layout":{"type":"flex","orientation":"vertical","gap":"1rem"}} -->
-<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
+<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
 <div class="wp-block-group project-top"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading"><?php esc_html_e( 'Villa Veldzicht', 'kadewerk' ); ?></h3>
 <!-- /wp:heading -->
@@ -99,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"feature-card project","layout":{"type":"flex","orientation":"vertical","gap":"1rem"}} -->
-<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
+<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
 <div class="wp-block-group project-top"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading"><?php esc_html_e( 'Woonblok Maashaven', 'kadewerk' ); ?></h3>
 <!-- /wp:heading -->
@@ -125,7 +125,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"feature-card project","layout":{"type":"flex","orientation":"vertical","gap":"1rem"}} -->
-<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
+<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
 <div class="wp-block-group project-top"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading"><?php esc_html_e( 'Pakhuis Keilewerf', 'kadewerk' ); ?></h3>
 <!-- /wp:heading -->
@@ -151,7 +151,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"feature-card project","layout":{"type":"flex","orientation":"vertical","gap":"1rem"}} -->
-<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
+<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
 <div class="wp-block-group project-top"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading"><?php esc_html_e( 'De Hoeksteen', 'kadewerk' ); ?></h3>
 <!-- /wp:heading -->
@@ -177,7 +177,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"feature-card project","layout":{"type":"flex","orientation":"vertical","gap":"1rem"}} -->
-<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
+<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
 <div class="wp-block-group project-top"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading"><?php esc_html_e( 'Kadeblok Noordereiland', 'kadewerk' ); ?></h3>
 <!-- /wp:heading -->
@@ -203,7 +203,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- /wp:group -->
 
 <!-- wp:group {"className":"feature-card project","layout":{"type":"flex","orientation":"vertical","gap":"1rem"}} -->
-<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
+<div class="wp-block-group feature-card project"><!-- wp:group {"className":"project-top","layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between","verticalAlignment":"baseline","gap":"1rem"}} -->
 <div class="wp-block-group project-top"><!-- wp:heading {"level":3} -->
 <h3 class="wp-block-heading"><?php esc_html_e( 'De Bergweg', 'kadewerk' ); ?></h3>
 <!-- /wp:heading -->
@@ -361,7 +361,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- /wp:aludra/testimonial-grid -->
 
 <!-- wp:aludra/contact-section {"className":"is-style-light","anchor":"contact"} -->
-<div id="contact" class="wp-block-aludra-contact-section alignfull is-style-light" style="margin-top:0;margin-bottom:0"><div class="contact-section__inner"><!-- wp:group {"className":"contact-section__intro","style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"constrained"}} -->
+<div id="contact" class="wp-block-aludra-contact-section alignfull is-style-light" style="margin-top:0;margin-bottom:0"><div class="contact-section__inner"><!-- wp:group {"className":"contact-section__intro","style":{"spacing":{"blockGap":"16px"}}} -->
 <div class="wp-block-group contact-section__intro"><!-- wp:paragraph {"className":"contact-section__label"} -->
 <p class="contact-section__label"><?php esc_html_e( 'Contact', 'kadewerk' ); ?></p>
 <!-- /wp:paragraph -->
