@@ -1,0 +1,1267 @@
+/*
+Theme Name: Kadewerk
+Theme URI: https://kadewerk-demo.test
+Author: Jasper Frumau
+Author URI: https://imagewize.com
+Description: Kadewerk is a full-site-editing theme for Bureau Kadewerk, an architecture studio in Rotterdam. Forked from the Aviendha starter theme.
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 8.0
+Version: 1.0.0
+License: GNU General Public License v3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: kadewerk
+Tags: e-commerce, full-site-editing, custom-colors, custom-logo, custom-menu, editor-style, featured-images, grid-layout, template-editing, translation-ready, wide-blocks
+
+Kadewerk WordPress Theme, (C) 2026 Jasper Frumau
+Kadewerk is distributed under the terms of the GNU GPL v3 (or later).
+*/
+
+/*
+ * The design system lives in theme.json — this file only holds what
+ * theme.json cannot express: sticky positioning, pseudo-classes, media
+ * queries, and overrides of core block styles that ship `!important`.
+ *
+ * 1. Template parts (global)
+ * 2. Header
+ *    2.1 Sticky masthead
+ *    2.2 Scroll edge (light header)
+ *    2.3 Wordmark and logo
+ *    2.4 CTA button
+ *    2.5 Navigation underline
+ *    2.6 Overlay navigation
+ *    2.7 Account icon
+ * 3. Footer
+ * 4. Utilities
+ *    4.1 Eyebrow
+ * 5. Content rhythm
+ * 6. Single post
+ *    6.1 Post meta line
+ *    6.2 Two-column article and sticky sidebar
+ *    6.3 Prose
+ *    6.4 Post tail and author card
+ *    6.5 Sidebar widgets
+ *    6.6 Related posts
+ *    6.7 Comments
+ *    6.8 Reading-progress bar
+ * 7. Pagination
+ */
+
+/* -------------------------------------------------------------------------
+ * 1. Template parts (global)
+ * ------------------------------------------------------------------------- */
+
+/*
+ * Core's `:where(.wp-site-blocks) > *` global style adds a 24px
+ * margin-block-start to every top-level block, including the
+ * wp-block-template-part wrapper WordPress injects around header/footer —
+ * not to the .kadewerk-header--dark/.foot block inside it, so setting
+ * margin on those directly has no effect on the wrapper. Reset it for all
+ * template parts generally (same fix as Imagewize's Elayne theme uses),
+ * since no template part should carry the inter-block content gap.
+ */
+.wp-site-blocks > .wp-block-template-part {
+	margin-block-start: 0;
+}
+
+/*
+ * Pin the footer to the bottom on short pages, where it would otherwise float
+ * mid-viewport with dead space beneath it.
+ *
+ * Safe to make `.wp-site-blocks` a flex column: its children stretch to full
+ * width by default, so the constrained-layout margins that produce alignwide
+ * and alignfull still resolve against the same box they did before.
+ */
+.wp-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+/*
+ * `main` takes up the slack. Its background is transparent, so on an ordinary
+ * prose page the stretch is indistinguishable from the content area around it —
+ * base on base, nothing to see.
+ */
+.wp-site-blocks > main {
+	flex: 1 0 auto;
+}
+
+/*
+ * The WooCommerce coming-soon template wraps its `main` in the block's own
+ * `.wp-block-woocommerce-coming-soon` div, so `main` is no longer a direct child
+ * of `.wp-site-blocks` and the rule above cannot reach it. The wrapper is the
+ * direct child instead, and — with no background of its own — it stands in for
+ * `main` here: growing it stretches base on base, invisibly, and the footer
+ * still settles at the bottom on a short page.
+ */
+.wp-site-blocks > .wp-block-woocommerce-coming-soon {
+	flex: 1 0 auto;
+}
+
+/*
+ * Unless the page ends in a full-bleed section, where that same transparent
+ * stretch reads as a base-coloured strip below the section's own colour. Then
+ * the section itself should absorb the space instead, so its background simply
+ * continues to the footer.
+ *
+ * Growing the footer rather than `main` was the other way to hide the strip, but
+ * it is the same region either way — only the colour changes — and a viewport's
+ * worth of it in the footer's tertiary reads as an enormous footer on a short
+ * page (622px of it on the Sample Page). Absorbing the space is what removes it.
+ *
+ * Scoped with `:has()` rather than applied to every page for two reasons: `float`
+ * is ignored on flex items, so an `alignleft`/`alignright` image inside
+ * `entry-content` would stop wrapping its text — a real cost on prose pages, and
+ * one they get nothing back for, since their filler is already invisible. Pages
+ * that end in an `alignfull` section are section-built and do not float. Where
+ * `:has()` is unsupported the chain simply never engages and the base-coloured
+ * strip comes back, which is the unstyled behaviour anyway.
+ */
+.wp-site-blocks > main:has(> .entry-content > :last-child.alignfull),
+.wp-site-blocks > main:has(> .entry-content > :last-child.alignfull) > .entry-content {
+	display: flex;
+	flex-direction: column;
+}
+
+.wp-site-blocks > main:has(> .entry-content > :last-child.alignfull) > .entry-content,
+.wp-site-blocks > main:has(> .entry-content > :last-child.alignfull) > .entry-content > :last-child {
+	flex: 1 0 auto;
+}
+
+/* -------------------------------------------------------------------------
+ * 2. Header
+ * ------------------------------------------------------------------------- */
+
+/* 2.1 Sticky masthead
+ * ------------------------------------------------------------------------- */
+
+/*
+ * Both variants stick. The rules below are scoped to `.kadewerk-header` rather
+ * than `.kadewerk-header--dark` wherever they are tonal-neutral, so the light
+ * header is a colour alternative rather than a header with features missing.
+ */
+.kadewerk-header {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+}
+
+/*
+ * When the header part renders inside a wrapper element (template-part
+ * `tagName`, or the block editor's part boundary), the wrapper is only as
+ * tall as the header itself, so a sticky child has no scroll range to move
+ * within and never sticks. Make the wrapper the sticky element in that case.
+ */
+.wp-block-template-part:has(> .kadewerk-header) {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+}
+
+/* 2.2 Scroll edge (light header)
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The light header sits on `base` and so does the page under it, so a resting
+ * border has no tonal change to describe — it reads as a scratch rather than a
+ * boundary. Instead the edge appears only once the page has moved, when the
+ * sticky masthead genuinely is above something.
+ *
+ * Done with a scroll-driven animation rather than a scroll listener because the
+ * theme ships no JavaScript. Where `scroll()` is unsupported the header simply
+ * stays flush, which is the rest state we are choosing anyway — so no fallback
+ * is needed. The dark header is excluded: it carries its own light hairline in
+ * the block markup, and a `border-light` shadow under it would read as a seam.
+ *
+ * The colours are literal because a keyframe needs the transparent stop to be
+ * the same colour at zero alpha: `#e5ded2` is `border-light`, `#211c1a` is
+ * `contrast`. Same hex-with-alpha idiom the dark header's border uses.
+ */
+@supports (animation-timeline: scroll()) {
+	.kadewerk-header:not(.kadewerk-header--dark) {
+		animation: kadewerk-header-edge linear both;
+		animation-range: 0 8px;
+		animation-timeline: scroll(root block);
+	}
+}
+
+@keyframes kadewerk-header-edge {
+	from {
+		box-shadow:
+			0 1px 0 0 #e5ded200,
+			0 8px 24px -18px #211c1a00;
+	}
+
+	to {
+		box-shadow:
+			0 1px 0 0 #e5ded2,
+			0 8px 24px -18px #211c1a80;
+	}
+}
+
+/* 2.3 Wordmark and logo
+ * ------------------------------------------------------------------------- */
+
+.kadewerk-header .wp-block-site-title a {
+	font-family: var(--wp--preset--font-family--sans);
+	font-weight: 800;
+	font-size: 1.15rem;
+	letter-spacing: -0.03em;
+	text-decoration: none;
+}
+
+.kadewerk-header .wp-block-site-title a:hover {
+	text-decoration: none;
+}
+
+/* For the Kadewerk marketing site: hide logo when using text wordmark */
+body .kadewerk-header--dark .wp-block-site-logo {
+	display: none;
+}
+
+/* 2.4 CTA button
+ * ------------------------------------------------------------------------- */
+
+/*
+ * Shape and type are shared; colour is not. The light header uses the filled
+ * `primary` button straight from theme.json (`styles.elements.button`), so it
+ * needs no colour rules here at all — including hover, which theme.json already
+ * takes to `primary-alt`. Only the dark header's outline treatment is below.
+ */
+.kadewerk-header__cta .wp-block-button__link {
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--x-small);
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	padding: 0.5rem 0.9rem;
+	border-radius: 999px;
+	white-space: nowrap;
+	transition: background-color 0.18s, border-color 0.18s, color 0.18s;
+}
+
+/*
+ * Drop the CTA below 600px, where the wordmark, the hamburger and the two icons
+ * leave less than the button's ~150px and it runs off the right edge. Above that
+ * it always has room — §2.7 keeps the navigation collapsed until 1024px, and by
+ * the time the menu goes inline the row is wide enough for both.
+ *
+ * The `.wp-block-buttons >` part is load-bearing, not decoration: core emits
+ * `.wp-block-buttons > .wp-block-button { display: inline-block }`, and a lone
+ * class selector here loses to it and leaves the button visible.
+ */
+@media (max-width: 599px) {
+	.kadewerk-header .wp-block-buttons > .kadewerk-header__cta {
+		display: none;
+	}
+}
+
+/* 2.5 Navigation underline
+ * ------------------------------------------------------------------------- */
+
+/*
+ * Wipe-in underline on hover, held open for the current page. `currentColor`
+ * rather than `primary` so the same rule serves both headers — primary against
+ * the dark header's `main` background is too low-contrast to read as a marker.
+ *
+ * Hooked on `[aria-current="page"]`, which core puts on the link itself, rather
+ * than the `.current-menu-item` class it puts on the `li`. Scoped to the
+ * top-level container so submenu items do not pick it up.
+ */
+.kadewerk-header .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content {
+	position: relative;
+	text-decoration: none;
+}
+
+.kadewerk-header .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content::after {
+	background: currentColor;
+	bottom: -0.25em;
+	content: "";
+	height: 2px;
+	left: 0;
+	position: absolute;
+	right: 0;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.16s ease;
+}
+
+.kadewerk-header .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content:hover::after,
+.kadewerk-header .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content[aria-current="page"]::after {
+	transform: scaleX(1);
+}
+
+/*
+ * The mobile overlay stacks the same links full-width, where an underline
+ * spanning the whole row reads as a divider rather than a marker.
+ */
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content::after {
+	content: none;
+}
+
+.kadewerk-header--dark .kadewerk-header__cta .wp-block-button__link {
+	border-color: rgb(250 247 242 / 0.3);
+}
+
+.kadewerk-header--dark .kadewerk-header__cta .wp-block-button__link:hover {
+	background-color: var(--wp--preset--color--base);
+	/* !important needed: the saved button markup carries has-base-color,
+	 * and core emits `.has-base-color { color: ... !important }` — a plain
+	 * override here loses to that, leaving white text on the white hover
+	 * background. */
+	color: var(--wp--preset--color--main) !important;
+	border-color: var(--wp--preset--color--base);
+}
+
+/* 2.6 Actions cluster order
+ * ------------------------------------------------------------------------- */
+
+/*
+ * `.kadewerk-header__actions` (parts/header.html, parts/header-dark.html)
+ * holds the icon/CTA group and the navigation block in that source order, so
+ * the hamburger renders last — rightmost, with the CTA immediately before
+ * it — which is what a collapsed header (below 1024px, see §2.7) wants.
+ *
+ * Once the navigation goes inline at 1024px+, that same order would put the
+ * link row after the icons and CTA, which reads backwards for a desktop
+ * masthead — so only there, pull it back in front with `order`. The page-list
+ * fallback stays a hamburger at every width (§2.7), so it keeps its place.
+ */
+@media (min-width: 1024px) {
+	.kadewerk-header__actions .wp-block-navigation:not(:has(.wp-block-page-list)) {
+		order: -1;
+	}
+}
+
+/* 2.7 Overlay navigation
+ * ------------------------------------------------------------------------- */
+
+/*
+ * Raise the overlay breakpoint from core's 600px to 1024px.
+ *
+ * `overlayMenu: "mobile"` only takes the three keywords, so the width at which
+ * the navigation collapses is not configurable — core hardcodes it in two rules
+ * inside `@media (min-width: 600px)`: one flips `.wp-block-navigation__responsive-container`
+ * from the hidden fixed-position overlay to an inline block, the other hides the
+ * hamburger. Between 600px and 1024px that left the inline menu competing with
+ * the wordmark, the cart and account icons and the CTA, and the row wrapped — a
+ * 105px-tall masthead on a tablet.
+ *
+ * Restoring those two declarations to their base values across the band is the
+ * whole fix: everything else about the overlay, including the fixed positioning
+ * it needs when open, already lives outside the media query.
+ *
+ * 1024px rather than a rounder 960px because the masthead's own contents decide
+ * it: this menu's six items plus the wordmark, icons and CTA measure 973px, so
+ * at 960px the row still wrapped. A longer menu would want this raised again.
+ */
+@media (min-width: 600px) and (max-width: 1023px) {
+	.kadewerk-header .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+		display: none;
+	}
+
+	.kadewerk-header .wp-block-navigation__responsive-container-open:not(.always-shown) {
+		display: flex;
+	}
+}
+
+/*
+ * Keep the inline menu on one line.
+ *
+ * Core lets the top-level list wrap, so a menu wider than the space beside the
+ * wordmark broke into two or three rows and the masthead grew with it. The
+ * header is built for a short, curated menu, so hold the list and each label
+ * on a single line instead.
+ */
+@media (min-width: 1024px) {
+	.kadewerk-header .wp-block-navigation__responsive-container:not(.is-menu-open) .wp-block-navigation__container {
+		flex-wrap: nowrap;
+	}
+
+	.kadewerk-header .wp-block-navigation__responsive-container:not(.is-menu-open) .wp-block-navigation-item__content {
+		white-space: nowrap;
+	}
+
+	.kadewerk-header .wp-block-site-title {
+		white-space: nowrap;
+	}
+}
+
+/*
+ * No menu assigned: collapse to the hamburger at every width.
+ *
+ * Until a menu is chosen, core fills the navigation block with a page list —
+ * every published page, nested or not. That list has no upper bound (a site
+ * with the Theme Unit Test data has two dozen top-level pages), so no
+ * breakpoint can keep it on one line beside the wordmark. The page list is the
+ * one case we can detect in CSS (`.wp-block-page-list` only renders for it), so
+ * route it to the overlay, which handles any length. Once a menu is assigned,
+ * the inline menu above takes over again.
+ *
+ * Same two declarations as the tablet band above, applied from 600px up.
+ * Where `:has()` is unsupported the fallback simply stays inline.
+ */
+@media (min-width: 600px) {
+	.kadewerk-header .wp-block-navigation:has(.wp-block-page-list) .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) {
+		display: none;
+	}
+
+	.kadewerk-header .wp-block-navigation:has(.wp-block-page-list) .wp-block-navigation__responsive-container-open:not(.always-shown) {
+		display: flex;
+	}
+}
+
+/*
+ * Core shrink-wraps the overlay's link list to its own content width, then
+ * right-aligns that shrink-wrapped box against the modal's already-padded
+ * edge (`align-items: flex-end` on the container-content, matching the
+ * collapsed hamburger's own justification) — the same edge inset the close
+ * button sits inside. Right-anchoring a shrink-wrapped box that way is
+ * fragile: anything that widens the list past its measured content width
+ * (a longer translated label, a larger accessibility text-size setting)
+ * pushes its edge past the modal boundary with no margin to absorb it, and
+ * the link reads as clipped against the screen edge.
+ *
+ * Stretch the list to the full padded content width instead, then
+ * right-align each link's own text inside that guaranteed box. The list can
+ * no longer be wider than the box it's aligned within, so its edge — and
+ * the close button's — stay pinned to the same padded inset regardless of
+ * label length.
+ */
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+	align-items: stretch;
+}
+
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+	text-align: right;
+}
+
+/*
+ * Core insets the overlay (and, with it, the close button pinned to its
+ * top-right corner) from the screen edge via the `--wp--style--root--padding-*`
+ * custom properties that `settings.useRootPaddingAwareAlignments` is meant to
+ * supply. Here they resolve to nothing usable, so the overlay's own padding
+ * collapses to 0 and the close button lands flush against the literal
+ * top-right corner of the screen — well above and outside of where the
+ * hamburger it replaces actually sits.
+ *
+ * Give the overlay the header's own padding directly instead of relying on
+ * that chain, so the close button opens right where the hamburger was. This
+ * also becomes the right-hand inset the link list (§ above) stretches
+ * against, keeping both edges aligned.
+ */
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open {
+	padding-top: var(--wp--preset--spacing--small);
+	padding-right: var(--wp--preset--spacing--small);
+}
+
+/*
+ * The dark header's navigation has no background of its own, so core's
+ * `.wp-block-navigation:not(.has-background) …is-menu-open` rule paints the
+ * mobile overlay white — while the block's `textColor: "base"` keeps the
+ * links and close button white too, leaving the open menu unreadable.
+ *
+ * Scoped to `.is-menu-open`: with `overlayMenu: "mobile"` the container
+ * carries no `hidden-by-default` class, so above 600px core reuses that same
+ * element to render the inline desktop nav. An unscoped rule here would
+ * darken those desktop links against the dark masthead.
+ *
+ * !important needed: the navigation markup carries has-base-color, and core
+ * emits `.has-base-color { color: ... !important }`.
+ */
+.kadewerk-header--dark .wp-block-navigation__responsive-container.is-menu-open,
+.kadewerk-header--dark .wp-block-navigation__responsive-container.is-menu-open * {
+	color: var(--wp--preset--color--main) !important;
+}
+
+/* 2.8 Account icon
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The customer-account block renders as a link, so it picks up the global
+ * `primary` link colour — rose, which is too low-contrast on the dark header's
+ * `main` background and reads as a different element from the mini cart beside
+ * it. Inherit the surrounding header text colour instead, so the account icon
+ * follows the cart in both headers: `base` on the dark header, `contrast` on
+ * the light one. The icon's SVG paints in `currentColor`, so it comes along.
+ */
+.kadewerk-header .wp-block-woocommerce-customer-account a {
+	color: inherit;
+}
+
+/*
+ * Size the account icon. WooCommerce ships its sizing rule against
+ * `.wc-block-customer-account__account-icon`, but the block actually renders
+ * the SVG with `class="icon"` (its `iconClass` default) — the two never match,
+ * so the icon collapses to zero and is invisible in every display mode. Give
+ * it an explicit size here; the `:not()` leaves the dropdown caret, which
+ * carries its own dimensions, alone. `em` so it tracks the header font size,
+ * matching WooCommerce's intended 1.5em.
+ */
+.kadewerk-header .wp-block-woocommerce-customer-account svg:not(.wc-block-customer-account__caret) {
+	height: 1.5em;
+	width: 1.5em;
+}
+
+/* -------------------------------------------------------------------------
+ * 3. Footer
+ * ------------------------------------------------------------------------- */
+
+/*
+ * Two rows: the brand (site title and tagline) with the footer menu beside it,
+ * then a hairline and the credits. Both rows are core flex groups that wrap, so
+ * the layout holds at any width; the rules below only set proportions and
+ * colour, and stack the rows on narrow screens (§3.1).
+ *
+ * The site title and tagline are blocks rather than literal text, so the footer
+ * names whatever site it is installed on.
+ */
+.foot {
+	color: var(--wp--preset--color--secondary);
+}
+
+.foot__top {
+	gap: var(--wp--preset--spacing--medium);
+}
+
+.foot__brand {
+	flex: 0 1 18rem;
+	gap: 0.35rem;
+}
+
+.foot__brand .wp-block-site-title {
+	color: var(--wp--preset--color--contrast);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+.foot__brand .wp-block-site-tagline {
+	margin: 0;
+}
+
+.foot__brand .wp-block-site-tagline:empty {
+	display: none;
+}
+
+/*
+ * The menu takes the space the brand leaves and wraps inside it, so a long
+ * menu — or the page-list fallback on a site with no menu assigned — becomes a
+ * tidy right-aligned block rather than running the full width of the footer.
+ */
+.foot .wp-block-navigation {
+	flex: 1 1 24rem;
+	margin: 0;
+	padding: 0;
+}
+
+.foot .wp-block-navigation__container,
+.foot .wp-block-navigation .wp-block-page-list {
+	column-gap: 1.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 0.6rem;
+	justify-content: flex-end;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.foot .wp-block-navigation-item {
+	margin: 0;
+	padding: 0;
+}
+
+/*
+ * The footer lists top-level items only. Child pages stay reachable through
+ * the header menu; in a footer a dropdown opening above the fold of the page
+ * end reads as a glitch rather than a menu.
+ */
+.foot .wp-block-navigation__submenu-container,
+.foot .wp-block-navigation__submenu-icon,
+.foot .wp-block-page-list__submenu-icon {
+	display: none;
+}
+
+.foot a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.foot a:hover,
+.foot a:focus-visible {
+	color: var(--wp--preset--color--primary);
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+
+.foot__brand .wp-block-site-title a {
+	color: inherit;
+}
+
+.foot__bottom {
+	border-top: 1px solid var(--wp--preset--color--border-light);
+	gap: 0.5rem 1.5rem;
+	margin-top: var(--wp--preset--spacing--medium);
+	padding-top: var(--wp--preset--spacing--small);
+}
+
+.foot__bottom p {
+	margin: 0;
+}
+
+/* 3.1 Narrow footer layout
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The footer navigation never collapses into a hamburger — the block itself
+ * sets `overlayMenu: "never"` (see parts/footer.html), so core renders a plain
+ * list at every width and emits no overlay markup. Below tablet width the brand
+ * and menu stack, and the menu turns left-aligned under the brand.
+ *
+ * With no assigned menu the nav falls back to a page list, which core nests as
+ * `__container > .wp-block-page-list > li` — so both levels need the alignment.
+ */
+@media (max-width: 781px) {
+	.foot__top {
+		flex-direction: column;
+	}
+
+	.foot__brand,
+	.foot .wp-block-navigation {
+		flex-basis: auto;
+	}
+
+	.foot .wp-block-navigation__container,
+	.foot .wp-block-navigation .wp-block-page-list {
+		justify-content: flex-start;
+	}
+}
+
+/* -------------------------------------------------------------------------
+ * 4. Utilities
+ * ------------------------------------------------------------------------- */
+
+/* 4.1 Eyebrow
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The theme's one repeated structural device: a mono, letter-spaced label
+ * introduced by a short rule. Add it as a class on any block that carries a
+ * short piece of text — a paragraph, a post-terms block — to mark a section
+ * without spending a heading on it.
+ *
+ * theme.json can't express it: the leading rule is a pseudo-element, and the
+ * class has to be available to arbitrary blocks rather than to one block type.
+ */
+.kadewerk-eyebrow {
+	align-items: baseline;
+	color: var(--wp--preset--color--main-accent);
+	display: flex;
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--xx-small);
+	font-weight: 600;
+	gap: 0.6rem;
+	letter-spacing: 0.14em;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+
+.kadewerk-eyebrow::before {
+	background: currentColor;
+	content: "";
+	flex: none;
+	height: 1px;
+	translate: 0 -0.28em;
+	width: 1.5rem;
+}
+
+.kadewerk-eyebrow a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.kadewerk-eyebrow a:hover {
+	color: var(--wp--preset--color--primary);
+}
+
+/* -------------------------------------------------------------------------
+ * 5. Content rhythm
+ * ------------------------------------------------------------------------- */
+
+/*
+ * theme.json sets the global `blockGap` that separates blocks, and an `h2` top
+ * margin that opens a section up. What it cannot express is the other half of
+ * the pairing — a heading should sit *close* to the block it introduces, which
+ * needs a sibling selector.
+ *
+ * Without this the full block gap lands between a heading and its own first
+ * paragraph, and the heading reads as belonging to the text above it.
+ */
+.entry-content :is(h2, h3, h4, h5, h6) + * {
+	margin-block-start: var(--wp--preset--spacing--small);
+}
+
+/* -------------------------------------------------------------------------
+ * 6. Single post
+ *
+ * All scoped to the `.single` body class core adds on single posts, so none
+ * of it leaks onto pages or archives. Layout primitives (the sticky sidebar,
+ * the two-column collapse) and pseudo-elements live here because theme.json
+ * cannot express them; colours and type reference the presets as everywhere
+ * else.
+ * ------------------------------------------------------------------------- */
+
+/* 6.1 Post meta line
+ * ------------------------------------------------------------------------- */
+
+/*
+ * A mono, letter-spaced byline under the title: avatar, author, date. Built
+ * from core blocks (avatar / post-author-name / post-date) rather than one
+ * block, so each piece can be styled and a reading-time block can slot in
+ * later without disturbing the rest.
+ */
+.kadewerk-post-meta {
+	color: var(--wp--preset--color--main-accent);
+	font-family: var(--wp--preset--font-family--sans);
+	gap: 0.55rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.kadewerk-post-meta .wp-block-avatar {
+	line-height: 0;
+}
+
+.kadewerk-post-meta .wp-block-avatar img {
+	border-radius: 999px;
+}
+
+/* "By" reads muted (inherits the block colour); the name link takes contrast. */
+.kadewerk-post-meta .wp-block-post-author-name::before {
+	content: "By ";
+}
+
+.kadewerk-post-meta .wp-block-post-author-name a {
+	color: var(--wp--preset--color--contrast);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+/* A hairline dot separates the date from the author; the flex gap does the spacing. */
+.kadewerk-post-meta .wp-block-post-date::before {
+	color: var(--wp--preset--color--sand-deep);
+	content: "·";
+	padding-right: 0.55rem;
+}
+
+.kadewerk-post-meta .wp-block-post-date a,
+.kadewerk-post-meta .wp-block-post-date time {
+	color: inherit;
+	text-decoration: none;
+}
+
+/* The lede under the title: colour and size come from the block; cap the measure. */
+.kadewerk-post-lede {
+	max-width: 56ch;
+}
+
+/* 6.2 Two-column article and sticky sidebar
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The content column has no width (it grows); the sidebar column is a fixed
+ * 300px. Two columns that both carry a percentage summing to 100% wrap onto
+ * two rows once the column gap is added, so the grow-plus-fixed pairing is
+ * what keeps them on one row.
+ *
+ * Sticky is not a core group support, so the inner sidebar group carries a
+ * class and the positioning lives here. The offset clears the sticky masthead
+ * (~66px) plus a little breathing room.
+ */
+.single .kadewerk-sidebar__sticky {
+	position: sticky;
+	top: 5.5rem;
+}
+
+/*
+ * Collapse to one column below 980px — earlier than core's own 782px column
+ * stacking, because the 300px sidebar beside a shrinking content column gets
+ * cramped before then. Once stacked, the sidebar drops its sticky behaviour
+ * (nothing to stick against in a single column) and sits below the article.
+ */
+@media (max-width: 980px) {
+	.single .kadewerk-article > .wp-block-column {
+		flex-basis: 100%;
+	}
+
+	.single .kadewerk-sidebar__sticky {
+		position: static;
+	}
+}
+
+/* 6.3 Prose
+ * ------------------------------------------------------------------------- */
+
+/*
+ * theme.json and §5 handle block rhythm; these are the post-body flourishes
+ * that need element or pseudo selectors: a display-face pull quote, primary
+ * list markers, and a drop cap on a post that opens with a paragraph.
+ */
+.single .entry-content blockquote {
+	border-left: 3px solid var(--wp--preset--color--primary);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 500;
+	letter-spacing: -0.02em;
+	line-height: 1.3;
+	margin-inline: 0;
+	padding: var(--wp--preset--spacing--small) 0 var(--wp--preset--spacing--small) var(--wp--preset--spacing--medium);
+}
+
+.single .entry-content li::marker {
+	color: var(--wp--preset--color--primary);
+}
+
+/*
+ * Drop cap only when the very first child is a paragraph — `:first-child`
+ * rather than `:first-of-type`, so a post opening with a heading, list or
+ * image is left alone rather than having a paragraph further down capitalised.
+ */
+.single .entry-content > p:first-child::first-letter {
+	color: var(--wp--preset--color--primary);
+	float: left;
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: 3.1em;
+	font-weight: 700;
+	line-height: 0.78;
+	padding: 0.06em 0.12em 0 0;
+}
+
+/* 6.4 Post tail and author card
+ * ------------------------------------------------------------------------- */
+
+/* Tags render as mono outline pills (post-terms with an empty separator). */
+.single .kadewerk-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+}
+
+.single .kadewerk-tags a {
+	border: 1px solid var(--wp--preset--color--border-light);
+	border-radius: 999px;
+	color: var(--wp--preset--color--secondary);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--xx-small);
+	letter-spacing: 0.06em;
+	padding: 0.35em 0.7em;
+	text-decoration: none;
+	transition: border-color 0.14s, color 0.14s;
+}
+
+.single .kadewerk-tags a:hover {
+	border-color: var(--wp--preset--color--primary);
+	color: var(--wp--preset--color--primary);
+}
+
+/* The author card is core/post-author; background/padding/radius are block attrs. */
+.single .kadewerk-author-card {
+	align-items: flex-start;
+	display: flex;
+	gap: var(--wp--preset--spacing--small);
+}
+
+.single .kadewerk-author-card .wp-block-post-author__avatar img {
+	border-radius: 999px;
+}
+
+.single .kadewerk-author-card .wp-block-post-author__byline {
+	color: var(--wp--preset--color--main-accent);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--xx-small);
+	letter-spacing: 0.1em;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.single .kadewerk-author-card .wp-block-post-author__name {
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 600;
+	margin: 0.15em 0 0.3em;
+}
+
+.single .kadewerk-author-card .wp-block-post-author__bio {
+	color: var(--wp--preset--color--secondary);
+	font-size: var(--wp--preset--font-size--small);
+	margin: 0;
+}
+
+/* 6.5 Sidebar widgets
+ * ------------------------------------------------------------------------- */
+
+/* A mono label with a hairline under it, distinct from the display headings. */
+.single .kadewerk-widget-title {
+	border-bottom: 1px solid var(--wp--preset--color--border-light);
+	color: var(--wp--preset--color--main-accent);
+	font-family: var(--wp--preset--font-family--sans);
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	margin-bottom: var(--wp--preset--spacing--small);
+	padding-bottom: var(--wp--preset--spacing--2-x-small);
+	text-transform: uppercase;
+}
+
+/* Recent (core/latest-posts) — title over a mono date, hairline between items. */
+.single .kadewerk-mini-posts {
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+.single .kadewerk-mini-posts li {
+	border-bottom: 1px solid var(--wp--preset--color--border-light);
+	padding-block: var(--wp--preset--spacing--x-small);
+}
+
+.single .kadewerk-mini-posts li:last-child {
+	border-bottom: 0;
+}
+
+.single .kadewerk-mini-posts a {
+	color: var(--wp--preset--color--contrast);
+	display: block;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 500;
+	line-height: 1.3;
+	text-decoration: none;
+}
+
+.single .kadewerk-mini-posts a:hover {
+	color: var(--wp--preset--color--primary);
+}
+
+.single .kadewerk-mini-posts .wp-block-latest-posts__post-date {
+	color: var(--wp--preset--color--main-accent);
+	display: block;
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--xx-small);
+	letter-spacing: 0.06em;
+	margin-top: 0.15em;
+}
+
+/* Topics (core/categories) — a plain hairline-separated list. */
+.single .kadewerk-topics {
+	list-style: none;
+	margin: 0;
+	padding-left: 0;
+}
+
+.single .kadewerk-topics li {
+	border-bottom: 1px solid var(--wp--preset--color--border-light);
+	padding-block: 0.3rem;
+}
+
+.single .kadewerk-topics li:last-child {
+	border-bottom: 0;
+}
+
+.single .kadewerk-topics a {
+	color: var(--wp--preset--color--secondary);
+	font-size: var(--wp--preset--font-size--small);
+	text-decoration: none;
+}
+
+.single .kadewerk-topics a:hover {
+	color: var(--wp--preset--color--primary);
+}
+
+/*
+ * Sidebar CTA button: base on main, inverting the theme.json primary button.
+ * The named-colour classes core emits carry `!important`, so the hover has to
+ * as well to win — same idiom the dark header's CTA hover uses (§2.5).
+ */
+.single .kadewerk-aside-cta .wp-block-button__link:hover {
+	background-color: var(--wp--preset--color--white) !important;
+	color: var(--wp--preset--color--main) !important;
+}
+
+/* 6.6 Related posts
+ * ------------------------------------------------------------------------- */
+
+/*
+ * The query loop renders a grid of <li> cards. The featured image sits flush
+ * to the card's top edge (card `overflow: hidden` clips it to the radius); the
+ * text blocks carry their own inline padding. A card without a featured image
+ * keeps its top spacing from the eyebrow's own top margin, so both cases read.
+ */
+.single .kadewerk-related__grid .wp-block-post-template > li {
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--preset--color--border-light);
+	border-radius: var(--wp--preset--border-radius--lg);
+	overflow: hidden;
+	padding-bottom: var(--wp--preset--spacing--medium);
+	transition: transform 0.16s, box-shadow 0.16s, border-color 0.16s;
+}
+
+.single .kadewerk-related__grid .wp-block-post-template > li:hover {
+	border-color: var(--wp--preset--color--sand-deep);
+	box-shadow: 0 16px 32px -22px rgb(33 28 26 / 0.55);
+	transform: translateY(-3px);
+}
+
+.single .kadewerk-related__grid .wp-block-post-featured-image {
+	margin: 0;
+}
+
+.single .kadewerk-related__grid .wp-block-post-featured-image img {
+	aspect-ratio: 16 / 10;
+	border-radius: 0;
+	object-fit: cover;
+	width: 100%;
+}
+
+.single .kadewerk-related__grid :is(.wp-block-post-terms, .wp-block-post-title, .wp-block-post-excerpt) {
+	padding-inline: var(--wp--preset--spacing--medium);
+}
+
+/* 6.7 Comments
+ * ------------------------------------------------------------------------- */
+
+.single .kadewerk-comments .wp-block-comment-template {
+	list-style: none;
+	margin-top: var(--wp--preset--spacing--large);
+	padding-left: 0;
+}
+
+.single .kadewerk-comments .wp-block-comment-template > li {
+	border-bottom: 1px solid var(--wp--preset--color--border-light);
+	padding-block: var(--wp--preset--spacing--medium);
+}
+
+.single .kadewerk-comments .wp-block-avatar img {
+	border-radius: 999px;
+}
+
+.single .kadewerk-comment__meta {
+	gap: 0.6rem;
+}
+
+.single .kadewerk-comment__meta .wp-block-comment-author-name {
+	font-family: var(--wp--preset--font-family--sans);
+	font-weight: 600;
+}
+
+.single .kadewerk-comment__meta .wp-block-comment-author-name a {
+	text-decoration: none;
+}
+
+.single .kadewerk-comment__meta .wp-block-comment-date,
+.single .kadewerk-comment__meta .wp-block-comment-date a {
+	color: var(--wp--preset--color--main-accent);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--xx-small);
+	letter-spacing: 0.06em;
+	text-decoration: none;
+}
+
+/*
+ * Comment form. Core renders the browser-default field: a white box with a
+ * sharp grey border, which reads as a foreign element on the cream page. Put
+ * the fields on `base` with a hairline border and the theme radius, and give
+ * their labels the same mono treatment the sidebar widgets and meta line use,
+ * so the form belongs to the design rather than the browser.
+ */
+.single .kadewerk-comments .comment-form label {
+	color: var(--wp--preset--color--main-accent);
+	display: block;
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--xx-small);
+	letter-spacing: 0.1em;
+	margin-bottom: var(--wp--preset--spacing--2-x-small);
+	text-transform: uppercase;
+}
+
+.single .kadewerk-comments .comment-form :is(textarea, input[type="text"], input[type="email"], input[type="url"]) {
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--custom--color--control-border);
+	border-radius: var(--wp--preset--border-radius--md);
+	/* Keep padding and border inside the 100% width. Core's comments-form
+	   block styles already set this, but without it the fields would overflow
+	   the column on phones, as the product review form's did. */
+	box-sizing: border-box;
+	color: var(--wp--preset--color--contrast);
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--base);
+	padding: 0.75em 0.9em;
+	width: 100%;
+}
+
+.single .kadewerk-comments .comment-form textarea {
+	min-height: 130px;
+	resize: vertical;
+}
+
+/*
+ * `:focus-visible` rather than `:focus` so a pointer click doesn't ring the
+ * field, and a real outline rather than the border swap this used to do — see
+ * the matching note on the catalog sorting select in `woocommerce.css`.
+ */
+.single .kadewerk-comments .comment-form :is(textarea, input[type="text"], input[type="email"], input[type="url"]):focus-visible {
+	border-color: var(--wp--preset--color--primary);
+	outline: 2px solid var(--wp--preset--color--primary);
+	outline-offset: 2px;
+}
+
+.single .kadewerk-comments .comment-form ::placeholder {
+	color: var(--wp--preset--color--main-accent);
+	opacity: 1;
+}
+
+/* 6.8 Reading-progress bar
+ * ------------------------------------------------------------------------- */
+
+/*
+ * A hairline under the masthead that fills as the page scrolls. Driven by a
+ * scroll timeline rather than a scroll listener, for the same reason §2.2's
+ * header edge is: the theme ships no JavaScript, and where `scroll()` is
+ * unsupported the bar simply never appears — the rest state we would choose
+ * anyway. Scoped to `.single` so it is a reading affordance for posts only.
+ *
+ * Anchored to `.kadewerk-header`, which §2.1 already makes sticky (hence
+ * positioned), so the absolute bar sits on its bottom edge.
+ */
+@supports (animation-timeline: scroll()) {
+	.single .kadewerk-header::after {
+		animation: kadewerk-read-progress linear both;
+		animation-timeline: scroll(root block);
+		background: var(--wp--preset--color--primary);
+		bottom: 0;
+		content: "";
+		height: 2px;
+		left: 0;
+		position: absolute;
+		transform: scaleX(0);
+		transform-origin: left;
+		width: 100%;
+	}
+}
+
+@keyframes kadewerk-read-progress {
+	to {
+		transform: scaleX(1);
+	}
+}
+
+/* -------------------------------------------------------------------------
+ * 7. Pagination
+ *
+ * Core leaves query pagination as bare inline links: a "1 2 3" run of
+ * underlined numbers with the next link floating beside it. Give every page
+ * link — numbers and previous/next alike — the same pill shape the theme's
+ * buttons use, so the row reads as a control. The current page inverts the
+ * body text pair — `contrast` fill, `base` text — which every style variation
+ * already has to keep legible, light palette or dark (Twilight).
+ *
+ * The row also gets real space above and below. Without it the last post sat
+ * a few pixels over the numbers and the numbers flush on the footer, since
+ * `main` carries no bottom padding of its own. Set here rather than as block
+ * margin attributes, which query-pagination does not render on the front end.
+ * ------------------------------------------------------------------------- */
+
+.wp-block-query-pagination {
+	align-items: center;
+	font-size: var(--wp--preset--font-size--small);
+	gap: 0.5rem;
+	margin-block-start: var(--wp--preset--spacing--large);
+	/*
+	 * Padding, not margin: pagination is the query's last child, and core's
+	 * `:root :where(.is-layout-flow) > :last-child` zeroes its end margin with
+	 * more specificity than this selector has.
+	 */
+	padding-block-end: var(--wp--preset--spacing--x-large);
+}
+
+.wp-block-query-pagination-numbers {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	justify-content: center;
+}
+
+.wp-block-query-pagination .page-numbers,
+.wp-block-query-pagination .wp-block-query-pagination-previous,
+.wp-block-query-pagination .wp-block-query-pagination-next {
+	align-items: center;
+	border: 1px solid var(--wp--preset--color--border-light);
+	border-radius: var(--wp--preset--border-radius--pill);
+	box-sizing: border-box;
+	color: var(--wp--preset--color--contrast);
+	display: inline-flex;
+	gap: 0.4rem;
+	justify-content: center;
+	line-height: 1;
+	min-height: 2.5rem;
+	min-width: 2.5rem;
+	padding: 0 0.85rem;
+	text-decoration: none;
+	transition: border-color 0.15s, background-color 0.15s;
+}
+
+/* Core sets its own margin on the arrows, which would double the gap. */
+.wp-block-query-pagination .wp-block-query-pagination-previous-arrow,
+.wp-block-query-pagination .wp-block-query-pagination-next-arrow {
+	margin: 0;
+}
+
+.wp-block-query-pagination a.page-numbers:hover,
+.wp-block-query-pagination .wp-block-query-pagination-previous:hover,
+.wp-block-query-pagination .wp-block-query-pagination-next:hover {
+	background-color: var(--wp--preset--color--tertiary);
+	border-color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--contrast);
+}
+
+.wp-block-query-pagination .page-numbers.current {
+	background-color: var(--wp--preset--color--contrast);
+	border-color: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+	font-weight: 600;
+}
+
+.wp-block-query-pagination .page-numbers.dots {
+	border-color: transparent;
+	min-width: auto;
+	padding: 0 0.25rem;
+}
+
+/*
+ * On a phone the two text labels plus a run of numbers no longer fit on one
+ * row, and the control broke onto three. Below 600px the previous/next links
+ * become arrow-only circles the size of a page number. `font-size: 0` hides
+ * the label visually but leaves it in the accessibility tree, so the link keeps
+ * its accessible name ("Previous Page"); the arrow is `aria-hidden` in core's
+ * markup and gets its size back explicitly.
+ */
+@media (max-width: 599px) {
+	.wp-block-query-pagination .wp-block-query-pagination-previous,
+	.wp-block-query-pagination .wp-block-query-pagination-next {
+		font-size: 0;
+		padding: 0;
+	}
+
+	.wp-block-query-pagination .wp-block-query-pagination-previous-arrow,
+	.wp-block-query-pagination .wp-block-query-pagination-next-arrow {
+		font-size: var(--wp--preset--font-size--base);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wp-block-query-pagination .page-numbers,
+	.wp-block-query-pagination .wp-block-query-pagination-previous,
+	.wp-block-query-pagination .wp-block-query-pagination-next {
+		transition: none;
+	}
+}
