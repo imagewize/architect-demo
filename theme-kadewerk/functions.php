@@ -59,6 +59,24 @@ function kadewerk_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\kadewerk_enqueue_styles' );
 
 /**
+ * Enqueue the draw-on-scroll script that starts each SVG drawing's animation
+ * when it scrolls into view.
+ */
+function kadewerk_enqueue_scripts() {
+	wp_enqueue_script(
+		'kadewerk-draw-on-scroll',
+		get_template_directory_uri() . '/assets/js/draw-on-scroll.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		array(
+			'in_footer' => true,
+			'strategy'  => 'defer',
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\kadewerk_enqueue_scripts' );
+
+/**
  * Enqueue WooCommerce-specific styles, if present.
  */
 function kadewerk_enqueue_woocommerce_styles() {
