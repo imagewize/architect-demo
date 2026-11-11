@@ -1,21 +1,29 @@
-<!-- wp:group {"tagName":"header","align":"full","className":"kadewerk-header","style":{"spacing":{"padding":{"top":"var:preset|spacing|small","bottom":"var:preset|spacing|small","left":"var:preset|spacing|small","right":"var:preset|spacing|small"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"base","layout":{"inherit":true,"type":"constrained"}} -->
-<header class="wp-block-group alignfull kadewerk-header has-base-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:var(--wp--preset--spacing--small);padding-right:var(--wp--preset--spacing--small);padding-bottom:var(--wp--preset--spacing--small);padding-left:var(--wp--preset--spacing--small)"><!-- wp:group {"align":"wide","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap","verticalAlignment":"center","gap":"2rem"}} -->
-<div class="wp-block-group alignwide"><!-- wp:site-logo {"width":40} /-->
+<!-- wp:paragraph {"className":"skip-link"} -->
+<p class="skip-link"><a href="#inhoud">Direct naar inhoud</a></p>
+<!-- /wp:paragraph -->
 
-<!-- wp:site-title {"level":0,"fontSize":"medium"} /-->
+<!-- wp:group {"tagName":"header","align":"full","className":"kadewerk-header site-header","style":{"spacing":{"padding":{"top":"0.85rem","bottom":"0.85rem","left":"clamp(1.25rem, 4vw, 3.5rem)","right":"clamp(1.25rem, 4vw, 3.5rem)"},"margin":{"top":"0","bottom":"0"}}},"backgroundColor":"base","layout":{"inherit":true,"type":"constrained"}} -->
+<header class="wp-block-group alignfull kadewerk-header site-header has-base-background-color has-background" style="margin-top:0;margin-bottom:0;padding-top:0.85rem;padding-right:clamp(1.25rem, 4vw, 3.5rem);padding-bottom:0.85rem;padding-left:clamp(1.25rem, 4vw, 3.5rem)"><!-- wp:group {"align":"wide","className":"header-inner","layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center","gap":"0 1.5rem"}} -->
+<div class="wp-block-group alignwide header-inner"><!-- wp:group {"className":"brand","layout":{"type":"flex","orientation":"vertical"}} -->
+<div class="wp-block-group brand"><!-- wp:site-title {"level":0,"className":"brand__title","fontSize":"large"} /-->
 
-<!-- wp:group {"className":"kadewerk-header__actions","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center","gap":"1rem"}} -->
-<div class="wp-block-group kadewerk-header__actions"><!-- wp:woocommerce/customer-account {"displayStyle":"icon_only"} /-->
+<!-- wp:site-tagline {"className":"brand__tagline","fontSize":"small"} /--></div>
+<!-- /wp:group -->
 
-<!-- wp:woocommerce/mini-cart /-->
+<!-- wp:navigation {"className":"site-nav","overlayMenu":"never","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","gap":"0.4rem 1.5rem"},"fontSize":"medium"} -->
+<nav class="wp-block-navigation site-nav has-medium-font-size"><!-- wp:navigation-link {"label":"Projecten","url":"#projecten"} /-->
+
+<!-- wp:navigation-link {"label":"Werkwijze","url":"#werkwijze"} /-->
+
+<!-- wp:navigation-link {"label":"Studio","url":"#studio"} /-->
+
+<!-- wp:navigation-link {"label":"Contact","url":"#contact"} /--></nav>
+<!-- /wp:navigation -->
 
 <!-- wp:buttons -->
-<div class="wp-block-buttons"><!-- wp:button {"className":"kadewerk-header__cta","fontSize":"x-small"} -->
-<div class="wp-block-button kadewerk-header__cta has-custom-font-size has-x-small-font-size"><a class="wp-block-button__link wp-element-button" href="#contact">Start a project</a></div>
+<div class="wp-block-buttons"><!-- wp:button {"className":"btn-small","fontSize":"small"} -->
+<div class="wp-block-button btn-small has-custom-font-size has-small-font-size"><a class="wp-block-button__link wp-element-button" href="#contact">Plan een gesprek</a></div>
 <!-- /wp:button --></div>
-<!-- /wp:buttons -->
-
-<!-- wp:navigation {"overlayMenu":"mobile","icon":"menu","layout":{"type":"flex","justifyContent":"right"}} /--></div>
-<!-- /wp:group --></div>
+<!-- /wp:buttons --></div>
 <!-- /wp:group --></header>
 <!-- /wp:group -->
