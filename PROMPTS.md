@@ -471,3 +471,48 @@ Why it is written this way:
 - **Screenshots before and after:** sentinel and the block checks pass on a page that looks
   nothing like the source, so only a visual comparison shows whether the pass worked.
 - **Same branch as 11b:** the diff against `eba88f3` is the design layer and nothing else.
+
+## 11d. Restore the hamburger menu
+
+Agent: `wp-frontend-builder`, with `html-to-block-theme`. Same branch family as 11c.
+
+The theme had no mobile menu. Cause, from git: `daa6ad9` rebuilt `parts/header.html` from
+`index.html`, and the 11c prompt (step 3) listed the navigation links but said nothing about small
+screens. `index.html` has no hamburger (its nav wraps onto its own row under 760px), so the part
+got `"overlayMenu":"never"`. Aviendha's overlay CSS (§2.6, §2.7 in `style.css`) stayed in the fork
+and went unused, and `header-dark.html` kept `"overlayMenu":"mobile"`, so the two headers differed.
+
+```
+Load html-to-block-theme. theme-kadewerk/parts/header.html has no hamburger menu on small screens: it uses overlayMenu "never" because index.html's nav is only a wrapping row. Aviendha, which this theme is forked from, has the hamburger, and style.css §2.6/§2.7 already styles it.
+1. Switch the header navigation to overlayMenu "mobile" with icon "menu", and put it after the CTA in the actions group with the class kadewerk-header__actions, so style.css §2.6 can reorder it on desktop. Leave the footer nav on "never".
+2. Remove the mobile nav-row CSS in the design layer (the max-width 47.5rem rule that gives .site-nav its own row); keep the static masthead part.
+3. Make sure the .site-nav ul flex rule does not apply inside the open overlay.
+4. Screenshot https://kadewerk-demo.test at 375px (closed, and open), 800px and 1280px. Check: hamburger below 1024px, inline links with the CTA from 1024px, overlay links stacked and readable, no horizontal scroll.
+4b. Fix what the screenshots show: at 375px the CTA wrapped into a four-line column and the header grew to 168px, and the tagline sat ~24px under the wordmark. Tighten the brand gap and hide the header CTA below 600px and keep its label on one line (the hero repeats it); the header should be one row (79px) at every width.
+5. Then update wp-vibe-toolbox on a new branch: add the rule to composing-with-aludra.md (Header step) and block-conversion-map.md, so the next conversion keeps the hamburger.
+```
+
+Why it is written this way:
+- **Names the cause:** the agent changes the one setting and the CSS that depended on it, not the
+  header as a whole.
+- **Screenshots at three widths:** the breakpoint is 1024px, so 375px alone would not show a
+  broken tablet layout.
+- **Toolbox in the same prompt:** the gap was in the skill (it never says a prototype's missing
+  mobile menu is not a reason to drop it), so fixing only the theme would repeat the bug on the
+  next site.
+- **Checked in the browser, not assumed:** the first test used flex-shrunk iframes (300px, not 375px)
+  and a cached stylesheet that still held the old nav-row rule. Both gave wrong readings; check
+  `innerWidth` and hard-reload before trusting a measurement.
+
+Follow-up: the open menu was black text on white. It is now an ink panel with large left-aligned
+links, orange folio numbers (CSS counters, as on the project cards), 1px rules and a white "Plan een
+gesprek" button as a fifth menu item (`nav-cta`, shown only inside the overlay, since the header
+button is hidden on phones). Two traps: core's `<li>` is a column flex box with `align-items:
+flex-end`, so `text-align` and a full-width link did nothing until the `li` was set to `stretch`;
+and the colours need `!important` against core's `:not(.has-background)` rule.
+
+Result: hamburger below 1024px on `kadewerk-demo.test`, inline links and CTA above it, overlay opens
+with all four links, one 79px row at 375, 800 and 1100px, no horizontal scroll. The toolbox gained
+`references/mobile-navigation.md` (a basic no-JS hamburger for the prototype, the collapse / always /
+never options, the 375/800/1280px check), a phone-experience note in `html-page-review`, and a mobile
+check in the `wp-frontend-builder` agent, so the next prototype gets a hamburger before conversion.
