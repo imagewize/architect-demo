@@ -23,7 +23,8 @@ vibe --agent <agent>
 | 9 | Draw-on animation for all seven drawings | `wp-frontend-builder` | All seven animate; needed a second session, see notes under 9 | this commit |
 | 10 | Convert to a block theme | `wp-frontend-builder` | Not run separately; run 11 built this in `theme/` instead | – |
 | 11 | Assemble on Aviendha + Aludra | `wp-frontend-builder` | Renamed fork, active on Valet, sentinel passes; but a core-block conversion with one Aludra block, see notes under 11 | `4376d1e` |
-| 11b | Aviendha + Aludra, rerun | `wp-frontend-builder` | Not run yet; needs `html-to-block-theme` 1.4.0 | – |
+| 11b | Aviendha + Aludra, rerun | `wp-frontend-builder` | Complete fork, every section an Aludra block, all checks pass; but the look is still Aviendha's, see notes under 11b | `eba88f3` (PR #6) |
+| 11c | Design layer pass | `wp-frontend-builder` | Running | – |
 
 ## 1. Build from brief
 
@@ -379,10 +380,29 @@ from run 11 stays available for comparison. Before the run, delete the six senti
 `~/code/aviendha`, and in `~/code/aludra` run `npm run build --workspaces --if-present` if its
 build looks stale. The site from run 11 can be reused: point its symlink at the new folder.
 
-Use prompt 11 as written, with this line added at the top:
+The prompt below replaces prompt 11. It adds the Mode B line at the top, gives every colour slug a
+value (prompt 11 listed eight slugs but gave values for six), and reuses the run 11 site instead of
+creating a second one.
 
 ```
-Load html-to-block-theme and work in Mode B (Aviendha fork + Aludra blocks); read references/forking-a-starter-theme.md and references/composing-with-aludra.md first. Do not hand-build a section with core/group + CSS when an aludra block fits: copy the block's markup from ~/code/aludra/patterns/section-*.php and change only the content, and list every section no aludra block covers as a gap. Run npm and sentinel only inside theme-kadewerk/, never inside ~/code/aviendha.
+Load html-to-block-theme and work in Mode B (Aviendha fork + Aludra blocks). Read references/forking-a-starter-theme.md and references/composing-with-aludra.md before writing any file.
+
+Create theme-kadewerk/ in this repository as a fork of ~/code/aviendha for Bureau Kadewerk, and build the homepage there as one pattern composed from aludra/* blocks:
+- Fork: copy ~/code/aviendha with rsync as the reference describes (no .git, node_modules, vendor or sentinel logs), compare both folder listings, then rename every aviendha identifier to kadewerk. Lineage docs keep naming Aviendha; version 1.0.0. Add sentinel-*.log.json to .gitignore. Run npm and sentinel only inside theme-kadewerk/, never inside ~/code/aviendha.
+- Palette: give theme.json only the colour slugs the Aludra blocks read (list them with the grep in composing-with-aludra.md): base #FFFFFF, contrast #111111, main #111111, primary #FF4F00, accent #FF4F00, secondary #595959, tertiary #F7F7F8, border-light #E3E3E3, white #FFFFFF; map primary-accent and main-accent to the nearest of these and say which. No paper/ink/... slugs. Helvetica stack as the sans font family.
+- patterns/homepage.php: one pattern mirroring index.html section by section, Dutch copy verbatim. For every section, copy the block's markup from ~/code/aludra/patterns/section-*.php (or carousel-portfolio-showcase.php) and change only the content:
+  - hero: aludra/hero-split with images/hero-section.svg
+  - Geselecteerde projecten: aludra/carousel with one aludra/slide per project (six SVGs, title and meta), or aludra/feature-cards if the carousel cannot hold title + meta
+  - In vier stappen van idee tot sleutel: aludra/service-blocks, or aludra/feature-list-grid
+  - Over het bureau: aludra/about or aludra/split-section, facts plus the Fig. 02 map
+  - client quote: aludra/testimonial-grid with one quote
+  - Plan een gesprek: aludra/contact-section (needs Contact Form 7) plus aludra/cta-banner
+  Do not hand-build a section with core/group + CSS when an aludra block fits. If none fits, build it from core blocks and list it as a gap. Keep style.css close to Aviendha's size.
+- Copy the seven SVGs from images/ into theme-kadewerk/assets/img/ and reference them with get_theme_file_uri().
+- Point the front page template at the pattern.
+- Site: reuse https://kadewerk-demo.test. Replace the wp-content/themes/kadewerk symlink so it points at theme-kadewerk/, keep Aludra and Contact Form 7 active, activate kadewerk. Use --path="$HOME/code/kadewerk-demo", never ~ after =.
+- Checks, one command per call: php -l every PHP file, npm run validate after every pattern change until it passes, the aviendha grep, the aludra block-name check, and the rendered front page containing a wp-block-aludra-* wrapper for every block used. Confirm git -C ~/code/aviendha status shows nothing new.
+- Report: the section-to-block table (block, source pattern copied, style variation), the gaps, the palette mapping, and the style.css line count.
 ```
 
 Why it is written this way:
@@ -391,3 +411,63 @@ Why it is written this way:
 - **Copy markup from Aludra's own patterns:** the blocks are static, so their wrapper must match
   `save()` exactly. Copying a working pattern is the fastest way to pass sentinel.
 - **Gaps listed, not hidden:** what no block covers shows what Aludra may need next.
+
+Result (`eba88f3`, PR #6): a complete, renamed fork in `theme-kadewerk/`, active on
+`kadewerk-demo.test` through the existing `kadewerk` symlink. The run took about three hours.
+- **Aludra throughout:** hero-split, stat-rail with four stat-items, spine-section with a carousel
+  of six slides, service-blocks, split-section, testimonial-grid, contact-section and cta-banner.
+  The agent read Aludra's section patterns and copied their markup before writing any pattern.
+- **Checks:** sentinel passes, all 11 `aludra/*` names exist in the plugin, every wrapper class
+  appears in the rendered page, the rename grep finds only the lineage comment, and nothing new
+  landed in `~/code/aviendha`.
+- **Two fixes of its own:** a `pre_render_block` filter so the CF7 shortcode runs inside an FSE
+  template, and the CF7 form template copied into its `_form` meta, because CF7 6.x reads it
+  from there.
+- **The look is still Aviendha's and Aludra's:** orange pill buttons with shadows, rounded cards,
+  monospace eyebrows, dark stat and contact bands with an orange glow, a carousel showing one and a
+  half projects instead of a 3-column grid, stacked step cards with grey italic numbers, the facts
+  as a bullet list, the quote as an italic card, and Aviendha's header ("kadewerk-demo", a
+  hamburger menu, "Start a project", WooCommerce blocks). The contact form has placeholders
+  instead of labels, and its icons are blue and purple.
+- **Cause:** the skill only ported the palette. Its rule "keep style.css close to Aviendha's size"
+  read as a target, and the agent reported 1267 = 1267 lines as a success. The light variations
+  (`stat-rail`, `contact-section`, `cta-banner`) and the `steps` variation were not used.
+- **Process:** the agent kept chaining shell commands with `&&` and `;`, and read files outside
+  the project with `cat`, which made Vibe ask for approval many times. It also edited one setting
+  on the demo site it was not asked to: it reset the admin password to log sentinel in, then set
+  it back.
+- **Branch:** the run started on `main`, because the branch from the setup step was not created.
+  The work was moved to `feat/aviendha-aludra` before committing.
+
+This led to the design layer step in `html-to-block-theme` (mistral-toolbox PR #50): port the
+source's design rules through variations, then `theme.json`, then rebuilt header and footer parts,
+then one design-layer CSS block, and compare screenshots of the source and the site.
+
+## 11c. Design layer pass
+
+Agent: `wp-frontend-builder`, with `html-to-block-theme` after PR #50. It runs on the same branch
+as 11b, so its diff shows only the design changes.
+
+```
+Load html-to-block-theme. theme-kadewerk/ is structurally right (aludra blocks) but looks like Aviendha, not like index.html. Do a design pass so https://kadewerk-demo.test matches index.html, without changing which aludra blocks are used except where noted. Open index.html and the site side by side (screenshot both at 1440px and 390px with headless Chrome) before and after.
+
+1. Variations first: aludra/stat-rail is-style-light, aludra/contact-section is-style-light, aludra/cta-banner is-style-light; try aludra/service-blocks is-style-steps and keep whichever is closer to the 4-column numbered steps.
+2. theme.json, not CSS, for the design rules from index.html's :root and base CSS: border radius 0 everywhere (replace the pill preset values), no shadows on buttons and cards, buttons square ink (#111) with white text and orange (#FF4F00) background on hover, a small button size for the header, headings 700 with the letter-spacing from index.html, links ink with an orange underline, eyebrows/kickers small Helvetica uppercase 0.12em in secondary (#595959), not monospace, no dot. Use styles.blocks["aludra/<name>"] for per-block colours and spacing.
+3. Header and footer parts: rebuild them from index.html: site title "Bureau Kadewerk" with the tagline "architecten · Rotterdam", navigation Projecten/Werkwijze/Studio/Contact to the section anchors, small "Plan een gesprek" button; remove the WooCommerce mini-cart and customer-account blocks and the "Start a project" button. Footer: the three columns and bottom row from index.html. Set the blogname to "Bureau Kadewerk" and blogdescription to "architecten · Rotterdam" with wp option update --path="$HOME/code/kadewerk-demo".
+4. Projects: a 3-column grid like index.html, not a carousel: switch to aludra/feature-cards if it can hold image + folio + title + description + meta, otherwise set the carousel to slidesToShow 3 without variableWidth and without arrows. Folio numbers orange and bold, drawings in a 1px #E3E3E3 frame.
+5. Studio: facts as rows with a 1px line between them and the label left, value right (core/table or a list with a class), not bullets; heading left-aligned.
+6. Quote: centred on the tertiary (#F7F7F8) band, not italic, with the orange „ mark; no card radius or shadow.
+7. Contact form: visible labels above each field (CF7 form 7: put the label text in the template, keep placeholders out), full-width fields, square inputs with a #595959 border; icons in primary or contrast, never blue or purple.
+8. Each section starts with a 1px contrast line on top, as in index.html.
+Only after 1–3: put the remaining gaps in style.css, in one block at the end headed "/* Kadewerk design layer */", one comment per rule naming the section. Report its line count and why each rule could not live in theme.json or a variation.
+Run npm run validate after every pattern or part change, then re-screenshot and list per section what still differs from index.html.
+```
+
+Why it is written this way:
+- **A numbered list per difference:** each point names one thing that differs from `index.html`,
+  so the report can be checked point by point against the screenshots.
+- **Variations, then `theme.json`, then CSS:** the cheapest fix first. A variation is one class
+  name, `theme.json` keeps the rules editable in the Site Editor, and CSS is only for what is left.
+- **Screenshots before and after:** sentinel and the block checks pass on a page that looks
+  nothing like the source, so only a visual comparison shows whether the pass worked.
+- **Same branch as 11b:** the diff against `eba88f3` is the design layer and nothing else.

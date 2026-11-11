@@ -1,0 +1,24 @@
+{
+	"name": "kadewerk",
+	"version": "1.0.0",
+	"description": "Full-site-editing block theme for Bureau Kadewerk.",
+	"keywords": [
+		"WordPress",
+		"theme",
+		"block-theme",
+		"fse",
+		"starter-theme"
+	],
+	"author": "Jasper Frumau",
+	"license": "GPL-3.0-or-later",
+	"scripts": {
+		"setup": "npx playwright install chromium",
+		"validate": "sentinel --log patterns/",
+		"validate:file": "sentinel",
+		"validate:new": "sentinel --cache --log patterns/",
+		"validate:clear-cache": "sentinel --clear-cache"
+	},
+	"dependencies": {
+		"@imwz/wp-pattern-sentinel": "^1.2.2"
+	}
+}

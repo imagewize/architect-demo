@@ -1,0 +1,25 @@
+<div class="form-row two">
+<div class="field"><label>Naam <span class="req" aria-hidden="true">*</span>
+[text* naam autocomplete:name]
+</label></div>
+<div class="field"><label>E-mailadres <span class="req" aria-hidden="true">*</span>
+[email* emailadres autocomplete:email]
+</label></div>
+</div>
+<div class="form-row two">
+<div class="field"><label>Telefoonnummer <span class="hint">(facultatief)</span>
+[tel tel-telefoonnummer autocomplete:tel]
+</label></div>
+<div class="field"><label>Waar gaat het over?
+[select* onderwerp "Nieuwbouw — villa of woning" "Nieuwbouw — woonblok" "Transformatie van een bestaand gebouw" "Interieur" "Iets anders"]
+</label></div>
+</div>
+<div class="form-row">
+<div class="field"><label>Uw bericht <span class="req" aria-hidden="true">*</span> <span class="hint">— locatie, programma, wensen en planning. Mag kort.</span>
+[textarea* bericht rows:5]
+</label></div>
+</div>
+<div class="form-foot">
+[submit "Verstuur aanvraag"]
+<p class="form-note">We gebruiken uw gegevens alleen om op uw aanvraag te reageren.</p>
+</div>
