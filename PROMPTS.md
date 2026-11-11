@@ -7,7 +7,7 @@ Start each run in this folder:
 
 ```bash
 cd ~/code/architect-demo
-vibe --agent <agent>
+vibe --agent <agent> --smart-approve
 ```
 
 | # | Step | Agent | Outcome | Commit |
@@ -24,7 +24,8 @@ vibe --agent <agent>
 | 10 | Convert to a block theme | `wp-frontend-builder` | Not run separately; run 11 built this in `theme/` instead | – |
 | 11 | Assemble on Aviendha + Aludra | `wp-frontend-builder` | Renamed fork, active on Valet, sentinel passes; but a core-block conversion with one Aludra block, see notes under 11 | `4376d1e` |
 | 11b | Aviendha + Aludra, rerun | `wp-frontend-builder` | Complete fork, every section an Aludra block, all checks pass; but the look is still Aviendha's, see notes under 11b | `eba88f3` (PR #6) |
-| 11c | Design layer pass | `wp-frontend-builder` | Running | – |
+| 11c | Design layer pass | `wp-frontend-builder` | Design layer, header and footer parts rebuilt from `index.html`; the header lost its mobile menu, see 11d | `9d42cef`, `d660fb5` |
+| 11d | Restore the hamburger menu | `wp-frontend-builder` | Hamburger below 1024px, one-row header, ink overlay with folio numbers and a CTA item | PR #7 |
 
 ## 1. Build from brief
 
