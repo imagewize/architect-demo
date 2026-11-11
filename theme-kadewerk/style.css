@@ -1373,6 +1373,78 @@ main [id] { scroll-margin-top: 5.5rem; }
 	.kadewerk-header .wp-block-buttons { display: none; }
 }
 
+/* Header — mobile overlay: ink panel, large left-aligned links with orange folio numbers and 1px rules, like the project cards; core paints it white and the starter right-aligns it (§2.7), neither expressible in theme.json. !important only where core's `.wp-block-navigation:not(.has-background)` rule and has-*-color utilities use it */
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open {
+	background-color: var(--wp--preset--color--contrast) !important;
+	color: var(--wp--preset--color--base) !important;
+	padding-left: clamp(1.25rem, 4vw, 3.5rem);
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content {
+	padding-top: 3rem;
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container {
+	counter-reset: kadewerk-nav;
+	text-align: left;
+	width: 100%;
+	gap: 0;
+	align-items: stretch;
+	justify-content: flex-start;
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item {
+	width: 100%;
+	align-items: stretch;
+	border-bottom: 1px solid rgb(255 255 255 / 0.2);
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+	display: flex;
+	align-items: baseline;
+	justify-content: flex-start;
+	gap: 1rem;
+	padding: 1rem 0;
+	color: var(--wp--preset--color--base);
+	font-size: clamp(1.75rem, 8vw, 2.5rem);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	line-height: 1.1;
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item:not(.nav-cta) > .wp-block-navigation-item__content::before {
+	counter-increment: kadewerk-nav;
+	content: counter(kadewerk-nav, decimal-leading-zero);
+	color: var(--wp--preset--color--accent);
+	font-size: var(--wp--preset--font-size--small);
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0.04em;
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content:hover,
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content:focus-visible {
+	color: var(--wp--preset--color--accent);
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-close {
+	color: var(--wp--preset--color--base);
+}
+
+/* Header — overlay CTA: the header button is hidden on phones, so the menu carries it as a last, square white button; the item is hidden everywhere else */
+.kadewerk-header .nav-cta { display: none; }
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .nav-cta {
+	display: block;
+	margin-top: 2rem;
+	border-bottom: 0;
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .nav-cta > .wp-block-navigation-item__content {
+	justify-content: center;
+	padding: 0.9rem 1.5rem;
+	background: var(--wp--preset--color--base);
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--medium);
+	font-weight: 600;
+	letter-spacing: 0;
+}
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .nav-cta > .wp-block-navigation-item__content:hover,
+.kadewerk-header .wp-block-navigation__responsive-container.is-menu-open .nav-cta > .wp-block-navigation-item__content:focus-visible {
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--contrast);
+}
+
 /* Header — mobile: static masthead; the nav collapses to the hamburger overlay (§2.7), so no separate nav row is needed: media queries cannot live in theme.json */
 @media (max-width: 47.5rem) {
 	.kadewerk-header,

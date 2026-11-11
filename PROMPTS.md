@@ -504,6 +504,13 @@ Why it is written this way:
   and a cached stylesheet that still held the old nav-row rule. Both gave wrong readings; check
   `innerWidth` and hard-reload before trusting a measurement.
 
+Follow-up: the open menu was black text on white. It is now an ink panel with large left-aligned
+links, orange folio numbers (CSS counters, as on the project cards), 1px rules and a white "Plan een
+gesprek" button as a fifth menu item (`nav-cta`, shown only inside the overlay, since the header
+button is hidden on phones). Two traps: core's `<li>` is a column flex box with `align-items:
+flex-end`, so `text-align` and a full-width link did nothing until the `li` was set to `stretch`;
+and the colours need `!important` against core's `:not(.has-background)` rule.
+
 Result: hamburger below 1024px on `kadewerk-demo.test`, inline links and CTA above it, overlay opens
 with all four links, one 79px row at 375, 800 and 1100px, no horizontal scroll. The toolbox gained
 `references/mobile-navigation.md` (a basic no-JS hamburger for the prototype, the collapse / always /
