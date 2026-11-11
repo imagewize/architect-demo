@@ -488,7 +488,7 @@ Load html-to-block-theme. theme-kadewerk/parts/header.html has no hamburger menu
 2. Remove the mobile nav-row CSS in the design layer (the max-width 47.5rem rule that gives .site-nav its own row); keep the static masthead part.
 3. Make sure the .site-nav ul flex rule does not apply inside the open overlay.
 4. Screenshot https://kadewerk-demo.test at 375px (closed, and open), 800px and 1280px. Check: hamburger below 1024px, inline links with the CTA from 1024px, overlay links stacked and readable, no horizontal scroll.
-4b. Fix what the screenshots show: at 375px the CTA wrapped into a four-line column and the header grew to 168px, and the tagline sat ~24px under the wordmark. Tighten the brand gap and hide the header CTA below 480px (the hero repeats it); the header should be one row (79px) at every width.
+4b. Fix what the screenshots show: at 375px the CTA wrapped into a four-line column and the header grew to 168px, and the tagline sat ~24px under the wordmark. Tighten the brand gap and hide the header CTA below 600px and keep its label on one line (the hero repeats it); the header should be one row (79px) at every width.
 5. Then update wp-vibe-toolbox on a new branch: add the rule to composing-with-aludra.md (Header step) and block-conversion-map.md, so the next conversion keeps the hamburger.
 ```
 
