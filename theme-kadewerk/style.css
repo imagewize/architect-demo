@@ -1265,3 +1265,619 @@ body .kadewerk-header--dark .wp-block-site-logo {
 		transition: none;
 	}
 }
+
+/* ============================================================
+   Kadewerk design layer
+   Port of index.html's own <style> rules that neither theme.json
+   nor an aludra variation can express: pseudo-elements, media
+   queries, template-part chrome, CF7-generated form markup, and
+   aludra's inner class elements (its block stylesheets set those
+   with !important, and styles.blocks["aludra/…"] in theme.json can
+   only reach the block root, not its children). Selectors carry
+   the block class because aludra nests its rules under it.
+   ============================================================ */
+
+/* Base — link underline colour/thickness/offset: theme.json sets the link colour and underline but has no text-decoration-color */
+a {
+	text-decoration-color: var(--wp--preset--color--accent);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+a:hover { text-decoration-thickness: 2px; }
+
+/* Base — focus ring: theme.json cannot express outline */
+:focus-visible {
+	outline: 2px solid var(--wp--preset--color--accent);
+	outline-offset: 3px;
+}
+
+/* Base — anchor offset for the sticky masthead: media queries and scroll-margin cannot live in theme.json */
+main [id] { scroll-margin-top: 5.5rem; }
+@media (max-width: 47.5rem) {
+	main [id] { scroll-margin-top: 1rem; }
+}
+
+/* Base — skip link off-canvas until focused: position and focus pseudo-state cannot live in theme.json */
+.skip-link {
+	position: absolute;
+	left: 1rem;
+	top: -4rem;
+	z-index: 100;
+	margin: 0;
+}
+.skip-link a {
+	display: inline-block;
+	padding: 0.5rem 1rem;
+	background: var(--wp--preset--color--contrast);
+	color: var(--wp--preset--color--base);
+	font-weight: 600;
+	text-decoration: none;
+}
+.skip-link:focus-within { top: 1rem; }
+
+/* Header — 1px ink rule under the masthead, replacing the scroll-driven shadow: theme.json has no per-template-part border */
+.kadewerk-header { border-bottom: 1px solid var(--wp--preset--color--contrast); }
+.kadewerk-header:not(.kadewerk-header--dark) { animation: none; box-shadow: none; }
+
+/* Header — brand: stacked title + tagline, no underline: inner elements of the site-title/site-tagline blocks cannot be reached from theme.json */
+.brand { margin-right: auto; }
+.brand .wp-block-site-title a {
+	color: var(--wp--preset--color--contrast);
+	font-size: var(--wp--preset--font-size--large);
+	font-weight: 700;
+	letter-spacing: -0.01em;
+	line-height: 1.15;
+	text-decoration: none;
+}
+.brand .wp-block-site-tagline {
+	display: block;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 400;
+	letter-spacing: 0.02em;
+	color: var(--wp--preset--color--secondary);
+}
+
+/* Header — nav row: flex list with gaps and hover-only orange underline; core/navigation renders a ul that theme.json cannot lay out */
+.site-nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 1.5rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.site-nav a { color: var(--wp--preset--color--contrast); text-decoration: none; }
+.site-nav a:hover {
+	text-decoration-line: underline;
+	text-decoration-color: var(--wp--preset--color--accent);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 4px;
+}
+
+/* Header — small CTA size: theme.json defines the small font size but per-instance button padding is not expressible there */
+.btn-small .wp-block-button__link {
+	padding: 0.55rem 1rem;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+/* Header — mobile: static masthead with the nav on its own hairline row: media queries cannot live in theme.json */
+@media (max-width: 47.5rem) {
+	.kadewerk-header,
+	.wp-block-template-part:has(> .kadewerk-header) { position: static; }
+	.site-nav {
+		order: 3;
+		flex-basis: 100%;
+		margin-top: 0.85rem;
+		padding-top: 0.85rem;
+		border-top: 1px solid var(--wp--preset--color--border-light);
+	}
+}
+
+/* Kickers — hero, projects, werkwijze, studio, contact, footer: small Helvetica uppercase 0.12em in secondary, no leading rule, not monospace; aludra sets its own label styles with !important, which theme.json cannot override */
+.wp-block-aludra-hero-split .hero-split__eyebrow,
+.wp-block-aludra-spine-section .spine-section__label,
+.wp-block-aludra-service-blocks .service-blocks__label,
+.wp-block-aludra-split-section .split-section__label,
+.wp-block-aludra-contact-section .contact-section__label,
+.wp-block-aludra-feature-cards .feature-cards__eyebrow,
+.kicker {
+	font-family: var(--wp--preset--font-family--sans) !important;
+	font-size: var(--wp--preset--font-size--small) !important;
+	font-weight: 600 !important;
+	letter-spacing: 0.12em !important;
+	text-transform: uppercase !important;
+	color: var(--wp--preset--color--secondary) !important;
+}
+.wp-block-aludra-hero-split .hero-split__eyebrow::before,
+.wp-block-aludra-spine-section .spine-section__label::before,
+.wp-block-aludra-split-section .split-section__label::before,
+.wp-block-aludra-service-blocks .service-blocks__label::before,
+.wp-block-aludra-contact-section .contact-section__label::before {
+	display: none;
+}
+
+/* Hero — 7/5 grid aligned to the baseline: hero-split's own inner layout is aludra's and media queries cannot live in theme.json */
+@media (min-width: 60rem) {
+	.wp-block-aludra-hero-split .hero-split__inner {
+		display: grid;
+		grid-template-columns: 7fr 5fr;
+		gap: clamp(2rem, 5vw, 4rem);
+		align-items: end;
+	}
+}
+
+/* Hero — title/lead/CTA rhythm: aludra zeroes the inner children's margins with !important and sets its own title clamp, which beats theme.json's body h1 */
+.wp-block-aludra-hero-split .hero-split__title {
+	font-size: var(--wp--preset--font-size--display);
+	margin: 1rem 0 1.5rem !important;
+}
+.wp-block-aludra-hero-split .hero-split__lead {
+	font-size: var(--wp--preset--font-size--large) !important;
+	line-height: 1.55 !important;
+	max-width: 34rem;
+	margin: 0 !important;
+}
+.wp-block-aludra-hero-split .hero-split__ctas { gap: 1rem 1.5rem; margin-top: 2.5rem !important; }
+
+/* Hero — figure caption on a hairline: the media pane's paragraph cannot be reached from theme.json */
+.wp-block-aludra-hero-split .hero-split__media > p {
+	margin: 0.5rem 0 0;
+	padding-top: 0.5rem;
+	border-top: 1px solid var(--wp--preset--color--border-light);
+}
+
+/* Hero/footer — arrow link: the chevron is a pseudo-element, which theme.json cannot draw */
+.link-arrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-weight: 600;
+}
+.link-arrow::after {
+	content: "";
+	width: 0.45em;
+	height: 0.45em;
+	border-right: 2px solid currentColor;
+	border-bottom: 2px solid currentColor;
+	transform: rotate(45deg);
+}
+.footer-bottom .link-arrow::after { transform: rotate(-135deg); }
+
+/* Hero facts (stat-rail, light variation) — ink rule on top, no dividers, big sans numerals, plain small captions: the rail's shell/items are aludra classes nested under the block */
+.wp-block-aludra-stat-rail .stat-rail__shell {
+	border-top: 1px solid var(--wp--preset--color--contrast);
+	border-bottom: 0;
+}
+.wp-block-aludra-stat-rail .stat-rail__item { padding: 1rem 0 0; }
+.wp-block-aludra-stat-rail .stat-rail__item + .stat-rail__item { border-left: 0; }
+.wp-block-aludra-stat-rail .stat-rail__num {
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--x-large);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	color: var(--wp--preset--color--contrast);
+}
+.wp-block-aludra-stat-rail .stat-rail__cap {
+	font-family: var(--wp--preset--font-family--sans);
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--wp--preset--color--secondary);
+	margin-top: 0.5rem;
+}
+@media (max-width: 60rem) {
+	.wp-block-aludra-stat-rail .stat-rail__shell {
+		grid-auto-flow: row;
+		grid-template-columns: repeat(2, 1fr);
+	}
+	.wp-block-aludra-stat-rail .stat-rail__item + .stat-rail__item { border-top: 0; }
+}
+
+/* Sections — drop aludra's own bottom hairlines: index.html draws one ink rule on top of each section instead (border-top set in theme.json) */
+.wp-block-aludra-spine-section,
+.wp-block-aludra-service-blocks,
+.wp-block-aludra-split-section,
+.wp-block-aludra-testimonial-grid,
+.wp-block-aludra-contact-section,
+.wp-block-aludra-cta-banner {
+	border-bottom: 0;
+}
+
+/* Base — container gutters: aludra's shells pad with spacing--50, while index.html's .container uses the content-padding clamp; the shells cannot be reached from theme.json */
+.wp-block-aludra-hero-split .hero-split__inner,
+.wp-block-aludra-stat-rail .stat-rail__shell,
+.wp-block-aludra-spine-section .spine-section__shell,
+.wp-block-aludra-service-blocks .service-blocks__inner,
+.wp-block-aludra-split-section .split-section__shell,
+.wp-block-aludra-contact-section .contact-section__inner,
+.wp-block-aludra-cta-banner .cta-banner__content {
+	max-width: var(--wp--style--global--wide-size);
+	padding-inline: var(--wp--custom--spacing--content-padding);
+}
+
+/* Projects — spine as a single-column section head (kicker full row, heading left, note right): the spine's sticky two-column grid is aludra's layout, not expressible in theme.json */
+.wp-block-aludra-spine-section .spine-section__shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+.wp-block-aludra-spine-section .spine-section__spine {
+	position: static;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 1rem 2.5rem;
+	margin-bottom: 2.5rem;
+}
+.wp-block-aludra-spine-section .spine-section__label { flex-basis: 100%; margin: 0 0 0.5rem; }
+.wp-block-aludra-spine-section .spine-section__heading { margin: 0; font-size: var(--wp--preset--font-size--xx-large); }
+.wp-block-aludra-spine-section .spine-section__aside {
+	max-width: 26ch;
+	margin: 0;
+	padding-bottom: 0.4rem;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--secondary);
+}
+
+/* Projects — cards grid with 1px line gaps on a line-coloured ground: feature-cards ships auto-fit/20px and some rules with !important */
+.wp-block-aludra-feature-cards .feature-cards__grid {
+	display: grid !important;
+	grid-template-columns: 1fr;
+	gap: 1px !important;
+	background: var(--wp--preset--color--border-light);
+	border: 1px solid var(--wp--preset--color--border-light);
+}
+@media (min-width: 42.5rem) {
+	.wp-block-aludra-feature-cards .feature-cards__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 67.5rem) {
+	.wp-block-aludra-feature-cards .feature-cards__grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Projects — card: square, borderless, shadowless white tile with 1.5rem padding; feature-cards' own card style carries radius/border/hover shadow with !important */
+.wp-block-aludra-feature-cards .feature-card {
+	background: var(--wp--preset--color--base);
+	border: 0 !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	padding: 1.5rem !important;
+	transform: none !important;
+}
+
+/* Projects — heading row with the folio right: baseline flex of the card's first group */
+.wp-block-aludra-feature-cards .project-top { align-items: baseline; }
+
+/* Projects — folio number orange, bold, tabular: feature-cards sets .feature-card p with !important */
+.wp-block-aludra-feature-cards .feature-card p.folio {
+	margin: 0 !important;
+	font-size: 1.5rem !important;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	font-variant-numeric: tabular-nums;
+	color: var(--wp--preset--color--accent) !important;
+}
+
+/* Projects — drawing in a 1px #E3E3E3 frame, fluid at the drawings' 2:1 ratio: aludra sizes card images fixed-width */
+.wp-block-aludra-feature-cards .plate { border: 1px solid var(--wp--preset--color--border-light); }
+.wp-block-aludra-feature-cards .plate img {
+	width: 100%;
+	height: auto;
+	aspect-ratio: 480 / 240;
+	object-fit: cover;
+}
+
+/* Projects — description and meta line: feature-cards sets .feature-card p font-size/colour with !important */
+.wp-block-aludra-feature-cards .feature-card p.project-desc {
+	margin: 0 !important;
+	max-width: 40ch;
+	font-size: var(--wp--preset--font-size--base) !important;
+	color: var(--wp--preset--color--contrast) !important;
+}
+.wp-block-aludra-feature-cards .feature-card p.project-meta {
+	margin: auto 0 0 !important;
+	padding-top: 0.5rem;
+	border-top: 1px solid var(--wp--preset--color--border-light);
+	font-size: var(--wp--preset--font-size--small) !important;
+	color: var(--wp--preset--color--secondary) !important;
+}
+
+/* Projects — card: no hover top-bar or lift; the ::after/hover rules are pseudo-states theme.json cannot reach */
+.wp-block-aludra-feature-cards .feature-card { overflow: visible; }
+.wp-block-aludra-feature-cards .feature-card::after { display: none; }
+
+/* Werkwijze — steps grid with 1px line gaps (2 cols ≥37.5rem, 4 cols ≥56.25rem): service-blocks ships a vertical list with !important */
+.wp-block-aludra-service-blocks .service-blocks__list {
+	display: grid !important;
+	grid-template-columns: 1fr;
+	gap: 1px !important;
+	background: var(--wp--preset--color--border-light);
+	border: 1px solid var(--wp--preset--color--border-light);
+}
+@media (min-width: 37.5rem) {
+	.wp-block-aludra-service-blocks .service-blocks__list { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 56.25rem) {
+	.wp-block-aludra-service-blocks .service-blocks__list { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* Werkwijze — step tile: square white, 1.5rem padding, no shadow */
+.wp-block-aludra-service-blocks .service-block {
+	background: var(--wp--preset--color--base);
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 1.5rem !important;
+}
+
+/* Werkwijze — numeral above the title, big orange solid (the steps variation's circular badge is neutralised here); the variation's rules carry !important at .is-style-steps specificity, so the overrides match it */
+.wp-block-aludra-service-blocks .service-block__header,
+.wp-block-aludra-service-blocks.is-style-steps .service-block__header { display: block !important; }
+.wp-block-aludra-service-blocks .service-block__num,
+.wp-block-aludra-service-blocks.is-style-steps .service-block__num {
+	display: block !important;
+	width: auto !important;
+	height: auto !important;
+	min-width: 0 !important;
+	border-radius: 0 !important;
+	background: none !important;
+	font-size: var(--wp--preset--font-size--xx-large) !important;
+	font-style: normal !important;
+	font-weight: 700 !important;
+	letter-spacing: -0.03em !important;
+	font-variant-numeric: tabular-nums;
+	color: var(--wp--preset--color--accent) !important;
+	margin: 0 0 1.5rem !important;
+}
+.wp-block-aludra-service-blocks .service-block__body,
+.wp-block-aludra-service-blocks.is-style-steps .service-block__body { padding: 0 !important; }
+.wp-block-aludra-service-blocks .service-block__title { margin: 0 0 0.5rem !important; }
+.wp-block-aludra-service-blocks .service-block__desc { margin: 0; max-width: 34ch; }
+.wp-block-aludra-service-blocks .service-blocks__title { font-size: var(--wp--preset--font-size--xx-large) !important; }
+.wp-block-aludra-service-blocks .service-blocks__lead {
+	font-size: var(--wp--preset--font-size--small) !important;
+	font-weight: 400 !important;
+	color: var(--wp--preset--color--secondary) !important;
+	max-width: 40ch;
+	margin-bottom: 2.5rem !important;
+}
+
+/* Studio — heading and lead left-aligned in the full container: split-section centres a 48rem header box and text-align cannot live in theme.json */
+.wp-block-aludra-split-section .split-section__header {
+	max-width: none;
+	margin-inline: 0;
+	text-align: left;
+}
+.wp-block-aludra-split-section .split-section__heading { font-size: var(--wp--preset--font-size--xx-large); margin: 0 0 1rem; }
+.wp-block-aludra-split-section .split-section__lead { max-width: 58ch; }
+
+/* Studio — facts as rows with a 1px line between, label left, value right: core/table renders its own cell chrome that theme.json cannot strip */
+.wp-block-table.facts { width: 100%; margin: 2.5rem 0 0; }
+.wp-block-table.facts table { border-collapse: collapse; }
+.wp-block-table.facts tr { border-top: 1px solid var(--wp--preset--color--border-light); }
+.wp-block-table.facts td {
+	border: 0 !important;
+	padding: 0.8rem 0 !important;
+}
+.wp-block-table.facts td:first-child {
+	width: 40%;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--secondary);
+}
+.wp-block-table.facts td:last-child { text-align: right; font-weight: 600; }
+
+/* Quote — no card: the quote sits directly on the tertiary band, centred; the card's own radius/shadow/background are aludra's */
+.wp-block-aludra-testimonial-grid .testimonial-grid__card {
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0 !important;
+	max-width: 46rem;
+	margin-inline: auto;
+	text-align: center;
+}
+
+/* Quote — orange „ mark above, big non-italic centred text: the mark is a pseudo-element and testimonial-grid sets its own quote styles with !important */
+.wp-block-aludra-testimonial-grid .testimonial-grid__quote {
+	font-size: clamp(1.5rem, 3.2vw, 2.5rem) !important;
+	font-weight: 500 !important;
+	font-style: normal !important;
+	letter-spacing: -0.015em;
+	line-height: 1.25;
+	text-wrap: balance;
+	margin: 0 auto !important;
+}
+.wp-block-aludra-testimonial-grid .testimonial-grid__quote::before {
+	content: "\201E";
+	display: block;
+	font-size: var(--wp--preset--font-size--xx-large);
+	font-weight: 700;
+	line-height: 1;
+	color: var(--wp--preset--color--accent);
+	margin-bottom: 1rem;
+}
+.wp-block-aludra-testimonial-grid .testimonial-grid__author {
+	margin: 1.5rem 0 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--secondary);
+}
+.wp-block-aludra-testimonial-grid .slick-arrow,
+.wp-block-aludra-testimonial-grid .slick-dots { display: none !important; }
+
+/* Contact — heading/lead left-aligned, then form left and info right on a hairline column: the section centres its intro and uses a flex row, neither expressible in theme.json */
+.wp-block-aludra-contact-section .contact-section__intro { text-align: left; margin-bottom: 2.5rem; }
+.wp-block-aludra-contact-section .contact-section__heading {
+	font-size: var(--wp--preset--font-size--xx-large);
+	text-align: left;
+}
+.wp-block-aludra-contact-section .contact-section__sub {
+	max-width: 52ch;
+	margin-top: 1rem;
+	margin-inline: 0;
+	text-align: left;
+}
+.wp-block-aludra-contact-section .contact-section__grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+.wp-block-aludra-contact-section .contact-section__card {
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0;
+	margin-top: 2.5rem;
+}
+@media (min-width: 56.25rem) {
+	.wp-block-aludra-contact-section .contact-section__grid { grid-template-columns: 7fr 5fr; gap: clamp(2rem, 5vw, 5rem); }
+	.wp-block-aludra-contact-section .contact-section__card { order: -1; margin-top: 0; }
+	.wp-block-aludra-contact-section .contact-section__info {
+		border-top: 0;
+		border-left: 1px solid var(--wp--preset--color--border-light);
+		padding-top: 0;
+		padding-left: clamp(1.5rem, 3vw, 3rem);
+		align-self: start;
+	}
+}
+
+/* Contact — info rows on hairlines, plain ink icons, non-uppercase labels: cs-detail's chip/label styles are aludra's */
+.wp-block-aludra-contact-section .cs-detail {
+	border-top: 1px solid var(--wp--preset--color--border-light);
+	padding-block: 0.8rem;
+}
+.wp-block-aludra-contact-section .cs-detail__icon {
+	width: 28px;
+	height: 28px;
+	border-radius: 0;
+	background: none;
+	border: 0;
+}
+.wp-block-aludra-contact-section .cs-detail__icon img { width: 22px; height: 22px; }
+.wp-block-aludra-contact-section .cs-detail__label {
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: 0;
+	text-transform: none;
+	color: var(--wp--preset--color--secondary);
+}
+.wp-block-aludra-contact-section .cs-detail__value { margin: 0; font-weight: 600; }
+.wp-block-aludra-contact-section .cs-badge {
+	display: block;
+	width: auto;
+	margin-top: 1.5rem;
+	background: none;
+	border: 0;
+	border-radius: 0;
+	padding: 0;
+}
+.wp-block-aludra-contact-section .cs-badge::before { display: none; }
+.wp-block-aludra-contact-section .cs-badge__text {
+	margin: 0;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--secondary);
+}
+
+/* Contact — CF7 form: labels above fields, full-width square inputs with a #595959 border (control-border preset), ink submit; the markup is generated by Contact Form 7 and contact-section styles it with its own selectors, which theme.json cannot reach */
+.wp-block-aludra-contact-section .wpcf7 .form-row { display: grid; gap: 1rem; margin-bottom: 1rem; }
+@media (min-width: 40rem) {
+	.wp-block-aludra-contact-section .wpcf7 .form-row.two { grid-template-columns: 1fr 1fr; }
+}
+.wp-block-aludra-contact-section .wpcf7 .field { display: grid; gap: 0.4rem; align-content: start; }
+.wp-block-aludra-contact-section .wpcf7 label { display: grid; gap: 0.4rem; font-weight: 600; }
+.wp-block-aludra-contact-section .wpcf7 .wpcf7-form-control-wrap { display: block; margin: 0; }
+.wp-block-aludra-contact-section .wpcf7 input[type="text"],
+.wp-block-aludra-contact-section .wpcf7 input[type="email"],
+.wp-block-aludra-contact-section .wpcf7 input[type="tel"],
+.wp-block-aludra-contact-section .wpcf7 select,
+.wp-block-aludra-contact-section .wpcf7 textarea {
+	width: 100%;
+	padding: 0.8rem 0.9rem;
+	font: inherit;
+	color: var(--wp--preset--color--contrast);
+	background: var(--wp--preset--color--base);
+	border: 1px solid var(--wp--custom--color--control-border) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+.wp-block-aludra-contact-section .wpcf7 textarea { min-height: 9rem; resize: vertical; }
+.wp-block-aludra-contact-section .wpcf7 input:focus,
+.wp-block-aludra-contact-section .wpcf7 select:focus,
+.wp-block-aludra-contact-section .wpcf7 textarea:focus { border-color: var(--wp--preset--color--contrast) !important; }
+.wp-block-aludra-contact-section .wpcf7 .req { color: var(--wp--preset--color--accent); }
+.wp-block-aludra-contact-section .wpcf7 .hint {
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 400;
+	color: var(--wp--preset--color--secondary);
+}
+.wp-block-aludra-contact-section .wpcf7 .form-foot {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 0.5rem;
+}
+.wp-block-aludra-contact-section .wpcf7 .form-note {
+	margin: 0;
+	max-width: 34ch;
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--secondary);
+}
+.wp-block-aludra-contact-section .wpcf7 input[type="submit"],
+.wp-block-aludra-contact-section .wpcf7 .wpcf7-submit {
+	display: inline-flex;
+	padding: 0.9rem 1.5rem;
+	background: var(--wp--preset--color--contrast) !important;
+	color: var(--wp--preset--color--base) !important;
+	border: 1px solid var(--wp--preset--color--contrast) !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+}
+.wp-block-aludra-contact-section .wpcf7 input[type="submit"]:hover,
+.wp-block-aludra-contact-section .wpcf7 .wpcf7-submit:hover {
+	background: var(--wp--preset--color--accent) !important;
+	border-color: var(--wp--preset--color--accent) !important;
+	color: var(--wp--preset--color--contrast) !important;
+}
+
+/* CTA banner — title size: cta-banner sets its own clamp on the inner class */
+.wp-block-aludra-cta-banner .cta-banner__title { font-size: var(--wp--preset--font-size--xx-large) !important; }
+
+/* Footer — 1px ink rule on top: theme.json has no per-template-part border */
+.site-footer { border-top: 1px solid var(--wp--preset--color--contrast); }
+
+/* Footer — three-column grid (2fr 1fr 1fr ≥50rem): the part's inner groups cannot become a grid in theme.json */
+.footer-grid { display: grid; gap: 2.5rem; }
+@media (min-width: 50rem) {
+	.footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+}
+.footer-tag { margin: 1rem 0 0; max-width: 30ch; }
+.footer-col .kicker { display: block; margin-bottom: 1rem; }
+.footer-col address { font-style: normal; }
+.footer-col p { margin: 0; }
+.footer-col p + p { margin-top: 0.5rem; }
+
+/* Footer — menu column: stacked links without underline; core/navigation's ul cannot be laid out from theme.json */
+.footer-nav ul {
+	display: grid;
+	gap: 0.5rem;
+	justify-items: start;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.footer-nav a { color: var(--wp--preset--color--contrast); text-decoration: none; }
+.footer-nav a:hover {
+	text-decoration-line: underline;
+	text-decoration-color: var(--wp--preset--color--accent);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 4px;
+}
+
+/* Footer — bottom row on a hairline: flex space-between with top rule, theme.json cannot style the part's inner groups */
+.footer-bottom {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 4rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--wp--preset--color--border-light);
+}
+.footer-bottom p { margin: 0; }
