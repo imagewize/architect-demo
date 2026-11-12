@@ -1,7 +1,7 @@
 # architect-demo
 
 A test run of the `wp-frontend-builder` Vibe agent from
-[mistral-toolbox](https://github.com/imagewize/mistral-toolbox). From a short brief, the agent
+[wp-vibe-toolbox](https://github.com/imagewize/wp-vibe-toolbox) (formerly `mistral-toolbox`). From a short brief, the agent
 built a homepage for an invented Rotterdam architecture firm, **Bureau Kadewerk**, as one
 self-contained HTML/CSS file. The aim is to test the loop: build from a brief, revise with change
 requests, then convert to a WordPress block theme.
@@ -14,12 +14,24 @@ requests, then convert to a WordPress block theme.
 
 ## Setup
 
-`.vibe/config.toml` points Vibe at the toolbox skills. The agent profiles are found through the
-user-level symlink `~/.vibe/agents` → `~/code/mistral-toolbox/agents`.
+Point Vibe at the toolbox skills in `~/.vibe/config.toml`:
+
+```toml
+skill_paths = ["~/code/wp-vibe-toolbox/skills"]
+```
+
+Copy the agent profiles to where Vibe looks for them (re-run after every `git pull` of the
+toolbox), then start the agent in this folder:
 
 ```bash
-vibe --agent wp-frontend-builder
+rsync -a ~/code/wp-vibe-toolbox/agents/ ~/.vibe/agents/
+vibe --agent wp-frontend-builder --smart-approve
 ```
+
+The runs in [PROMPTS.md](PROMPTS.md) used the toolbox under its old name and a symlink
+`~/.vibe/agents` → `~/code/mistral-toolbox/agents`; see the toolbox's
+[agents README](https://github.com/imagewize/wp-vibe-toolbox/blob/main/agents/README.md) for why
+a copy is now preferred.
 
 ## View
 
